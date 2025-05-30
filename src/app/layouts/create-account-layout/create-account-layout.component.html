@@ -1,0 +1,47 @@
+<div class="min-h-screen h-full">
+  <main class="bg-slate-50 flex flex-row justify-center w-full min-h-screen h-full">
+    <div class="bg-slate-50 w-full max-w-[1440px] relative py-6 overflow-y-auto">
+      <!-- Logo -->
+      <header class="flex items-center px-4 sm:px-10 py-2.5">
+        <div class="relative w-[121px] h-[26x] overflow-hidden">
+          <div class="relative h-[26px]">
+            <div class="logo" routerLink="/dashboard/home">
+              <img src="assets/images/logo1.svg" />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main content layout -->
+      <div class="flex flex-col md:flex-row mt-[-2.5rem] h-[90%]">
+        <!-- Sidebar -->
+        <aside class="w-full md:w-[611px] px-4 sm:px-10 mb-6 md:mb-0 mt-[125px]">
+          <h2 class="font-paragraph-l-semibold text-slate-800 mb-10">SET UP YOUR PROFILE</h2>
+          <nav class="flex flex-row md:flex-col w-full md:w-[184px] gap-6">
+            <div *ngFor="let step of navigationSteps"
+                 class="flex items-center gap-2 flex-1 md:flex-none"
+                 [class.justify-end]="!step.active">
+              <img *ngIf="step.active"
+                   class="w-6 h-6"
+                   alt="Arrows diagrams"
+                   src="assets/icons/rounded-right-arrow.svg" />
+              <div class="flex items-center pt-0 pb-0.5 w-full md:w-[152px]">
+                <span [class]="step.active ? 'text-slate-800' : 'text-slate-500'"
+                      class="font-paragraph-m-medium">
+                  {{step.label}}
+                </span>
+              </div>
+            </div>
+          </nav>
+        </aside>
+
+        <!-- Main form area -->
+        <div class="w-full md:w-[802px] rounded-[20px] bg-[#fff] px-4 sm:px-0">
+          <div class="flex flex-col w-full md:w-[446px] mx-auto mt-8 md:mt-[126px] gap-8">
+            <app-setup-profile-form [form]="form"></app-setup-profile-form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

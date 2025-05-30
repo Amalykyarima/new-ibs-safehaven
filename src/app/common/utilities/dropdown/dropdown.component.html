@@ -1,0 +1,25 @@
+<div class="ml-1 mt-2 mb-4 relative">
+  <!-- Vertical line -->
+  <div class="absolute top-0 left-[-14px] h-full w-px bg-[#E2E8F0] z-0"></div>
+
+  <!-- Buttons -->
+  <div class="space-y-1 relative z-10">
+    <ng-container *ngFor="let item of items">
+      <button (click)="setActiveDropdown(item.label)" [ngClass]="{
+          'bg-[#EBF5FF] text-[#034EA2]': activeDropdownItem === item.label,
+          'hover:bg-gray-100 text-slate-500': activeDropdownItem !== item.label
+        }" class="flex ml-[2px] h-10 items-center justify-between w-full rounded-lg">
+        <div class="pl-2.5 flex items-center gap-2">
+          <img [src]="'assets/icons/topup/' + item.icon + (item.active ? '-active.svg' : '.svg')" [alt]="item.label"
+            class="w-6 h-6" />
+          <span [ngClass]="{
+              'text-[#034EA2]': activeDropdownItem === item.label,
+              'text-slate-500': activeDropdownItem !== item.label
+            }" class="text-sm truncate font-semibold">
+            {{ item.label }}
+          </span>
+        </div>
+      </button>
+    </ng-container>
+  </div>
+</div>

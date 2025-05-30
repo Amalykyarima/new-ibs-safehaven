@@ -1,0 +1,132 @@
+.dropdown-container {
+  position: fixed;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 8px 0;
+  min-width: 200px;
+  z-index: 1000;
+}
+
+.dropdown-list {
+  position: relative;
+  padding-left: 12px;
+}
+
+.vertical-stroke {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: #E2E8F0;
+}
+
+.dropdown-item {
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #64748B;
+  margin-bottom: 4px;
+}
+
+.dropdown-item:hover {
+  background-color: #F8FAFC;
+}
+
+.dropdown-item.last-item {
+  margin-bottom: 0;
+}
+
+/* Style for the dropdown trigger button */
+.dropdown-trigger {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border: none;
+  color: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0; /* Remove default button padding */
+}
+
+/* Inherit styles from .nav-item */
+.dropdown-trigger {
+  padding: 16px 24px; /* Restore padding like other nav-items */
+}
+
+/* Arrow icon styling */
+.dropdown-arrow {
+  transition: transform 0.3s ease;
+}
+
+/* General sub-menu styling */
+.submenu-container {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+  background-color: #0c3d7a; /* Slightly different background for sub-menu */
+}
+
+.submenu-container.open {
+  max-height: 500px; /* Set to a height larger than the content */
+}
+
+.submenu-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Styling for individual sub-items */
+.sub-item {
+  padding-left: 56px; /* Indent sub-items */
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.sub-item .nav-item-content {
+  opacity: 0.8;
+}
+
+.sub-item:hover .nav-item-content {
+  opacity: 1;
+}
+
+.sub-item.active {
+  background-color: #0a2e5e; /* Active background for sub-item */
+}
+
+.sub-item.active .nav-item-content {
+  font-weight: 600;
+  opacity: 1;
+}
+
+/* Inherit general nav-item styles for consistency */
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 16px 24px;
+  cursor: pointer;
+  border-left: 4px solid transparent;
+  transition: background-color 0.3s ease, border-left 0.3s ease;
+}
+
+.nav-item-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-item:hover, .dropdown-trigger:hover {
+  background-color: #1a5bb8;
+}
+
+.nav-item.active, .dropdown-trigger.active {
+  background-color: #e3f2fd;
+  color: #0d47a1;
+  border-left-color: #0d47a1;
+  font-weight: 600;
+}

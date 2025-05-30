@@ -1,0 +1,126 @@
+<div class="overall">
+  <div class="header">
+    <div class="title">
+      <div class="hambuger" [ngClass]="this.openSideBar ? 'opened' : ''" (click)="this.toggleSidebar()">
+        <div class="h1"></div>
+        <div class="h2"></div>
+      </div>
+      <div *ngIf="fetchingData" class="w-[150px] h-[30px] mb-0 bg-gray-300 rounded animate-pulse"></div>
+
+      <ng-container *ngIf="!this.fetchingData">
+        <div class="logo" routerLink="/dashboard/home">
+          <img src="assets/images/logo1.svg" />
+        </div>
+        <p class="text-big" *ngIf="!this.showBackButton">{{ this.title }}</p>
+        <div class="nav-big" *ngIf="this.showBackButton && this.backUrl == ''" (click)="this.generalService.goBack()">
+          <div class="back-icon">
+            <img src="assets/images/arrow-back.svg" />
+          </div>
+          <span>Back</span>
+        </div>
+        <div class="nav-big" *ngIf="this.showBackButton && this.backUrl != ''" [routerLink]="[this.backUrl]"
+          [queryParams]="this.urlQuery">
+          <div class="back-icon">
+            <img src="assets/images/arrow-back.svg" />
+          </div>
+          <span>Back</span>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="right-con">
+      <div class="right" *ngIf="this.fetchingData">
+        <div class="w-[100px] h-[40px] mb-0 bg-gray-300 rounded animate-pulse"></div>
+
+      </div>
+      <div class="right" *ngIf="!this.fetchingData" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu"
+        [nzOverlayClassName]="'dropdown1'" [nzPlacement]="'bottomCenter'">
+        <span class="headway-container"></span>
+        <div class="avatar">
+          <!-- <ngx-avatar class="big-avatar" [name]="
+              this.currentUser?.user?.firstName +
+              ' ' +
+              this.currentUser?.user?.lastName
+            " [round]="true"></ngx-avatar> -->
+          <app-avatar [name]="
+            this.currentUser?.user?.firstName +
+            ' ' +
+            this.currentUser?.user?.lastName">
+          </app-avatar>
+
+          <!-- <ngx-avatar class="small-avatar" [name]="
+              this.currentUser?.user?.firstName +
+              ' ' +
+              this.currentUser?.user?.lastName
+            " size="42" [round]="true"></ngx-avatar> -->
+          <app-avatar [name]="
+            this.currentUser?.user?.firstName +
+            ' ' +
+            this.currentUser?.user?.lastName
+          " size="42">
+          </app-avatar>
+          <!-- <ngx-avatar class="smaller-avatar" [name]="
+              this.currentUser?.user?.firstName +
+              ' ' +
+              this.currentUser?.user?.lastName
+            " size="35" [round]="true"></ngx-avatar> -->
+          <app-avatar [name]="
+          this.currentUser?.user?.firstName +
+          ' ' +
+          this.currentUser?.user?.lastName
+        " size="35">
+          </app-avatar>
+          <img [src]="'https://identicon-api.herokuapp.com/'+this.currentUser.user._id+'/100?format=png'" />
+        </div>
+        <div class="name">
+          <div class="details">
+            <p class="heading">{{ this.currentUser?.client?.fullName }}</p>
+            <p class="subheading">{{ this.currentUser?.user?.emailAddress }}</p>
+          </div>
+          <div class="arrow"><img src="assets/images/chevron-down.svg" /></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="warning-notification" *ngIf="!this.fetchingData && !this.currentUser?.user?.emailAddressVerified">
+  <div class="icon"><img src="assets/images/warning.svg" /></div>
+  <p>
+    Your Email is not verified.
+    <span (click)="resendVerificationEmail()">Click here to resend verification link</span>
+  </p>
+</div>
+<div class="space">
+  <div class="text-small" *ngIf="!this.showBackButton">{{ this.title }}</div>
+  <div class="nav-small" *ngIf="this.showBackButton && this.backUrl == ''" (click)="this.generalService.goBack()">
+    <div class="back-icon">
+      <img src="assets/images/arrow-back.svg" />
+    </div>
+    <span>Back</span>
+  </div>
+  <div class="nav-small" *ngIf="this.showBackButton && this.backUrl != ''" [routerLink]="[this.backUrl]"
+    [queryParams]="this.urlQuery">
+    <div class="back-icon">
+      <img src="assets/images/arrow-back.svg" />
+    </div>
+    <span>Back</span>
+  </div>
+  <div class="line" *ngIf="!this.showBackButton"></div>
+</div>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item [routerLink]="['/dashboard/settings']" [queryParams]="{ tab: 'profile' }">
+      <img class="small-icons" src="assets/images/profile.svg" />
+      <span>Profile</span>
+    </li>
+    <li nz-menu-item [routerLink]="['/dashboard/settings']" [queryParams]="{ tab: 'password' }">
+      <img class="small-icons" src="assets/images/password.svg" />
+      <span>Change Password</span>
+    </li>
+    <li nz-menu-divider></li>
+    <li nz-menu-item (click)="logout()">
+      <img class="small-icons" src="assets/images/log-out.svg" />
+      <span>Sign Out</span>
+    </li>
+  </ul>
+</nz-dropdown-menu>

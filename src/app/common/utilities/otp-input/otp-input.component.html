@@ -1,0 +1,6 @@
+<div class="w-full {{ error !== '' ? 'animate-bounce' : '' }}">
+  <ng-otp-input
+    (onInputChange)="onPINChange($event)"
+    [config]="this.pinConfig"
+  ></ng-otp-input>
+</div>

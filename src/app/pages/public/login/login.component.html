@@ -1,0 +1,58 @@
+<app-onboarding-layout [showSignIn]="path === 'signin' && showOtp" (switchAccountType)="switchAccountType($event)"
+  [userInfo]="userPayload">
+  <div *ngIf="!showPin" class="flex flex-col gap-[27px] max-w-[456px] w-full h-full z-[9999] sm:py-[120px] py-[60px]">
+    <div class="flex flex-col gap-[16px] w-full">
+      <span class="text-[#161E2E] text-[24px] font-[900]">{{
+        showOtp ? "Create Account" : "Sign In"
+        }}</span>
+      <span class="text-[#6B7280] sm:text-[18px] text-[14px] font-[400]">{{
+        showOtp
+        ? "Hey welcome. Let’s get you started"
+        : "Hey Welcome back. Sign In to continue."
+        }}
+      </span>
+    </div>
+
+    <app-tab [types]="['Individual', 'Corporate']" [type]="accountType"
+      (switchType)="switchAccountType($event)"></app-tab>
+
+    <div *ngIf="accountType === 'Individual' && !showOtp" class=" transition-all ease-in duration-75 w-full {{
+        animate
+          ? 'opacity-[0.3] translate-x-[-20px]'
+          : 'opacity-1 translate-x-0'
+      }}">
+      <app-individual-login></app-individual-login>
+    </div>
+    <div *ngIf="accountType === 'Corporate' && !showOtp" class=" transition-all ease-in duration-75 w-full {{
+        animate ? 'opacity-[0.3] translate-x-[20px]' : 'opacity-1 translate-x-0'
+      }}">
+      <app-corporate-login></app-corporate-login>
+      <!-- <app-corporate-login
+        *ngIf="!animate"
+        (validateUser)="validateUser($event)"
+        (getUser)="getUser($event)"
+      ></app-corporate-login> -->
+    </div>
+    <div *ngIf="showOtp" class=" transition-all ease-in duration-150 w-full {{
+        animate ? 'opacity-[0.7] translate-x-[20px]' : 'opacity-1 translate-x-0'
+      }}">
+      <!-- <app-otp
+        [showTimer]="showTimer"
+        (resend)="verifyUser($event)"
+        [loginData]="loginData"
+        (close)="showOtp = false"
+      ></app-otp> -->
+    </div>
+  </div>
+
+  <div *ngIf="showPin"
+    class="min-h-[calc(100vh-135px)] flex flex-col sm:gap-[81px] gap-[45px] w-full h-full z-[9999] py-[53px]">
+    <span class="cursor-pointer flex items-center text-[#9FA6B2] gap-[7px]"><img class="h-[14px]"
+        src="../../../assets/images/arrow-back.svg" alt="" />
+      Back
+    </span>
+    <div class="h-full w-full flex items-center justify-center">
+      <!-- <app-pin></app-pin> -->
+    </div>
+  </div>
+</app-onboarding-layout>

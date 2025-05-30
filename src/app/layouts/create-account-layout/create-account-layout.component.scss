@@ -1,0 +1,39 @@
+.menu-container {
+  position: relative;
+  width: 100%;
+}
+
+.menu-button {
+  display: flex;
+  height: 40px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border-radius: 8px;
+  padding: 0 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.menu-button:hover, .menu-button.active {
+  background-color: #F1F5F9;
+}
+
+.button-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+.button-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748B;
+}

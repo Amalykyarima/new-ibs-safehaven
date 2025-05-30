@@ -1,0 +1,38 @@
+
+
+::ng-deep ng-otp-input .otp-input {
+  margin: 0 6px; /* gap between inputs (12px total) */
+  text-align: center;
+}
+
+/* Center the entire input group */
+::ng-deep ng-otp-input {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 8px !important;
+
+}
+
+
+::ng-deep ng-otp-input .otp-input {
+  background-color: #F1F5F9;
+}
+
+::ng-deep ng-otp-input .otp-input {
+  border: none;
+}
+
+
+::ng-deep .ng-otp-input-wrapper .otp-input {
+  min-height: 50px !important;
+  background-color: #F1F5F9 !important;
+  border: none !important;
+  display: flex;
+  justify-content: space-between;
+}
+
+::ng-deep .n-o-c {
+  gap: 8px;
+}
+
+

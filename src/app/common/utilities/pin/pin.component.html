@@ -1,0 +1,23 @@
+<div
+  class="flex flex-col gap-[66px] items-center rounded-[10px] justify-center sm:bg-[#fff] h-full  sm:w-[456px] w-full min-h-[351px] shadow_"
+>
+  <div class="flex flex-col gap-[36px] items-center">
+    <div class="flex flex-col gap-[8px] items-center">
+      <span class="text-[#161E2E] font-[900] text-[24px] text-center">PIN</span>
+      <span class="text-[#6B7280] font-[400] text-[18px] text-center"
+        >Enter your account PIN</span
+      >
+    </div>
+    <app-otp-input
+      [length]="4"
+      [error]="error"
+      (onChange)="onPinChange($event)"
+    ></app-otp-input>
+  </div>
+  <span class="text-[#6B7280] font-[400] text-[18px] text-center"
+    >Can’t remember PIN?
+    <span class="font-[500] underline cursor-pointer"
+      >Try another Auth method</span
+    ></span
+  >
+</div>

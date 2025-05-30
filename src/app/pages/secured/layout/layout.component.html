@@ -1,0 +1,334 @@
+<div class="bg-white flex flex-col md:flex-row w-full min-h-screen">
+  <!-- Mobile Header (shown only on small screens) -->
+  <header class="md:hidden flex items-center justify-between p-3 bg-white sticky top-0 z-30">
+    <div class="flex items-center gap-2">
+      <button id="mobile-menu-button" class="w-7 h-7 text-gray-600">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+      <div class="font-semibold text-sm">
+        <span class="text-slate-500">Hi, </span>
+        <span class="text-slate-800">Abasifreke</span>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button class="w-8 h-8 p-1 bg-slate-50 rounded-full flex items-center justify-center">
+        <img src="../../../../assets/icons/newBluebell.svg" alt="Notifications" class="w-5 h-5">
+      </button>
+      <img class="w-8 h-8 rounded-full" src="../../../../assets/icons/new-Avatars.svg" alt="User avatar" />
+    </div>
+  </header>
+
+  <!-- Sidebar - Hidden on mobile by default, shown when toggled -->
+  <aside id="sidebar" class="hidden md:flex flex-col w-[260px] min-h-screen bg-white fixed z-20">
+    <!-- ... (your existing sidebar content remains the same) ... -->
+    <aside id="sidebar" class="hidden md:flex flex-col w-[260px] min-h-screen bg-white fixed z-20">
+      <div class="flex flex-col items-start gap-16 pt-8 pb-10 px-6 flex-1">
+        <!-- Logo -->
+        <div class="relative w-[121px] h-[26px]">
+          <img src="../../../../assets/images/logo1.svg" alt="Logo">
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="w-full gap-2 flex flex-col items-start">
+          <div class="gap-4 w-full flex flex-col items-start">
+            <div class="flex flex-col items-start gap-2 w-full">
+              <!-- Menu Items -->
+              <!-- <button class="flex h-10 items-center justify-start gap-2 w-full rounded-lg hover:bg-gray-100">
+                <img class="w-6 h-6" src="../../../../assets/icons/Home, House, Line.svg" alt="Home" />
+                <span class="text-sm font-semibold text-slate-500">Home</span>
+              </button>
+
+              <button class="flex h-10 items-center justify-start gap-2 w-full rounded-lg hover:bg-gray-100">
+                <img class="w-6 h-6" src="../../../../assets/icons/coins.svg" alt="Accounts" />
+                <span class="text-sm font-semibold text-slate-500">Accounts</span>
+              </button>
+
+              <button class="flex h-10 items-center justify-start gap-2 w-full rounded-lg hover:bg-gray-100">
+                <img class="w-6 h-6" src="../../../../assets/icons/Arrow, Forward.svg" alt="Transfer" />
+                <span class="text-sm font-semibold text-slate-500">Transfer</span>
+              </button> -->
+
+              <!-- Home -->
+              <button (click)="setActive('Home')" [ngClass]="{
+                'bg-[#EBF5FF] text-[#034EA2]': activeItem === 'Home',
+                'hover:bg-gray-100 text-slate-500': activeItem !== 'Home'
+              }" class="flex p-[10px] h-10 items-center justify-start gap-2 w-full rounded-lg">
+                <div class="flex items-center gap-2">
+
+                  <img class="w-6 h-6"
+                    [src]="activeItem === 'Home' ?  '../../../../assets/icons/home-blue.svg' : '../../../../assets/icons/default-home.svg'"
+                    alt="Home" />
+                  <span class="text-sm truncate font-semibold">{{ 'Home' }}</span>
+                </div>
+              </button>
+
+              <!-- Accounts -->
+              <button (click)="setActive('Accounts')" [ngClass]="{
+                'bg-[#EBF5FF] text-[#034EA2]': activeItem === 'Accounts',
+                'hover:bg-gray-100 text-slate-500': activeItem !== 'Accounts'
+              }" class="flex p-[10px] h-10 items-center justify-start gap-2 w-full rounded-lg">
+                <div class="flex items-center gap-2">
+
+                  <img class="w-6 h-6"
+                    [src]="activeItem === 'Accounts' ?  '../../../../assets/icons/account-blue.svg' : '../../../../assets/icons/coins.svg'"
+                    src="../../../../assets/icons/coins.svg" alt="Accounts" />
+                  <span class="text-sm truncate font-semibold">{{'Accounts'}}</span>
+                </div>
+              </button>
+
+              <!-- Transfer -->
+              <button (click)="setActive('Transfer')" [ngClass]="{
+                'bg-[#EBF5FF] text-[#034EA2]': activeItem === 'Transfer',
+                'hover:bg-gray-100 text-slate-500': activeItem !== 'Transfer'
+              }" class="flex p-[10px] h-10 items-center justify-start gap-2 w-full rounded-lg">
+                <div class="flex items-center gap-2">
+
+
+                  <img class="w-6 h-6"
+                    [src]="activeItem === 'Transfer' ?  '../../../../assets/icons/arrow-blue.svg' : '../../../../assets/icons/Arrow, Forward.svg'" />
+                  <!-- <img class="w-6 h-6" src="../../../../assets/icons/Arrow, Forward.svg" alt="Transfer" /> -->
+                  <span class="text-sm truncate font-semibold">{{'Transfer'}}</span>
+                </div>
+              </button>
+
+              <!-- <button (click)="toggleTopUpOptions()"
+                class="flex h-10 items-center justify-between w-full rounded-lg hover:bg-gray-100">
+                <div class="flex items-center gap-2">
+
+                  <img class="w-6 h-6" src="../../../../assets/icons/newtopup.svg" alt="Top Up" />
+                  <span class="text-sm font-semibold text-slate-500">Top Up</span>
+                </div>
+                <img src="../../../../assets/icons/newdropdown.svg" alt="Dropdown" class="w-6 h-6">
+              </button> -->
+              <button (click)="setActive('Top Up')" [ngClass]="{
+                  'bg-[#EBF5FF] text-[#034EA2]': activeItem === 'Top Up',
+                  'hover:bg-gray-100 text-slate-500': activeItem !== 'Top Up'
+                }" class="flex h-10 p-[10px] items-center justify-between w-full rounded-lg">
+                <div class="flex items-center gap-2">
+                  <img class="w-6 h-6"
+                    [src]="activeItem === 'Top Up' ? '../../../../assets/icons/topup-blue.svg' : '../../../../assets/icons/newtopup.svg'" />
+                  <span class="text-sm font-semibold">{{'Top Up'}}</span>
+                </div>
+                <img class="w-6 h-6"
+                  [src]="activeItem === 'Top Up' ? '../../../../assets/icons/active-arrow-up.svg' : '../../../../assets/icons/newdropdown.svg'"
+                  alt="Dropdown" />
+              </button>
+
+              <!-- Section under button, offset and with vertical line -->
+              <div *ngIf="showTopUpOptions" class="ml-[20px] mt-1 w-[90%] relative">
+                <app-dropdown [items]="topUpItems" [activeDropdownItem]="activeItem === 'Top Up' ? 'Buy Airtime' : ''"></app-dropdown>
+              </div>
+
+
+              <!-- Financial Tool -->
+              <button (click)="setActive('Financial')" [ngClass]="{
+                'bg-[#EBF5FF] text-[#034EA2]': activeItem === 'Financial',
+                'hover:bg-gray-100 text-slate-500': activeItem !== 'Financial'
+              }" class="flex p-[10px] h-10 items-center justify-between w-full rounded-lg">
+                <div class="flex items-center gap-2">
+                  <img [src]="activeItem === 'Financial'
+                    ? '../../../../assets/icons/delivery-blue.svg'
+                    : '../../../../assets/icons/Delivery, Shipment.svg'" alt="Financial Tool" class="w-6 h-6" />
+                  <span [ngClass]="{
+                    'text-[#034EA2]': activeItem === 'Financial',
+                    'text-slate-500': activeItem !== 'Financial'
+                  }" class="text-sm font-semibold">
+                    Financial Tool
+                  </span>
+                </div>
+                <img [src]="activeItem === 'Financial'
+                  ? '../../../../assets/icons/active-arrow-up.svg'
+                  : '../../../../assets/icons/newdropdown.svg'" alt="Dropdown" class="w-6 h-6" />
+              </button>
+              <!-- Section under button, offset and with vertical line -->
+              <div *ngIf="showFinancialOptions" class="ml-[20px] mt-1 w-[90%] relative">
+                <app-dropdown [items]="financialItems" [activeDropdownItem]="activeItem === 'Financial' ? 'Cards' : ''"></app-dropdown>
+              </div>
+
+
+              <!-- Reward Center -->
+              <button (click)="setActive('Reward')" [ngClass]="{
+                'bg-[#EBF5FF] text-[#034EA2]': activeItem === 'Reward',
+                'hover:bg-gray-100 text-slate-500': activeItem !== 'Reward'
+              }" class="flex p-[10px] h-10 items-center justify-between w-full rounded-lg">
+                <div class="flex items-center gap-2">
+                  <img [src]="activeItem === 'Reward'
+                    ? '../../../../assets/icons/party-confetti-blue.svg'
+                    : '../../../../assets/icons/party-confetti.svg'" alt="Reward Center" class="w-6 h-6" />
+                  <span [ngClass]="{
+                    'text-[#034EA2]': activeItem === 'Reward',
+                    'text-slate-500': activeItem !== 'Reward'
+                  }" class="text-sm font-semibold">
+                    Reward Center
+                  </span>
+                </div>
+                <img [src]="activeItem === 'Reward'
+                  ? '../../../../assets/icons/active-arrow-up.svg'
+                  : '../../../../assets/icons/newdropdown.svg'" alt="Dropdown" class="w-6 h-6" />
+              </button>
+              <!-- Section under button, offset and with vertical line -->
+              <div *ngIf="showRewardOptions" class="ml-[20px] mt-1 w-[90%] relative">
+                <app-dropdown [items]="rewardItems" [activeDropdownItem]="activeItem === 'Reward' ? 'Daily Check-ins' : ''"></app-dropdown>
+              </div>
+
+
+              <!-- Settings -->
+              <button (click)="setActive('Settings')" [ngClass]="{
+                'bg-[#EBF5FF] text-[#034EA2]': activeItem === 'Settings',
+                'hover:bg-gray-100 text-slate-500': activeItem !== 'Settings'
+              }" class="flex p-[10px] h-10 items-center justify-between w-full rounded-lg">
+                <div class="flex items-center gap-2">
+                  <img [src]="activeItem === 'Settings'
+                    ? '../../../../assets/icons/settings-blue.svg'
+                    : '../../../../assets/icons/newsetting.svg'" alt="Settings" class="w-6 h-6" />
+                  <span [ngClass]="{
+                    'text-[#034EA2]': activeItem === 'Settings',
+                    'text-slate-500': activeItem !== 'Settings'
+                  }" class="text-sm font-semibold">
+                    Settings
+                  </span>
+                </div>
+                <!-- <img [src]="activeItem === 'Settings'
+                  ? '../../../../assets/icons/active-arrow-up.svg'
+                  : '../../../../assets/icons/newdropdown.svg'" alt="Dropdown" class="w-6 h-6" /> -->
+              </button>
+              <!-- Section under button, offset and with vertical line -->
+              <!-- <div *ngIf="showSettingsOptions" class="ml-[20px] mt-1 w-[90%] relative">
+                <app-dropdown [items]="topUpItems"></app-dropdown>
+              </div> -->
+
+
+              <!-- test -->
+              <div class="menu-container">
+                <!-- Financial Tool -->
+                <!-- <button
+                  class="menu-button"
+                  (click)="toggleDropdown('financial', $event)"
+                  [class.active]="activeDropdown === 'financial'"
+                >
+                  <div class="button-content">
+                    <img src="assets/icons/Delivery, Shipment.svg" alt="Financial Tool" class="icon">
+                    <span class="button-text">Financial Tool</span>
+                  </div>
+                  <img src="assets/icons/newdropdown.svg" alt="Dropdown" class="icon">
+                </button> -->
+
+                <!-- Repeat for other buttons -->
+
+                <!-- @if (activeDropdown && buttonPosition) {
+                  <app-dropdown
+                    [items]="getItems(activeDropdown)"
+                    [buttonPosition]="buttonPosition"
+                    (itemSelected)="onItemSelected($event)"
+                  />
+                } -->
+              </div>
+
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <!-- QR Code Section -->
+      <div class="p-6">
+        <div class="flex flex-col items-center p-4 bg-slate-50 rounded-[20px] shadow-[0px_2px_40px_-10px_#00000002]">
+          <img src="../../../../assets/icons/Vector.svg" alt="QR Code" class="w-40 h-40 mb-4">
+          <div class="text-center font-medium text-[12px] shadow-custom text-stroke-black">
+            Scan to Download Mobile App
+          </div>
+          <div class="flex justify-center gap-3">
+            <img src="../../../../assets/icons/Store=App Store, Style=Black.svg" alt="App Store" class="h-8">
+            <img src="../../../../assets/icons/Store=Google Play, Style=Black.svg" alt="Google Play" class="h-8">
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 md:ml-[260px]">
+    <!-- Desktop Header (hidden on mobile) -->
+    <header class="hidden md:flex items-center justify-between px-4 py-3 lg:px-6 lg:py-4 bg-white sticky top-0 z-10">
+      <!-- Greeting - responsive text size -->
+      <div class="font-semibold text-sm lg:text-base">
+        <span class="text-slate-500">Good Morning, </span>
+        <span class="text-slate-800">Malik 👋</span>
+      </div>
+
+      <!-- Right side header elements - responsive layout -->
+      <div class="flex items-center gap-2 lg:gap-4 xl:gap-6">
+        <!-- KYC Section - responsive sizing -->
+        <div class="flex items-center bg-slate-200 rounded-[10px] px-2 py-1 lg:px-3 lg:py-2">
+          <div class="flex items-center gap-1 mr-1 lg:mr-2 lg:gap-1.5">
+            <img src="../../../../assets/icons/kyc-1.svg" alt="KYC Level" class="w-5 h-5 lg:w-6 lg:h-6">
+            <span class="font-semibold text-slate-800 text-xs lg:text-sm">KYC Level 1</span>
+          </div>
+          <img src="../../../../assets/icons/warn.svg" alt="Info" class="w-4 h-4 mr-1 lg:w-5 lg:h-5 lg:mr-2">
+          <button
+            class="h-7 px-2 lg:h-8 lg:px-3 bg-white rounded-[10px] border border-slate-300 text-xs lg:text-sm font-semibold text-slate-700">
+            <span class="hidden sm:inline">Upgrade Account</span>
+            <span class="sm:hidden">Upgrade</span>
+          </button>
+        </div>
+
+        <!-- Notification and User Profile - responsive layout -->
+        <div class="flex items-center gap-2 lg:gap-4">
+          <!-- Notification Button - responsive size -->
+          <button
+            class="w-8 h-8 lg:w-10 lg:h-10 p-1 lg:p-1.5 bg-slate-50 rounded-full flex items-center justify-center">
+            <img src="../../../../assets/icons/newBluebell.svg" alt="Notifications" class="w-4 h-4 lg:w-5 lg:h-5">
+          </button>
+
+          <!-- User Profile - responsive elements -->
+          <div class="flex items-center gap-1 lg:gap-2">
+            <img class="w-8 h-8 lg:w-10 lg:h-10 rounded-full" src="../../../../assets/icons/new-Avatars.svg"
+              alt="User avatar" />
+            <div class="hidden xl:flex flex-col">
+              <div class="font-semibold text-slate-800 text-sm">Abdulmalik Masud</div>
+              <div class="text-xs text-slate-500">abdulmalik.masud2gmail.com</div>
+            </div>
+            <img src="../../../../assets/icons/newdropdown.svg" alt="Dropdown"
+              class="w-5 h-5 lg:w-6 lg:h-6 hidden lg:block">
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main
+      class="bg-slate-50 min-h-[calc(100vh-56px)] md:min-h-[calc(100vh-64px)] lg:min-h-[calc(100vh-72px)] p-4 md:p-6 md:rounded-tl-[20px]">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
+
+<!-- Improved Mobile Menu Toggle Script -->
+<script>
+  document.getElementById('mobile-menu-button').addEventListener('click', function () {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('hidden');
+
+    // Optional: Add body overflow hidden when sidebar is open
+    if (sidebar.classList.contains('hidden')) {
+      document.body.style.overflow = 'auto';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+  });
+
+  // Close sidebar when clicking outside (optional)
+  document.addEventListener('click', function (event) {
+    const sidebar = document.getElementById('sidebar');
+    const mobileBtn = document.getElementById('mobile-menu-button');
+
+    if (!sidebar.contains(event.target) && event.target !== mobileBtn && !mobileBtn.contains(event.target)) {
+      if (window.innerWidth < 768 && !sidebar.classList.contains('hidden')) {
+        sidebar.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+      }
+    }
+  });
+</script>
