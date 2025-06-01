@@ -1,0 +1,12 @@
+<button
+[disabled]="disabled"
+[type]="type"
+[class]="buttonClass"
+[class.active]="isActive"
+(click)="onClick.emit($event)"
+(mousedown)="setActive(true)"
+(mouseup)="setActive(false)"
+(mouseleave)="setActive(false)"
+>
+<ng-content></ng-content>
+</button>

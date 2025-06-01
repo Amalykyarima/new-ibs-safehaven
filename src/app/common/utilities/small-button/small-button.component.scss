@@ -1,0 +1,43 @@
+button {
+  display: flex;
+  width: 157px;
+  height: 52px;
+  padding: 14px 22px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: #E2E8F0;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+button:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+  background: #E2E8F0;
+}
+
+button.active:not(:disabled) {
+  background: #034EA2;
+}
+
+/* Default state */
+button {
+  background: #E2E8F0;
+}
+
+/* Active state (when pressed) */
+button.active:not(:disabled) {
+  background: #034EA2;
+}
+
+/* Disabled state */
+button:disabled {
+  background: #E2E8F0;
+}

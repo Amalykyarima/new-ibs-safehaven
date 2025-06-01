@@ -3,15 +3,23 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { InputComponent } from "../../utilities/input/input.component";
 import { Signin } from '../../../resources/models/signin';
+import { SelectComponent } from "../../utilities/select/select.component";
+import { SmallButtonComponent } from "../../utilities/small-button/small-button.component";
 
 @Component({
   selector: 'app-setup-profile-form',
   standalone: true,
-  imports: [CommonModule, InputComponent],
+  imports: [CommonModule, InputComponent, SelectComponent, SmallButtonComponent],
   templateUrl: './setup-profile-form.component.html',
   styleUrl: './setup-profile-form.component.scss'
 })
 export class SetupProfileFormComponent {
+saveData() {
+throw new Error('Method not implemented.');
+}
+onCountrySelected($event: string) {
+throw new Error('Method not implemented.');
+}
 
   @Input() form!: FormGroup;
   @Output() validateUser: EventEmitter<any> = new EventEmitter<any>();
