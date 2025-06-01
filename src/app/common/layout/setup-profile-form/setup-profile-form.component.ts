@@ -42,12 +42,12 @@ export class SetupProfileFormComponent {
     {
       id: 1,
       type: 'Savings Account',
-      icon: '/account-avatar.svg'
+      icon: '../../../../assets/icons/savings.svg'
     },
     {
       id: 2,
       type: 'Current Account',
-      icon: '/account-avatar-1.svg'
+      icon: '../../../../assets/icons/current.svg'
     }
   ];
 

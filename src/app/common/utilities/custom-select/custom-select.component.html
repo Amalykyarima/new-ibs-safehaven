@@ -1,0 +1,51 @@
+<div class="flex flex-col w-full">
+  <div class="flex flex-col w-full gap-[6px]">
+    <label
+      [for]="label.trim()"
+      *ngIf="label !== ''"
+      class="text-[#6B7280] text-[14px] font-[800]"
+      >{{ label }}</label
+    >
+    <div
+      class="relative w-full  {{
+        type && type === 'outline'
+          ? 'border rounded-[8px]'
+          : 'bg-[#F4F5F7] rounded-[10px]'
+      }} px-[18px]  overflow-hidden  {{ className }}"
+      [ngClass]="{
+        'border-[#C7C7C7] capitalize focus:border-none': error === '',
+        ' border-[#ff00005e] bg-[#ff00000c]': error !== ''
+      }"
+    >
+      <select
+        style="width: 100%"
+        [(ngModel)]="selectedValue"
+        (ngModelChange)="selectOption($event)"
+        [disabled]="disabled"
+        class=" w-full outline-none capitalize h-full bg-transparent  placeholder:text-gray-400 {{
+          size === 'medium' ? 'min-h-[52px]' : 'min-h-[40px]'
+        }} {{ !selectedValue ? 'text-gray-400' : '' }} text-[14px] "
+        name=""
+        [id]="label.trim()"
+      >
+        <option
+          [ngValue]="null"
+          style="color: gray"
+          class="text-gray-300 opacity-0 bg-transparent text-[14px]"
+        >
+          {{ placeholder }}
+        </option>
+        <option
+          *ngFor="let option of options"
+          class="text-[#6B7280] text-[14px]"
+          [ngValue]="option.value"
+        >
+          {{ option.name }}
+        </option>
+      </select>
+    </div>
+    <span class="text-[12px] min-h-[14px] font-[400] text-red-500">
+      {{ error }}
+    </span>
+  </div>
+</div>

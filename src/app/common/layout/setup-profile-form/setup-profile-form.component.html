@@ -1,54 +1,56 @@
-<div class="flex flex-col gap-7 w-full">
-  <div class="flex flex-col gap-2">
-    <h1 class="font-heading-h5-bold-desktop text-slate-800 text-[24px] leading-8">
-      Additional Information
-    </h1>
-    <p class="font-paragraph-l-medium text-slate-500 text-[18px] leading-7">
-      Please provide just a bit more information to complete your profile setup.
-    </p>
-  </div>
-
-  <form class="flex flex-col gap-6">
-    <div class="flex flex-col gap-0.5">
-      <app-input [value]="email"
-      [placeholder]="'Enter your email address'" [error]="validators.email" (onChange)="handleChange('email', $event)"
-      ></app-input>
+<div class="flex flex-col gap-7 w-full h-[100%]">
+  <div>
+    <div class="flex flex-col gap-2">
+      <h1 class="font-heading-h5-bold-desktop text-slate-800 text-[24px] leading-8">
+        Additional Information
+      </h1>
+      <p class="font-paragraph-l-medium text-slate-500 text-[18px] leading-7">
+        Please provide just a bit more information to complete your profile setup.
+      </p>
     </div>
 
-    <select formControlName="gender"
-            class="bg-slate-100 rounded-[10px] px-4 py-[18px] h-auto font-paragraph-s-medium text-slate-500 w-full">
-      <option value="" disabled selected>Gender</option>
-      <option value="male">Male</option>
-      <option value="female">Female</option>
-      <option value="other">Other</option>
-    </select>
+    <form class="flex flex-col gap-6">
+      <div class="flex flex-col gap-0.5">
+        <app-input [value]="email"
+        [placeholder]="'Enter your email address'" [error]="validators.email" (onChange)="handleChange('email', $event)"
+        ></app-input>
+      </div>
 
-    <div class="flex flex-col gap-8 p-5 bg-slate-50 rounded-[10px]">
-      <div class="flex flex-col gap-3.5">
-        <h3 class="font-paragraph-s-semibold text-slate-500 uppercase">
-          ACCOUNT TYPE
-        </h3>
+      <select formControlName="gender"
+              class="bg-slate-100 rounded-[10px] px-4 py-[18px] h-auto font-paragraph-s-medium text-slate-500 w-full">
+        <option value="" disabled selected>Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Others</option>
+      </select>
 
-        <div class="flex flex-wrap gap-3.5">
-          <div *ngFor="let account of accountTypes"
-               class="flex-1 min-w-[200px] flex flex-col gap-3.5 pt-[5px] pb-[18px] px-1.5 bg-white rounded-2xl shadow-[0px_2px_40px_-10px_#00000002]">
-            <div class="flex items-start justify-between">
-              <img [src]="account.icon"
-                   class="w-[50px] h-[50px]"
-                   [alt]="account.type" />
-              <input type="radio"
-                     [value]="account.type.toLowerCase().replace(' ', '-')"
-                     formControlName="accountType"
-                     class="w-4 h-4 rounded-full border border-solid border-slate-300" />
-            </div>
-            <div class="flex h-6 items-center px-2.5">
-              <label class="font-paragraph-m-medium text-slate-500">
-                {{account.type}}
-              </label>
+      <div class="flex flex-col gap-8 p-5 bg-slate-50 rounded-[10px]">
+        <div class="flex flex-col gap-3.5">
+          <h3 class="font-paragraph-s-semibold text-slate-500 uppercase">
+            ACCOUNT TYPE
+          </h3>
+
+          <div class="flex flex-col sm:flex-row gap-3.5">
+            <div *ngFor="let account of accountTypes"
+                 class="flex-1 min-w-[200px] flex flex-col gap-3.5 pt-[5px] pb-[18px] px-1.5 bg-white rounded-2xl shadow-[0px_2px_40px_-10px_#00000002]">
+              <div class="flex items-start justify-between">
+                <img [src]="account.icon"
+                     class="w-[50px] h-[50px]"
+                     [alt]="account.type" />
+                <input type="radio"
+                       [value]="account.type.toLowerCase().replace(' ', '-')"
+                       formControlName="accountType"
+                       class="w-[16px] h-[16px] rounded-full border border-solid border-slate-300" />
+              </div>
+              <div class="flex h-6 items-center px-2.5">
+                <label class="font-paragraph-m-medium text-slate-500">
+                  {{account.type}}
+                </label>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>
