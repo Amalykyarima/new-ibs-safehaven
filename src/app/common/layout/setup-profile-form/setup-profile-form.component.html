@@ -1,10 +1,10 @@
-<div class="flex flex-col gap-7 w-full h-[100%]">
+<div *ngIf="additional" class="flex flex-col gap-7 w-full h-[100%]">
   <div>
     <div class="flex flex-col gap-2">
-      <h1 class="font-heading-h5-bold-desktop text-slate-800 text-[24px] leading-8">
+      <h1 class="font-heading-h5-bold-desktop text-[#1E293B] text-[24px] font-[700] leading-8">
         Additional Information
       </h1>
-      <p class="font-paragraph-l-medium text-slate-500 text-[18px] leading-7">
+      <p class="font-paragraph-l-medium text-[#64748B] text-[18px] font-[500] leading-7">
         Please provide just a bit more information to complete your profile setup.
       </p>
     </div>
@@ -22,8 +22,7 @@
         <option value="female">Female</option>
         <option value="other">Others</option>
       </select> -->
-      <app-select [placeholder]="'Gender'" [options]="['Male', 'Female']"
-        (optionSelected)="onCountrySelected($event)">
+      <app-select [placeholder]="'Gender'" [options]="['Male', 'Female']" (optionSelected)="onCountrySelected($event)">
       </app-select>
 
       <div class="flex flex-col gap-8 p-5 bg-slate-50 rounded-[10px]">
@@ -35,14 +34,30 @@
           <div class="flex flex-col sm:flex-row gap-3.5">
             <div *ngFor="let account of accountTypes"
               class="flex-1 min-w-[200px] flex flex-col gap-3.5 pt-[5px] pb-[18px] px-1.5 bg-white rounded-2xl shadow-[0px_2px_40px_-10px_#00000002]">
-              <div class="flex items-start justify-between">
-                <img [src]="account.icon" class="w-[50px] h-[50px]" [alt]="account.type" />
-                <input type="radio" [value]="account.type.toLowerCase().replace(' ', '-')" formControlName="accountType"
-                  class="w-[16px] h-[16px] rounded-full border border-solid border-slate-300" />
+              <div (click)="onClick()" class="flex items-start justify-between">
+                <img [src]="active ? account.active : account.icon" class="w-[50px] h-[50px]" [alt]="account.type" />
+                <span
+                  class="sm:min-w-[16px] min-w-[16px] sm:h-[16px] h-[16px] flex items-center justify-center rounded-full cursor-pointer border border-[#CBD5E1] transition-all duration-200 ease-in"
+                  [ngClass]="{
+                    'bg-[#034EA2] border-[#034EA2]': active,
+                    'bg-white border-[#CBD5E1]': !active
+                  }">
+                  <span
+                    class="sm:min-w-[6px] min-w-[10px] sm:h-[6px] h-[10px] rounded-full transition-all ease-in duration-200"
+                    [ngClass]="{
+                      'opacity-100 bg-white': active,
+                      'opacity-0 bg-transparent': !active
+                    }"></span>
+                </span>
+
+
               </div>
               <div class="flex h-6 items-center px-2.5">
-                <label class="font-paragraph-m-medium text-slate-500">
-                  {{account.type}}
+                <label class="font-paragraph-m-medium" [ngClass]="{
+                  'text-[#1E293B] text-[16px] font-medium': active,
+                  'text-slate-500 text-[16px] font-medium': !active
+                }">
+                  {{ account.type }}
                 </label>
               </div>
             </div>
@@ -67,3 +82,97 @@
     </form>
   </div>
 </div>
+
+<div *ngIf="home" class="flex flex-col gap-7 w-full h-[100%]">
+  <div>
+    <div class="flex flex-col gap-2">
+      <h1 class="font-heading-h5-bold-desktop text-[#1E293B] text-[24px] font-[700] leading-8">
+        Home Address
+      </h1>
+      <p class="font-paragraph-l-medium text-[#64748B] text-[18px] font-[500] leading-7">
+        Please provide an address where you are currently registered
+      </p>
+    </div>
+
+    <form class="flex flex-col gap-6">
+      <div class="flex flex-col gap-0.5">
+        <app-input [value]="address" [placeholder]="'Address Line 1'" [error]="validators.email"
+          (onChange)="handleChange('address', $event)"></app-input>
+      </div>
+
+
+      <app-select [placeholder]="'State'" [options]="['Abia', 'Adamawa', 'Yola', 'Oyo']"
+        (optionSelected)="onCountrySelected($event)">
+      </app-select>
+
+      <app-select [placeholder]="'City'" [options]="['Aba', 'Abakaliki']" (optionSelected)="onCountrySelected($event)">
+      </app-select>
+
+
+      <div class="flex flex-row justify-between">
+        <div class="flex px-0 py-0 justify-center items-center text-[#334155] text-[14px] font-[600]">
+          <img class="back-img" src="../../../../assets/icons/black-back-button.svg" alt="">
+          Back
+        </div>
+
+        <div>
+          <app-small-button (onClick)="saveData()">
+            Continue
+          </app-small-button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="passwordSetup" class="flex flex-col gap-7 w-full h-[100%]">
+  <div>
+    <div class="flex flex-col gap-2">
+      <h1 class="font-heading-h5-bold-desktop text-[#1E293B] text-[24px] font-[700] leading-8">
+        Password Setup
+      </h1>
+      <p class="font-paragraph-l-medium text-[#64748B] text-[18px] font-[500] leading-7">
+        Set a strong password to protect your account. This will be used to protect your account
+      </p>
+    </div>
+
+    <form class="flex flex-col gap-6">
+      <div class="flex flex-col gap-0.5">
+        <app-input [value]="address" [placeholder]="'Password'" [error]="validators.email"
+          (onChange)="handleChange('address', $event)"></app-input>
+      </div>
+
+
+      <div class="flex flex-col gap-0.5">
+        <app-input [value]="address" [placeholder]="'Confirm Password'" [error]="validators.email"
+          (onChange)="handleChange('address', $event)"></app-input>
+      </div>
+
+      <div class="flex flex-row justify-between">
+        <div class="flex px-0 py-0 justify-center items-center text-[#334155] text-[14px] font-[600]">
+          <img class="back-img" src="../../../../assets/icons/black-back-button.svg" alt="">
+          Back
+        </div>
+
+        <div>
+          <app-small-button (onClick)="saveData()">
+            Continue
+          </app-small-button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- <div *ngIf="spinner" class="flex flex-col gap-7 w-full h-[100%]">
+  <div>
+    <span>
+      <div class="w-full h-full flex justify-center items-center">
+        <span class="w-[27px] h-[27px] border border-l-[#fff] rounded-full animate-spin border-[#034EA2]"></span>
+      </div>
+    </span>
+    <div>
+      <p>Setting up your SafeHaven Profile...</p>
+    </div>
+  </div>
+</div> -->

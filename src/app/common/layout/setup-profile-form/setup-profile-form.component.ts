@@ -14,12 +14,21 @@ import { SmallButtonComponent } from "../../utilities/small-button/small-button.
   styleUrl: './setup-profile-form.component.scss'
 })
 export class SetupProfileFormComponent {
+additional: boolean = false;
+home:  boolean = false;
+passwordSetup: boolean = true;
+spinner: boolean = false;
+
+onClick() {
+  this.active = !this.active;
+}
 saveData() {
 throw new Error('Method not implemented.');
 }
 onCountrySelected($event: string) {
 throw new Error('Method not implemented.');
 }
+active: boolean = false;
 
   @Input() form!: FormGroup;
   @Output() validateUser: EventEmitter<any> = new EventEmitter<any>();
@@ -40,27 +49,33 @@ throw new Error('Method not implemented.');
   passwordType = 'password';
   showPassword = false;
   email: string = '';
+  address: string = '';
   validators = {
     email: '',
     password: '',
-    phoneNumber: ''
+    phoneNumber: '',
+    address:'',
   };
+  // icon-active: '../../../../assets/icons/savings-active.svg',
 
   accountTypes = [
     {
       id: 1,
       type: 'Savings Account',
-      icon: '../../../../assets/icons/savings.svg'
+      icon: '../../../../assets/icons/savings.svg',
+      active: '../../../../assets/icons/savings-active.svg',
     },
     {
       id: 2,
       type: 'Current Account',
-      icon: '../../../../assets/icons/current.svg'
+      icon: '../../../../assets/icons/current.svg',
+      active: '../../../../assets/icons/current-active.svg'
+
     }
   ];
 
   handleChange = (
-    name: 'phoneNumber' | 'password' | 'email',
+    name: 'phoneNumber' | 'password' | 'email' | 'address',
     value: string
   ) => {
     console.log('handleChange', value)

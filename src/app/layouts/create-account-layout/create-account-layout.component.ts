@@ -33,6 +33,7 @@ export class CreateAccountLayoutComponent {
     { id: 2, label: 'Home Address', active: false },
     { id: 3, label: 'Password Setup', active: false }
   ];
+spinner: boolean =false;
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
