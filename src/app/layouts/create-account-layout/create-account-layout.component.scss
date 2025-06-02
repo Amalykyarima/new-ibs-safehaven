@@ -17,7 +17,8 @@
   transition: background-color 0.2s ease;
 }
 
-.menu-button:hover, .menu-button.active {
+.menu-button:hover,
+.menu-button.active {
   background-color: #F1F5F9;
 }
 
@@ -36,4 +37,18 @@
   font-size: 14px;
   font-weight: 600;
   color: #64748B;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  gap: 32px;
+
+  .inside {
+    gap: 30px;
+    display: flex;
+    flex-direction: column;
+  }
 }
