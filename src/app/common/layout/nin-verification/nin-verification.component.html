@@ -1,0 +1,20 @@
+<div class="w-full flex flex-col ">
+    <div class="w-full flex flex-col gap-[24px]">
+      <div
+        class="w-full flex flex-col gap-[8px] bg-[#F8FAFC] rounded-[10px] p-[16px]"
+      >
+        <span class="font-[600] text-[14px] text-[#64748B]">VERIFY BY</span>
+        <app-select-box
+          [options]="verificationMethods"
+          (selectedValue)="setVerificationMethod($event)"
+          [activeTab]="'SMS'"
+        />
+      </div>
+      <app-input [placeholder]="'BVN'" />
+      <app-input [placeholder]="'Date of Birth'" />
+      <div class="w-full flex justify-end">
+        <div class="max-w-[144px] w-full"><app-button-filled [text]="'Verify BVN'" [action]="verifyBVN" [loading]="loading" /></div>
+      </div>
+    </div>
+  </div>
+  

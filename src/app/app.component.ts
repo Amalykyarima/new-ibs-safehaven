@@ -3,7 +3,6 @@ import { RouterOutlet } from '@angular/router';
 // for HttpClient import:
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 
-
 // for Router import:
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 

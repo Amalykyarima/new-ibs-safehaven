@@ -1,0 +1,6 @@
+::ng-deep .n-o-c{
+    gap: 14px !important;
+    @media (min-width: 640px) {
+          gap: 20px;
+      }
+}
