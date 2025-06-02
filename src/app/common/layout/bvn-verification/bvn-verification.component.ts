@@ -21,6 +21,7 @@ export class BvnVerificationComponent {
   loading: boolean = false
   activeMethod: string = '';
 
+
   setVerificationMethod(value: string) {
     this.activeMethod = value;
   }
