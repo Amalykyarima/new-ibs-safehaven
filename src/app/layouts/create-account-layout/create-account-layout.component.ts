@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { SetupProfileFormComponent } from "../../common/layout/setup-profile-form/setup-profile-form.component";
+import { ButtonFilledComponent } from "../../common/utilities/button-filled/button-filled.component";
 
 @Component({
   selector: 'app-create-account-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterOutlet, SetupProfileFormComponent],
+  imports: [CommonModule, RouterModule, RouterOutlet, SetupProfileFormComponent, ButtonFilledComponent],
   templateUrl: './create-account-layout.component.html',
   styleUrl: './create-account-layout.component.scss'
 })
@@ -34,6 +35,7 @@ export class CreateAccountLayoutComponent {
     { id: 3, label: 'Password Setup', active: false }
   ];
 spinner: boolean =false;
+loading: boolean = false
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({

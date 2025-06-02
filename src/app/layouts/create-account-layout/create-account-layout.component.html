@@ -18,16 +18,12 @@
         <aside class="w-full md:w-[611px] px-4 sm:px-10 mb-6 md:mb-0 mt-[125px]">
           <h2 class="font-paragraph-l-semibold text-[#1E293B] font-[600] text-[18px] mb-10">SET UP YOUR PROFILE</h2>
           <nav class="flex flex-row md:flex-col w-full md:w-[184px] gap-6">
-            <div *ngFor="let step of navigationSteps"
-                 class="flex items-center gap-2 flex-1 md:flex-none"
-                 [class.justify-end]="!step.active">
-              <img *ngIf="step.active"
-                   class="w-6 h-6"
-                   alt="Arrows diagrams"
-                   src="assets/icons/rounded-right-arrow.svg" />
+            <div *ngFor="let step of navigationSteps" class="flex items-center gap-2 flex-1 md:flex-none"
+              [class.justify-end]="!step.active">
+              <img *ngIf="step.active" class="w-6 h-6" alt="Arrows diagrams"
+                src="assets/icons/rounded-right-arrow.svg" />
               <div class="flex items-center pt-0 pb-0.5 w-full md:w-[152px]">
-                <span [class]="step.active ? 'text-slate-800' : 'text-slate-500'"
-                      class="font-paragraph-m-medium">
+                <span [class]="step.active ? 'text-slate-800' : 'text-slate-500'" class="font-paragraph-m-medium">
                   {{step.label}}
                 </span>
               </div>
@@ -45,11 +41,12 @@
 
 
       <!-- spinner -->
-      <div class="spinner" *ngIf="!spinner">
-        <div class="inside" >
+      <div class="spinner" *ngIf="spinner">
+        <div class="inside">
           <span>
             <div class="w-full h-full flex justify-center items-center">
-              <span class="w-[61px] h-[61px] border-[6px] border-l-[#fff] rounded-full animate-spin  border-[#034EA2]"></span>
+              <span
+                class="w-[61px] h-[61px] border-[6px] border-l-[#E2E8F0] rounded-full animate-spin  border-[#034EA2]"></span>
             </div>
           </span>
           <div>
@@ -57,6 +54,24 @@
           </div>
         </div>
       </div>
+
+      <!-- Account Created Succesfully -->
+
+
+      <div class="m-0 flex items-center justify-center">
+        <div style=" width: 461px;height: 474px;">
+          <img src="../../../assets/images/creation-sucessful.svg" alt="">
+          <span style=" width: 441px;" class="absolute top-[440px] left-1/2 -translate-x-1/2 -translate-y-1/2 text-center px-4">
+            <p class="text-[#1E293B] font-[700] text-[24px]">Account Created Successfully</p>
+            <p class="text-[#64748B] text-[18px] font-[500]">
+              Your Safehaven MFB account has been created. Verify your account to start transacting.
+            </p>
+            <app-button-filled class="m-[32px]" [text]="'Continue'" [loading]="loading"></app-button-filled>
+          </span>
+        </div>
+      </div>
+
+
     </div>
   </main>
 </div>

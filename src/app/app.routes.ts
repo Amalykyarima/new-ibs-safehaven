@@ -13,12 +13,12 @@ export const routes: Routes = [
   //     import('./pages/secured/layout/layout.routes').then(m => m.layoutRoutes),
   // },
   {
-    path: 'identity',
+    path: 'signin',
     loadComponent: () =>
       import('./pages/public/login/login.component').then((m) => m.LoginComponent),
   },
   {
-    path: 'signin',
+    path: 'identity',
     loadComponent: () =>
       import('./pages/public/identity-verification/identity-verification.component').then((m) => m.IdentityVerificationComponent),
   },
