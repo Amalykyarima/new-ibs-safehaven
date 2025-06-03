@@ -1,4 +1,4 @@
-<div class="w-full flex flex-col ">
+<div class="w-full flex flex-col">
   <div class="w-full flex flex-col gap-[24px]">
     <div
       class="w-full flex flex-col gap-[8px] bg-[#F8FAFC] rounded-[10px] p-[16px]"
@@ -7,18 +7,36 @@
       <app-select-box
         [options]="verificationMethods"
         (selectedValue)="setVerificationMethod($event)"
-        [activeTab]="'SMS'"
       />
     </div>
-    <app-input [placeholder]="'BVN'" />
-    <app-input [placeholder]="'Date of Birth'" />
-    <div *ngIf="activeMethod === 'USSD'" class="w-full flex flex-col gap-[24px]">
-        <span class="text-[18px] font-[500] tet-[#6B7280]">Dial <span class="text-[18px] font-[600] tet-[#252F3F]">*345*900#</span> on mobile phone (Could be any number linked to your BVN), An 8 digit code will be sent to that number. Enter it below.</span>
-        <app-otp-input [length]="8"></app-otp-input>
-        <span class="text-[16px] font-[500] text-[#64748B]">I  didn’t receive the OTP, <span class="text-[16px] font-[600] text-[#034EA2]">Resend</span></span>
+    <div *ngIf="activeMethod !== ''" class="w-full flex flex-col gap-[24px]">
+      <app-input [placeholder]="'BVN'" />
+      <app-input [placeholder]="'Date of Birth'" />
     </div>
-    <div class="w-full flex justify-end">
-      <div class="max-w-[144px] w-full"><app-button-filled [text]="'Verify BVN'" [action]="verifyBVN" [loading]="loading" /></div>
+    <div
+      *ngIf="activeMethod === 'USSD'"
+      class="w-full flex flex-col gap-[24px]"
+    >
+      <span class="text-[18px] font-[500] tet-[#6B7280]"
+        >Dial
+        <span class="text-[18px] font-[600] tet-[#252F3F]">*345*900#</span> on
+        mobile phone (Could be any number linked to your BVN), An 8 digit code
+        will be sent to that number. Enter it below.</span
+      >
+      <app-otp-input [length]="8"></app-otp-input>
+      <span class="text-[16px] font-[500] text-[#64748B]"
+        >I didn’t receive the OTP,
+        <span class="text-[16px] font-[600] text-[#034EA2]">Resend</span></span
+      >
+    </div>
+    <div *ngIf="activeMethod !== ''" class="w-full flex justify-end">
+      <div class="max-w-[144px] w-full">
+        <app-button-filled
+          [text]="'Verify BVN'"
+          [action]="verifyBVN"
+          [loading]="loading"
+        />
+      </div>
     </div>
   </div>
 </div>

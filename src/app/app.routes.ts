@@ -20,7 +20,7 @@ export const routes: Routes = [
   {
     path: 'identity',
     loadComponent: () =>
-      import('./pages/public/identity-verification/identity-verification.component').then((m) => m.IdentityVerificationComponent),
+      import('./layouts/identity-verification-layout/identity-verification-layout.component').then((m) => m.IdentityVerificationLayoutComponent),
   },
   {
     path: 'create-account',
