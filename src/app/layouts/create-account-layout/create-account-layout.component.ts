@@ -30,12 +30,26 @@ export class CreateAccountLayoutComponent {
   ];
 
   navigationSteps = [
-    { id: 1, label: 'Additional Information', active: true },
-    { id: 2, label: 'Home Address', active: false },
-    { id: 3, label: 'Password Setup', active: false }
+    { label: 'Additional Information', status: 'completed' },
+    { label: 'Home Address', status: 'active' },
+    { label: 'Password Setup', status: 'default' }
   ];
-spinner: boolean =false;
-loading: boolean = false
+
+  currentFlags = {
+    additional: false,
+    home: true,
+    passwordSetup: false
+  };
+
+
+
+  // navigationSteps = [
+  //   { id: 1, label: 'Additional Information', active: true },
+  //   { id: 2, label: 'Home Address', active: false },
+  //   { id: 3, label: 'Password Setup', active: false }
+  // ];
+  spinner: boolean = false;
+  loading: boolean = false
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -44,4 +58,35 @@ loading: boolean = false
       accountType: ['']
     });
   }
+
+  // activateStep(index: number): void {
+  //   this.navigationSteps = this.navigationSteps.map((step, i) => {
+  //     if (i < index) {
+  //       return { ...step, status: 'completed' };
+  //     } else if (i === index) {
+  //       return { ...step, status: 'active' };
+  //     } else {
+  //       return { ...step, status: 'default' };
+  //     }
+  //   });
+  // }
+  activateStep(index: number): void {
+    this.navigationSteps = this.navigationSteps.map((step, i) => {
+      if (i < index) {
+        return { ...step, status: 'completed' };
+      } else if (i === index) {
+        return { ...step, status: 'active' };
+      } else {
+        return { ...step, status: 'default' };
+      }
+    });
+
+    // Toggle flags based on current step
+    this.currentFlags = {
+      additional: index === 0,
+      home: index === 1,
+      passwordSetup: index === 2
+    };
+  }
+
 }

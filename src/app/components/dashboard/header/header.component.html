@@ -8,7 +8,7 @@
       <div *ngIf="fetchingData" class="w-[150px] h-[30px] mb-0 bg-gray-300 rounded animate-pulse"></div>
 
       <ng-container *ngIf="!this.fetchingData">
-        <div class="logo" routerLink="/dashboard/home">
+        <div class="logo" routerLink="/dashboard/signin">
           <img src="assets/images/logo1.svg" />
         </div>
         <p class="text-big" *ngIf="!this.showBackButton">{{ this.title }}</p>

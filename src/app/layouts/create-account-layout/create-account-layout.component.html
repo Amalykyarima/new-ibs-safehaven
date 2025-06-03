@@ -13,28 +13,44 @@
       </header>
 
       <!-- Main content layout -->
-      <div *ngIf="spinner" class="flex flex-col md:flex-row mt-[-2.5rem] h-[90%]">
+      <div *ngIf="!spinner" class="flex flex-col md:flex-row mt-[-2.5rem] h-[90%]">
         <!-- Sidebar -->
         <aside class="w-full md:w-[611px] px-4 sm:px-10 mb-6 md:mb-0 mt-[125px]">
           <h2 class="font-paragraph-l-semibold text-[#1E293B] font-[600] text-[18px] mb-10">SET UP YOUR PROFILE</h2>
           <nav class="flex flex-row md:flex-col w-full md:w-[184px] gap-6">
-            <div *ngFor="let step of navigationSteps" class="flex items-center gap-2 flex-1 md:flex-none"
-              [class.justify-end]="!step.active">
-              <img *ngIf="step.active" class="w-6 h-6" alt="Arrows diagrams"
-                src="assets/icons/rounded-right-arrow.svg" />
+            <div *ngFor="let step of navigationSteps; let i = index"
+              class="flex items-center gap-2 flex-1 md:flex-none cursor-pointer"
+              [class.justify-end]="step.status !== 'active'" (click)="activateStep(i)">
+              <!-- Icon -->
+              <ng-container [ngSwitch]="step.status">
+                <img *ngSwitchCase="'active'" class="w-6 h-6" alt="Active Arrow"
+                  src="assets/icons/rounded-right-arrow.svg" />
+                <img *ngSwitchCase="'completed'" class="w-6 h-6" alt="Completed Check"
+                  src="assets/icons/blue-completed-check.svg" />
+              </ng-container>
+
+              <!-- Label -->
               <div class="flex items-center pt-0 pb-0.5 w-full md:w-[152px]">
-                <span [class]="step.active ? 'text-slate-800' : 'text-slate-500'" class="font-paragraph-m-medium">
-                  {{step.label}}
+                <span [ngClass]="{
+                  'text-slate-800': step.status === 'active',
+                  'text-[#034EA2]': step.status === 'completed',
+                  'text-slate-500': step.status === 'default'
+                }" class="font-paragraph-m-medium">
+                  {{ step.label }}
                 </span>
               </div>
             </div>
+
+
           </nav>
         </aside>
 
         <!-- Main form area -->
         <div class="w-full md:w-[802px] rounded-[20px] bg-[#fff] px-4 sm:px-0">
           <div class="flex flex-col w-full md:w-[100%]  pt-[100px] pr-[178px] pb-[266px] pl-[178px] mt-8 gap-8">
-            <app-setup-profile-form [form]="form"></app-setup-profile-form>
+            <!-- <app-setup-profile-form [form]="form"></app-setup-profile-form> -->
+            <app-setup-profile-form [form]="form" [additional]="currentFlags.additional" [home]="currentFlags.home"
+              [passwordSetup]="currentFlags.passwordSetup"></app-setup-profile-form>
           </div>
         </div>
       </div>
@@ -56,12 +72,11 @@
       </div>
 
       <!-- Account Created Succesfully -->
-
-
-      <div class="m-0 flex items-center justify-center">
+      <div *ngIf="spinner" class="m-0 flex items-center justify-center">
         <div style=" width: 461px;height: 474px;">
           <img src="../../../assets/images/creation-sucessful.svg" alt="">
-          <span style=" width: 441px;" class="absolute top-[440px] left-1/2 -translate-x-1/2 -translate-y-1/2 text-center px-4">
+          <span style=" width: 441px;"
+            class="absolute top-[440px] left-1/2 -translate-x-1/2 -translate-y-1/2 text-center px-4">
             <p class="text-[#1E293B] font-[700] text-[24px]">Account Created Successfully</p>
             <p class="text-[#64748B] text-[18px] font-[500]">
               Your Safehaven MFB account has been created. Verify your account to start transacting.

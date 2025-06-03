@@ -5,19 +5,29 @@ import { InputComponent } from "../../utilities/input/input.component";
 import { Signin } from '../../../resources/models/signin';
 import { SelectComponent } from "../../utilities/select/select.component";
 import { SmallButtonComponent } from "../../utilities/small-button/small-button.component";
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-setup-profile-form',
   standalone: true,
-  imports: [CommonModule, InputComponent, SelectComponent, SmallButtonComponent],
+  imports: [CommonModule, InputComponent, SelectComponent, SmallButtonComponent, RouterModule],
   templateUrl: './setup-profile-form.component.html',
   styleUrl: './setup-profile-form.component.scss'
 })
 export class SetupProfileFormComponent {
-additional: boolean = false;
-home:  boolean = false;
-passwordSetup: boolean = true;
+// additional: boolean = false;
+// home:  boolean = true;
+// passwordSetup: boolean = false;
+@Input() additional: boolean = false;
+@Input() home: boolean = true;
+@Input() passwordSetup: boolean = false;
+
 spinner: boolean = false;
+
+constructor(
+  private router: Router,
+) {
+}
 
 onClick() {
   this.active = !this.active;
@@ -73,6 +83,24 @@ active: boolean = false;
 
     }
   ];
+
+  onBack(): void {
+    if (this.additional) {
+      // Case: First screen — go to home page
+      this.router.navigate(['/home']); // adjust this path as needed
+    } else if (this.home) {
+      // Case: Second screen — go back to 'additional'
+      this.additional = true;
+      this.home = false;
+      this.passwordSetup = false;
+    } else if (this.passwordSetup) {
+      // Case: Third screen — go back to 'home'
+      this.additional = false;
+      this.home = true;
+      this.passwordSetup = false;
+    }
+  }
+
 
   handleChange = (
     name: 'phoneNumber' | 'password' | 'email' | 'address',
