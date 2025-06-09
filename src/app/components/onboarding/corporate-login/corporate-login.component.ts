@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { InputComponent } from '../../utilities/input/input.component';
+import { InputComponent } from '../../../common/utilities/input/input.component';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../resources/services/auth.service';
 import { Signin } from '../../../resources/models/signin';

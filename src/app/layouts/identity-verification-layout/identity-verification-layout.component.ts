@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { TabComponent } from '../../common/utilities/tab/tab.component';
 import { CommonModule } from '@angular/common';
-import { BvnVerificationComponent } from '../../common/layout/bvn-verification/bvn-verification.component';
-import { NinVerificationComponent } from '../../common/layout/nin-verification/nin-verification.component';
+import { BvnVerificationComponent } from '../../components/onboarding/bvn-verification/bvn-verification.component';
+import { NinVerificationComponent } from '../../components/onboarding/nin-verification/nin-verification.component';
 
 @Component({
   selector: 'app-identity-verification-layout',

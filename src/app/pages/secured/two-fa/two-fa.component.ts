@@ -67,8 +67,8 @@ export class TwoFaComponent {
   ussdString = '';
 
   constructor(
-    // public store: Store<State>,
-    private store: Store,
+    public store: Store<State>,
+    // private store: Store,
     private router: Router,
     private authService: AuthService,
     // private notification: NzNotificationService,
@@ -91,7 +91,10 @@ export class TwoFaComponent {
   }
 
   getTwoFactorActionType() {
+    console.log('getTwoFactorActionType',)
     this.store.select(selectTwoFAAction).subscribe((value: any) => {
+    console.log('getTwoFactorActionType value', value,)
+
       this.twoFactorAction = value;
       console.log('this.twoFactorAction', this.twoFactorAction)
       if (!['signup', 'signin'].includes(this.twoFactorAction)) {
@@ -184,6 +187,7 @@ export class TwoFaComponent {
 
 
   onPINChange(event: any) {
+    console.log('onPINChange', event, this.twoFactorAction)
     this.pin = event;
     if (event.length == 4) {
       this.twoFactorAction == 'signin' ? this.verify('PIN') : this.enrol('PIN');

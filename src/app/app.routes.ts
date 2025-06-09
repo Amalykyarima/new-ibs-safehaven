@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { provideState } from '@ngrx/store';
+import { OnboardingReducer, onboardingFeatureKey } from './resources/store/onboarding/onboarding.reducer';
 
 export const routes: Routes = [
   {
@@ -36,6 +38,9 @@ export const routes: Routes = [
     path: 'two-factor-authentication',
     loadComponent: () =>
       import('./pages/secured/two-fa/two-fa.component').then((m) => m.TwoFaComponent),
+      providers: [
+        provideState(onboardingFeatureKey, OnboardingReducer)
+      ]
   },
   {
     path: 'layout',

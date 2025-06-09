@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { OnboardingLayoutComponent } from "../../../layouts/onboarding-layout/onboarding-layout.component";
 import { TabComponent } from "../../../common/utilities/tab/tab.component";
-import { IndividualLoginComponent } from "../../../common/layout/individual-login/individual-login.component";
-import { CorporateLoginComponent } from "../../../common/layout/corporate-login/corporate-login.component";
+import { IndividualLoginComponent } from "../../../components/onboarding/individual-login/individual-login.component";
+import { CorporateLoginComponent } from "../../../components/onboarding/corporate-login/corporate-login.component";
 import { CommonModule } from '@angular/common';
 import { OtpComponent } from "../../../common/utilities/otp/otp.component";
 import { PinComponent } from "../../../common/utilities/pin/pin.component";
 import { RouterModule } from '@angular/router';
-import { TotpRegisterComponent } from "../../../common/layout/totp-register/totp-register.component";
+import { TotpRegisterComponent } from "../../../components/onboarding/totp-register/totp-register.component";
 
 @Component({
   selector: 'app-create-account',

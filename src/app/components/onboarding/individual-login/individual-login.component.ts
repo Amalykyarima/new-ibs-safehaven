@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { InputComponent } from "../../utilities/input/input.component";
+import { InputComponent } from "../../../common/utilities/input/input.component";
 import { AuthService } from '../../../resources/services/auth.service';
 import { ResetPassword, Signin } from '../../../resources/models/signin';
 import { Router, RouterModule } from '@angular/router';

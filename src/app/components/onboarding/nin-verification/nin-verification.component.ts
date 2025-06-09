@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { SelectBoxComponent } from "../../utilities/select-box/select-box.component";
-import { InputComponent } from "../../utilities/input/input.component";
-import { ButtonFilledComponent } from "../../utilities/button-filled/button-filled.component";
+import { SelectBoxComponent } from "../../../common/utilities/select-box/select-box.component";
+import { InputComponent } from "../../../common/utilities/input/input.component";
+import { ButtonFilledComponent } from "../../../common/utilities/button-filled/button-filled.component";
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -24,6 +24,6 @@ export class NinVerificationComponent {
     this.activeMethod = value;
   }
   verifyNIN() {
-    
+
   }
 }

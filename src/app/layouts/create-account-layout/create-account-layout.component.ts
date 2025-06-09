@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RouterModule, RouterOutlet } from '@angular/router';
-import { SetupProfileFormComponent } from "../../common/layout/setup-profile-form/setup-profile-form.component";
+import { SetupProfileFormComponent } from "../../components/onboarding/setup-profile-form/setup-profile-form.component";
 import { ButtonFilledComponent } from "../../common/utilities/button-filled/button-filled.component";
 
 @Component({
