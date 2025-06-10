@@ -35,20 +35,6 @@
           <div class="gap-4 w-full flex flex-col items-start">
             <div class="flex flex-col items-start gap-2 w-full">
               <!-- Menu Items -->
-              <!-- <button class="flex h-10 items-center justify-start gap-2 w-full rounded-lg hover:bg-gray-100">
-                <img class="w-6 h-6" src="../../../../assets/icons/Home, House, Line.svg" alt="Home" />
-                <span class="text-sm font-semibold text-slate-500">Home</span>
-              </button>
-
-              <button class="flex h-10 items-center justify-start gap-2 w-full rounded-lg hover:bg-gray-100">
-                <img class="w-6 h-6" src="../../../../assets/icons/coins.svg" alt="Accounts" />
-                <span class="text-sm font-semibold text-slate-500">Accounts</span>
-              </button>
-
-              <button class="flex h-10 items-center justify-start gap-2 w-full rounded-lg hover:bg-gray-100">
-                <img class="w-6 h-6" src="../../../../assets/icons/Arrow, Forward.svg" alt="Transfer" />
-                <span class="text-sm font-semibold text-slate-500">Transfer</span>
-              </button> -->
 
               <!-- Home -->
               <button (click)="setActive('Home')" [ngClass]="{
@@ -93,15 +79,6 @@
                 </div>
               </button>
 
-              <!-- <button (click)="toggleTopUpOptions()"
-                class="flex h-10 items-center justify-between w-full rounded-lg hover:bg-gray-100">
-                <div class="flex items-center gap-2">
-
-                  <img class="w-6 h-6" src="../../../../assets/icons/newtopup.svg" alt="Top Up" />
-                  <span class="text-sm font-semibold text-slate-500">Top Up</span>
-                </div>
-                <img src="../../../../assets/icons/newdropdown.svg" alt="Dropdown" class="w-6 h-6">
-              </button> -->
               <button (click)="setActive('Top Up')" [ngClass]="{
                   'bg-[#EBF5FF] text-[#034EA2]': activeItem === 'Top Up',
                   'hover:bg-gray-100 text-slate-500': activeItem !== 'Top Up'
@@ -118,7 +95,8 @@
 
               <!-- Section under button, offset and with vertical line -->
               <div *ngIf="showTopUpOptions" class="ml-[20px] mt-1 w-[90%] relative">
-                <app-dropdown [items]="topUpItems" [activeDropdownItem]="activeItem === 'Top Up' ? 'Buy Airtime' : ''"></app-dropdown>
+                <app-dropdown [items]="topUpItems"
+                  [activeDropdownItem]="activeItem === 'Top Up' ? 'Buy Airtime' : ''"></app-dropdown>
               </div>
 
 
@@ -144,7 +122,8 @@
               </button>
               <!-- Section under button, offset and with vertical line -->
               <div *ngIf="showFinancialOptions" class="ml-[20px] mt-1 w-[90%] relative">
-                <app-dropdown [items]="financialItems" [activeDropdownItem]="activeItem === 'Financial' ? 'Cards' : ''"></app-dropdown>
+                <app-dropdown [items]="financialItems"
+                  [activeDropdownItem]="activeItem === 'Financial' ? 'Cards' : ''"></app-dropdown>
               </div>
 
 
@@ -170,7 +149,8 @@
               </button>
               <!-- Section under button, offset and with vertical line -->
               <div *ngIf="showRewardOptions" class="ml-[20px] mt-1 w-[90%] relative">
-                <app-dropdown [items]="rewardItems" [activeDropdownItem]="activeItem === 'Reward' ? 'Daily Check-ins' : ''"></app-dropdown>
+                <app-dropdown [items]="rewardItems"
+                  [activeDropdownItem]="activeItem === 'Reward' ? 'Daily Check-ins' : ''"></app-dropdown>
               </div>
 
 
@@ -203,17 +183,6 @@
               <!-- test -->
               <div class="menu-container">
                 <!-- Financial Tool -->
-                <!-- <button
-                  class="menu-button"
-                  (click)="toggleDropdown('financial', $event)"
-                  [class.active]="activeDropdown === 'financial'"
-                >
-                  <div class="button-content">
-                    <img src="assets/icons/Delivery, Shipment.svg" alt="Financial Tool" class="icon">
-                    <span class="button-text">Financial Tool</span>
-                  </div>
-                  <img src="assets/icons/newdropdown.svg" alt="Dropdown" class="icon">
-                </button> -->
 
                 <!-- Repeat for other buttons -->
 

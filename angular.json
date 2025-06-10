@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "new-ibs-safehaven": {
+    "new-ibs-dashboard2": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/new-ibs-safehaven",
+            "outputPath": "dist/new-ibs-dashboard2",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -26,24 +26,15 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets",
-              "src/.well-known",
               {
                 "glob": "**/*",
-                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
-                "output": "/assets/"
+                "input": "public"
               }
             ],
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
-            "server": "src/main.server.ts",
-            "prerender": true,
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -73,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "new-ibs-safehaven:build:production"
+              "buildTarget": "new-ibs-dashboard2:build:production"
             },
             "development": {
-              "buildTarget": "new-ibs-safehaven:build:development"
+              "buildTarget": "new-ibs-dashboard2:build:development"
             }
           },
           "defaultConfiguration": "development"
