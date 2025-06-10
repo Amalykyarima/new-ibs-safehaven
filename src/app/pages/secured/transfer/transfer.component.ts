@@ -1,15 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { LayoutComponent } from "../layout/layout.component";
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-transfer',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  templateUrl: './transfer.component.html',
+  styleUrl: './transfer.component.scss'
 })
-export class DashboardComponent {
+export class TransferComponent {
 
 }

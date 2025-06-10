@@ -13,6 +13,8 @@ import { Observable } from 'rxjs';
 import { SettingsService } from './settings.service';
 import { EncryptStorage } from 'encrypt-storage';
 import { environment } from '../../../environments/environment';
+import { firstValueFrom } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root',
@@ -108,10 +110,21 @@ export class GeneralService {
     }
   }
 
+  // async getUserFromAPI() {
+  //   let response = await this.authService.authorize().toPromise();
+  //   return response;
+  // }
+
   async getUserFromAPI() {
-    let response = await this.authService.authorize().toPromise();
-    return response;
+    try {
+      const response = await firstValueFrom(this.authService.authorize());
+      return response;
+    } catch (error) {
+      console.error('Authorization failed:', error);
+      throw error;
+    }
   }
+
 
   async getUserFromStore() {
     return await this.generalStore
@@ -151,7 +164,7 @@ export class GeneralService {
         localStorage.setItem('@shmfb?chat', window.btoa(user.client.firstName));
       else
         localStorage.setItem('@shmfb?chat', window.btoa(user.client.fullName));
-      // this.setStorageData(storageData);
+      this.setStorageData(storageData);
     } catch (e) {
       let storageData = {
         clientId: user.client._id,
@@ -162,12 +175,13 @@ export class GeneralService {
         localStorage.setItem('@shmfb?chat', window.btoa(user.client.firstName));
       else
         localStorage.setItem('@shmfb?chat', window.btoa(user.client.fullName));
-      // this.setStorageData(storageData);
+      this.setStorageData(storageData);
     }
   }
 
   async refreshUserData() {
     let res: any = await this.getUserFromAPI();
+    console.log('res', res)
     this.saveUser(res.data);
     return res.data;
   }
@@ -185,15 +199,15 @@ export class GeneralService {
     return true;
   }
 
-  // setStorageData(data: any) {
-  //   this.encryptStorage.setItem('SHMFB', JSON.stringify(data));
-  // }
+  setStorageData(data: any) {
+    this.encryptStorage.setItem('SHMFB', JSON.stringify(data));
+  }
 
-  // getStorageData(): any {
-  //   return this.encryptStorage.getItem('SHMFB')
-  //     ? this.encryptStorage.getItem('SHMFB')
-  //     : {};
-  // }
+  getStorageData(): any {
+    return this.encryptStorage.getItem('SHMFB')
+      ? this.encryptStorage.getItem('SHMFB')
+      : {};
+  }
   // getStates = async () => {
   //   return await  this.apiService.getStates().toPromise();
   // };

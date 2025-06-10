@@ -43,15 +43,18 @@ export const routes: Routes = [
       ]
   },
   {
-    path: 'layout',
-    loadComponent: () =>
-    import('./pages/secured/layout/layout.component').then((m) => m.LayoutComponent),
-  },
-  {
     path: 'dashboard',
     loadComponent: () =>
-    import('./pages/secured/dashboard/dashboard.component').then((m) => m.DashboardComponent),
+    import('./pages/secured/layout/layout.component').then((m) => m.LayoutComponent),
+    providers: [
+      provideState(onboardingFeatureKey, OnboardingReducer)
+    ]
   },
+  // {
+  //   path: 'dashboard',
+  //   loadComponent: () =>
+  //   import('./pages/secured/dashboard/dashboard.component').then((m) => m.DashboardComponent),
+  // },
   {
     path: 'setup-account',
     loadComponent: () =>
