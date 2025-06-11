@@ -7,6 +7,7 @@
       <app-select-box
         [options]="verificationMethods"
         (selectedValue)="setVerificationMethod($event)"
+        [activeTab]="verificationMethods[0].name"
       />
     </div>
     <div *ngIf="activeMethod !== ''" class="w-full flex flex-col gap-[24px]">
@@ -40,3 +41,4 @@
     </div>
   </div>
 </div>
+
