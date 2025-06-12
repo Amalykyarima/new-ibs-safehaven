@@ -14,13 +14,11 @@ import { IndividualLoginComponent } from "../../../components/onboarding/individ
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-
 export class LoginComponent {
   constructor(
     private authService: AuthService,
     private routes: ActivatedRoute
   ) {}
-
   ngOnInit(): void {
     this.path = location.pathname.slice(1);
     // //(this.path);

@@ -151,6 +151,7 @@ export class GeneralService {
   }
 
   saveUser(user: any) {
+    console.log('Dispatching saveCurrentUser with:', user);
     try {
       this.generalStore.dispatch(
         generalActions.saveCurrentUser({ currentUser: user })
@@ -159,6 +160,8 @@ export class GeneralService {
         clientId: user.client._id,
         jwtToken: user.jwtToken,
       };
+    console.log('storageData:', storageData);
+
 
       if (user.client.type === 'Individual')
         localStorage.setItem('@shmfb?chat', window.btoa(user.client.firstName));
@@ -205,6 +208,7 @@ export class GeneralService {
   }
 
   getStorageData(): any {
+    console.log('getstorage')
     return this.encryptStorage.getItem('SHMFB')
       ? this.encryptStorage.getItem('SHMFB')
       : {};

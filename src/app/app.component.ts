@@ -1,17 +1,23 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ToastModule } from 'primeng/toast';
+// for HttpClient import:
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 
+// for Router import:
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+
+// for Core import:
+import { LoadingBarModule } from '@ngx-loading-bar/core';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ToastModule],
+  imports: [RouterOutlet,  LoadingBarHttpClientModule,
+    LoadingBarRouterModule,
+    LoadingBarModule,],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
-
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'safehaven';
+  title = 'new-ibs-safehaven';
 }

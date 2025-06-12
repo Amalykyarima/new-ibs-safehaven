@@ -113,6 +113,21 @@ export class LayoutComponent {
     }
   ];
 
+  ngOnInit(): void {
+    this.getUserData();
+    this.totalTransfersRequiringApproval = 0;
+    // this.getTransfers();
+    this.setTitle(this.location.path());
+    this.location.onUrlChange((url) => {
+      this.refreshUserData();
+      // this.getTransfers();
+      this.setTitle(url);
+      if (window.innerWidth <= 768) {
+        this.openSideBar = false;
+      }
+    });
+  }
+
 
 
   toggleTopUpOptions() {
@@ -230,21 +245,6 @@ export class LayoutComponent {
     }
   }
 
-
-  ngOnInit(): void {
-    this.getUserData();
-    this.totalTransfersRequiringApproval = 0;
-    // this.getTransfers();
-    this.setTitle(this.location.path());
-    this.location.onUrlChange((url) => {
-      this.refreshUserData();
-      // this.getTransfers();
-      this.setTitle(url);
-      if (window.innerWidth <= 768) {
-        this.openSideBar = false;
-      }
-    });
-  }
 
   // underDevelopment() {
   //   this.message.create(

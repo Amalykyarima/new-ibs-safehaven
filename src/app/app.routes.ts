@@ -19,7 +19,9 @@ export const routes: Routes = [
     path: 'signin',
     loadComponent: () =>
       import('./pages/public/login/login.component').then((m) => m.LoginComponent),
-
+      providers: [
+        provideState(onboardingFeatureKey, OnboardingReducer)
+      ],
   },
   {
     path: 'identity',

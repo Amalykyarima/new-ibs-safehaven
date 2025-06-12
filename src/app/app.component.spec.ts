@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'sudo' title`, () => {
+  it(`should have the 'new-ibs-safehaven' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('sudo');
+    expect(app.title).toEqual('new-ibs-safehaven');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, sudo');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, new-ibs-safehaven');
   });
 });
