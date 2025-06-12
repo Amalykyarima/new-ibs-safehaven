@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "new-ibs-dashboard2": {
+    "safhavenIbs": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/new-ibs-dashboard2",
+            "outputPath": "dist/safhaven-ibs",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -26,9 +26,12 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
+              "src/favicon.ico",
+              "src/assets",
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
               }
             ],
             "styles": [
@@ -64,10 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "new-ibs-dashboard2:build:production"
+              "buildTarget": "safhavenIbs:build:production"
             },
             "development": {
-              "buildTarget": "new-ibs-dashboard2:build:development"
+              "buildTarget": "safhavenIbs:build:development"
             }
           },
           "defaultConfiguration": "development"

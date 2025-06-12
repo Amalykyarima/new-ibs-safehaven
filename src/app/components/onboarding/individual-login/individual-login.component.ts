@@ -6,7 +6,8 @@ import { ResetPassword, Signin } from '../../../resources/models/signin';
 import { Router, RouterModule } from '@angular/router';
 import * as onboardingActions from '../../../resources/store/onboarding/onboarding.actions';
 import { Store, StoreModule } from '@ngrx/store';
-// import { State } from '../../../resources/store/onboarding/onboarding.reducer';
+import { State } from '../../../resources/store/onboarding/onboarding.reducer';
+import { GeneralService } from '../../../resources/services/general.service';
 // import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 
@@ -21,9 +22,11 @@ export class IndividualLoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private store: Store
-    // private store: Store<State>,
+    // private store: Store
+    private store: Store<State>,
     // private notification: NzNotificationService,
+    private generalService: GeneralService,
+
 
 
   ) {
@@ -195,7 +198,7 @@ export class IndividualLoginComponent {
             //   { nzClass: 'notification1' }
             // );
 
-            // this.validateUser.emit({ ...this.user, type: 'login' });
+            this.validateUser.emit({ ...this.user, type: 'login' });
             setTimeout(() => {
               this.router.navigate(['/two-factor-authentication']);
             }, 500);
@@ -218,7 +221,7 @@ export class IndividualLoginComponent {
               this.store.dispatch(
                 onboardingActions.setResetAction({ resetType: 'signin' })
               );
-              // this.validateUser.emit({ ...this.user, type: 'reset' });
+              this.validateUser.emit({ ...this.user, type: 'reset' });
               setTimeout(() => {
                 this.router.navigate(['/reset-password-with-otp']);
               }, 500);

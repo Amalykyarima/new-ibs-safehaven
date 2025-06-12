@@ -12,8 +12,6 @@ import { DropdownComponent } from "../../../common/utilities/dropdown/dropdown.c
 import { Location } from '@angular/common';
 
 
-
-
 @Component({
   selector: 'app-layout',
   standalone: true,
@@ -114,6 +112,21 @@ export class LayoutComponent {
       expanded: false
     }
   ];
+
+  ngOnInit(): void {
+    this.getUserData();
+    this.totalTransfersRequiringApproval = 0;
+    // this.getTransfers();
+    this.setTitle(this.location.path());
+    this.location.onUrlChange((url) => {
+      this.refreshUserData();
+      // this.getTransfers();
+      this.setTitle(url);
+      if (window.innerWidth <= 768) {
+        this.openSideBar = false;
+      }
+    });
+  }
 
 
 
@@ -232,21 +245,6 @@ export class LayoutComponent {
     }
   }
 
-
-  ngOnInit(): void {
-    this.getUserData();
-    this.totalTransfersRequiringApproval = 0;
-    // this.getTransfers();
-    this.setTitle(this.location.path());
-    this.location.onUrlChange((url) => {
-      this.refreshUserData();
-      // this.getTransfers();
-      this.setTitle(url);
-      if (window.innerWidth <= 768) {
-        this.openSideBar = false;
-      }
-    });
-  }
 
   // underDevelopment() {
   //   this.message.create(
