@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { InputComponent } from "../../../common/utilities/input/input.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [InputComponent],
+  imports: [CommonModule,InputComponent],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss'
 })

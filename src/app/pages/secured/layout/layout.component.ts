@@ -12,8 +12,6 @@ import { DropdownComponent } from "../../../common/utilities/dropdown/dropdown.c
 import { Location } from '@angular/common';
 
 
-
-
 @Component({
   selector: 'app-layout',
   standalone: true,

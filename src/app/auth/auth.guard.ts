@@ -7,7 +7,8 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { GeneralService } from '../services/general.service';
+import { GeneralService } from '../resources/services/general.service';
+// import { GeneralService } from '../services/general.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,11 +24,10 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    let data = this.generalService.getStorageData();
-    if (data.clientId && data.jwtToken) {
+    let jwtToken = this.generalService.getToken();
+    if (jwtToken) {
       return true;
     }
-    if (localStorage['sign']) return true;
     this.generalService.logoutUser();
     return false;
   }

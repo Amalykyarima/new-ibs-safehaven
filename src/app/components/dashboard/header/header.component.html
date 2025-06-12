@@ -9,7 +9,7 @@
 
       <ng-container *ngIf="!this.fetchingData">
         <div class="logo" routerLink="/dashboard/signin">
-          <img src="assets/images/logo1.svg" />
+          <img src="../../../../assets/images/SafeHaven.png" />
         </div>
         <p class="text-big" *ngIf="!this.showBackButton">{{ this.title }}</p>
         <div class="nav-big" *ngIf="this.showBackButton && this.backUrl == ''" (click)="this.generalService.goBack()">

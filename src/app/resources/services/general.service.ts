@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { ApiService } from './api.service';
-import { LoadingBarService } from '@ngx-loading-bar/core';
+// import { LoadingBarService } from '@ngx-loading-bar/core';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import * as generalActions from '../store/general/general.actions';
@@ -27,12 +27,12 @@ export class GeneralService {
     private location: Location,
     private store: Store,
     public apiService: ApiService,
-    private loadingBar: LoadingBarService,
+    // private loadingBar: LoadingBarService,
     private router: Router,
     private authService: AuthService,
     private settingsService: SettingsService,
     private generalStore: Store<generalReducer.State>
-  ) {}
+  ) { }
 
   encryptStorage = new EncryptStorage(this.environment.privateKey, {
     prefix: '@shmfb',
@@ -94,7 +94,7 @@ export class GeneralService {
       for (let i = 0; i < otps.length; i++) {
         document
           .getElementsByClassName('otp-input')
-          [i].setAttribute('inputmode', 'numeric');
+        [i].setAttribute('inputmode', 'numeric');
       }
     }, 500);
   }
@@ -179,6 +179,7 @@ export class GeneralService {
     }
   }
 
+
   async refreshUserData() {
     let res: any = await this.getUserFromAPI();
     console.log('res', res)
@@ -208,6 +209,22 @@ export class GeneralService {
       ? this.encryptStorage.getItem('SHMFB')
       : {};
   }
+
+
+  setToken(jwtToken: string) {
+    this.encryptStorage.setItem('token', jwtToken);
+  }
+  setUser(user: any) {
+    this.encryptStorage.setItem('user', JSON.stringify(user));
+  }
+
+  getToken(): string {
+    return this.encryptStorage.getItem('token')!;
+  }
+  // getUser = () => {
+  //   return JSON.parse(this.encryptStorage.getItem('user'));
+  // };
+
   // getStates = async () => {
   //   return await  this.apiService.getStates().toPromise();
   // };

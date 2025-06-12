@@ -26,9 +26,9 @@ import { LoaderService } from '../services/loader.service';
 //     let secureReq;
 //     // Don't add header to external APIs
 //     if (
-      // !request.url.includes('safehavenmfb.com') &&
-      // !request.url.includes('localhost') &&
-      // !request.url.includes('-feature-')
+// !request.url.includes('safehavenmfb.com') &&
+// !request.url.includes('localhost') &&
+// !request.url.includes('-feature-')
 //     ) {
 //       secureReq = request.clone();
 //     } else {
@@ -71,17 +71,23 @@ import { LoaderService } from '../services/loader.service';
 //   }
 // }
 
-console.log('')
+console.log('111111111111111')
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
+
   let generalService = inject(GeneralService);
   let loaderService = inject(LoaderService);
-  loaderService.show();
-  const router = inject(Router);
-  // const token = generalService.getStorageData() ?? '';
-  let data = generalService.getStorageData();
-  let secureReq;
 
-  console.log('token', data)
+  loaderService.show();
+
+  const router = inject(Router);
+
+  console.log('222222222222')
+
+  const data = generalService.getStorageData() ?? '';
+  // let data = generalService.getStorageData('SHMFB');
+  console.log('auth data', data)
+
+  let secureReq;
 
   if (
     !req.url.includes('safehavenmfb.com') &&
@@ -89,11 +95,12 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     !req.url.includes('-feature-')
   ) {
     secureReq = req.clone();
-  } else if (data && data.jwtToken&&data.clientId ) {
+  } else if (data && data.jwtToken && data.clientId) {
+    console.log('data && data.jwtToken && data.clientId', data && data.jwtToken && data.clientId)
     const authReq = req.clone({
       setHeaders: {
+        Authorization: `Bearer ${data.jwtToken}`,
         ClientID: data.clientId,
-            Authorization: data.jwtToken,
         // 'ngrok-skip-browser-warning': 'true', // Skip ngrok warning
       },
       //   headers: req.headers.set('Authorization', token),

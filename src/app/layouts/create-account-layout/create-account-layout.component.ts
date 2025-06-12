@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { RouterModule,  } from '@angular/router';
 import { SetupProfileFormComponent } from "../../components/onboarding/setup-profile-form/setup-profile-form.component";
 import { ButtonFilledComponent } from "../../common/utilities/button-filled/button-filled.component";
 
 @Component({
   selector: 'app-create-account-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterOutlet, SetupProfileFormComponent, ButtonFilledComponent],
+  imports: [CommonModule, RouterModule, SetupProfileFormComponent, ButtonFilledComponent],
   templateUrl: './create-account-layout.component.html',
   styleUrl: './create-account-layout.component.scss'
 })
