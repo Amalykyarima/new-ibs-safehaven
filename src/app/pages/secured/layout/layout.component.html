@@ -9,7 +9,7 @@
       </button>
       <div class="font-semibold text-sm">
         <span class="text-slate-500">Hi, </span>
-        <span class="text-slate-800">Abasifreke</span>
+        <span class="text-slate-800">{{this.currentUser?.user?.firstName}}</span>
       </div>
     </div>
     <div class="flex items-center gap-2">
@@ -220,7 +220,16 @@
   <!-- Main Content -->
   <div class="flex-1 md:ml-[260px]">
     <!-- Desktop Header (hidden on mobile) -->
-    <app-header></app-header>
+    <app-header
+      [title]="this.headerTitle"
+      [(openSideBar)]="this.openSideBar"
+      [fetchingData]="this.fetchingData"
+      [currentUser]="this.currentUser"
+      [showBackButton]="this.showHeaderBackButton"
+      [backUrl]="this.backUrl"
+      [urlQuery]="this.urlQuery"
+    ></app-header>
+
 
     <!-- Main Content Area -->
     <main

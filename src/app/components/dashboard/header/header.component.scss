@@ -1,0 +1,14 @@
+.small-icons {
+  width: 16px;
+  height: 16px;
+}
+
+/* Hover effect for menu items */
+[nz-menu-item]:hover {
+  background-color: #f5f5f5;
+}
+
+/* Make sure dropdown menu has proper z-index */
+.nz-dropdown-menu {
+  z-index: 1050;
+}

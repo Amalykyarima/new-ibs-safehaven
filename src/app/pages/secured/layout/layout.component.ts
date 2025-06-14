@@ -15,7 +15,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterOutlet, DropdownComponent],
+  imports: [CommonModule, RouterModule, RouterOutlet, DropdownComponent, HeaderComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss'
 })
