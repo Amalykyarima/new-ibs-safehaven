@@ -22,7 +22,7 @@ import {
           modalView: type !== '' ? !state.modalView : false,
           modalType: type,
           modal,
-          sideDrawerView: false, // close drawer if modal is opened
+          sideDrawerView: false,
         }));
       },
       closeModal() {

@@ -5,12 +5,11 @@ import { ButtonFilledComponent } from "../../utilities/button-filled/button-fill
 import { OtpInputComponent } from "../../utilities/otp-input/otp-input.component";
 import { CommonModule } from '@angular/common';
 import { DisplayStore } from '../../../stores/display.store';
-import { ModalComponent } from '../../utilities/modal/modal.component';
 
 @Component({
   selector: 'app-bvn-verification',
   standalone: true,
-  imports: [SelectBoxComponent, InputComponent, ButtonFilledComponent, OtpInputComponent, CommonModule, ModalComponent],
+  imports: [SelectBoxComponent, InputComponent, ButtonFilledComponent, OtpInputComponent, CommonModule],
   templateUrl: './bvn-verification.component.html',
   styleUrl: './bvn-verification.component.scss',
 })

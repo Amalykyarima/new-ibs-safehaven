@@ -1,0 +1,90 @@
+<div class="w-full max-w-[446px] pb-[50px] overflow-y-auto">
+    <ng-container [ngSwitch]="step">
+      <div *ngSwitchCase="0">
+        <div *ngIf="searchCompany" class="w-full flex flex-col max-w-[466px] gap-[28px]">
+           <div class="w-full flex flex-col gap-[8px]">
+            <span class="font-[700] text-[24px] text-[#1E293B]">Let’s find your company</span>
+            <span class="font-[500] text-[18px] text-[#64748B]">Search for your company to continue</span>
+           </div>
+           <div class="w-full flex flex-col gap-[32px]">
+           <app-search />
+            <span class="font-[500] text-[14px] text-[#64748B]">I didn’t find my company name, <span (click)="searchCompanyToggle()" class="font-[600] cursor-pointer text-[#034EA2] text-[14px]">Click Here</span></span>
+           </div>
+        </div>
+        <div *ngIf="!searchCompany" class="w-full flex flex-col gap-[28px]">
+            <div class="w-full flex flex-col gap-[8px]">
+                <span class="font-[700] text-[24px] text-[#1E293B]">Company Details</span>
+                <span class="font-[500] text-[18px] text-[#64748B]">Please provide just a bit more information to complete your profile setup.</span>
+            </div>
+            <div class="flex flex-col gap-[8px]">
+                <app-input [placeholder]="'Company Name'" />
+                <div class="w-full items-center grid grid-cols-2 gap-[10px]">
+                    <app-input [placeholder]="'RC Number'" />
+                    <app-datepicker />
+                </div>
+                <app-input [placeholder]="'Company Email Address'" />
+                <app-select [placeholder]="'Incorporation Type'" [options]="['Private Limited', 'Public Limited', 'Sole Proprietorship', 'Partnership']" />
+                <app-select [placeholder]="'Nature of Business'" [options]="['Agriculture', 'Manufacturing', 'Services', 'Other']" />
+                <app-input [placeholder]="'Tax Identification Number'" />
+            </div>
+        </div>
+      </div>
+      <div *ngSwitchCase="1">
+        <div class="w-full flex flex-col gap-[8px]">
+            <span class="font-[700] text-[24px] text-[#1E293B]">Company Address</span>
+            <span class="font-[500] text-[18px] text-[#64748B]">Please provide an address where you are currently registered</span>
+        </div>
+        <div class="flex flex-col gap-[8px]">
+            <app-input [placeholder]="'Address Line 1'" />
+            <app-select [placeholder]="'State'" [options]="['Abia', 'Adamawa', 'Yola', 'Oyo']" />
+            <app-select [placeholder]="'City'" [options]="['Aba', 'Abakaliki']" />
+        </div>
+      </div>
+      <div *ngSwitchCase="2">
+        <div class="w-full flex flex-col gap-[8px]">
+            <span class="font-[700] text-[24px] text-[#1E293B]">Director's Address</span>
+            <span class="font-[500] text-[18px] text-[#64748B]">Please provide an address where you are currently registered</span>
+        </div>
+        <div class="flex flex-col gap-[8px]">
+            <app-input [placeholder]="'Address Line 1'" />
+            <app-select [placeholder]="'State'" [options]="['Abia', 'Adamawa', 'Yola', 'Oyo']" />
+            <app-select [placeholder]="'City'" [options]="['Aba', 'Abakaliki']" />
+        </div>
+      </div>
+      <div *ngSwitchCase="3">
+        <div class="w-full flex flex-col gap-[8px]">
+            <span class="font-[700] text-[24px] text-[#1E293B]">Password Setup</span>
+            <span class="font-[500] text-[18px] text-[#64748B]">Set a strong password to protect your account. This will be used to protect your account</span>
+        </div>
+        <div class="flex flex-col gap-[8px]">
+            <app-input [placeholder]="'Password'" />
+            <app-input [placeholder]="'Confirm Password'" />
+        </div>
+      </div>
+    </ng-container>
+    <div *ngIf="!searchCompany" class="mt-[32px] flex justify-between">
+        <!-- <button
+          class="bg-gray-200 px-4 py-2 rounded"
+          (click)="back()"
+          [disabled]="step === 0">
+          Back
+        </button> -->
+        <div (click)="back()" class="flex items-center w-fit cursor-pointer">
+            <img src="../../../../assets/icons/left-arrow.svg" alt="">
+            <span class="text-[#334155] font-[600] text-[14px]">Back</span>
+        </div>
+      
+        <!-- <button
+          class="bg-blue-600 text-white px-4 py-2 rounded"
+          (click)="next()"
+          [disabled]="step === totalSteps - 1">
+          Next
+        </button> -->
+        <div class="w-full max-w-[157px]"> 
+            <app-button-filled [action]="next" [text]="'Continue'" />
+        </div>
+      </div>
+  </div>
+  
+  
+  
