@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @font-face {
-  font-family: 'OverusedGrotesk';
-  src: url('/assets/fonts/OverusedGrotesk-Light.woff2') format('woff2');
+  font-family: "OverusedGrotesk";
+  src: url("/assets/fonts/OverusedGrotesk-Light.woff2") format("woff2");
   // font-weight: 400;
   font-style: normal;
   // font-display: swap;
@@ -82,13 +82,35 @@ body {
   padding: 0;
   margin: 0;
 }
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 20px;
+  border: 3px solid #f1f1f1;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none; /* Hides the scrollbar in Webkit-based browsers */
+}
+.scrollbar-hidden {
+  -ms-overflow-style: none; /* Hides the scrollbar in Internet Explorer 10+ */
+  scrollbar-width: none; /* Hides the scrollbar in Firefox */
+}
+
 .page-content {
   width: 100%;
   min-height: 100%;
   .main-body-content {
     width: 100%;
     padding: 40px 50px;
-    @media screen and (max-width:1024px) {
+    @media screen and (max-width: 1024px) {
       padding: 40px 80px;
     }
     @media screen and (max-width: 768px) {
@@ -290,11 +312,11 @@ body {
     box-shadow: var(--box-shadow1);
     border-radius: 15px;
     padding: 30px 45px 60px 45px;
-    @media screen and (max-width:768px) {
+    @media screen and (max-width: 768px) {
       min-width: 0px;
       width: 70%;
     }
-    @media screen and (max-width:540px) {
+    @media screen and (max-width: 540px) {
       min-width: 0px;
       width: 100%;
       padding: 30px 14px 60px 14px;
@@ -345,7 +367,7 @@ body {
       justify-content: center;
       margin-top: 10px;
       margin-bottom: -20px;
-      color: #034EA2;
+      color: #034ea2;
       .steps {
         flex-grow: 1;
         color: var(--color-5);
@@ -382,7 +404,7 @@ body {
       font-weight: 700;
       font-size: 26px;
       margin-top: 45px;
-      @media screen and (max-width:768px) {
+      @media screen and (max-width: 768px) {
         font-size: 22px;
       }
     }
@@ -392,7 +414,7 @@ body {
       font-weight: 400;
       font-size: 15px;
       line-height: 1.5;
-      @media screen and (max-width:768px) {
+      @media screen and (max-width: 768px) {
         font-size: 14px;
       }
     }
@@ -403,7 +425,7 @@ body {
       font-size: 16px;
       line-height: 1.5;
       text-align: justify;
-      @media screen and (max-width:768px) {
+      @media screen and (max-width: 768px) {
         font-size: 14px;
       }
       .extra {
@@ -418,7 +440,7 @@ body {
       font-size: 16px;
       line-height: 1.5;
       text-align: left;
-      @media screen and (max-width:768px) {
+      @media screen and (max-width: 768px) {
         font-size: 18px;
       }
     }
@@ -569,7 +591,7 @@ body {
         font-weight: 700;
         font-size: 17px;
         margin: 20px 0;
-        @media screen and (max-width:768px) {
+        @media screen and (max-width: 768px) {
           font-size: 15px;
         }
       }
@@ -578,7 +600,7 @@ body {
         font-weight: 500;
         font-size: 14px;
         margin-bottom: 20px;
-        @media screen and (max-width:768px) {
+        @media screen and (max-width: 768px) {
           font-size: 12px;
         }
         .account-number {
@@ -641,11 +663,11 @@ body {
     background: #ffffff;
     border-radius: 15px;
     width: 60%;
-    @media screen and (max-width:768px) {
+    @media screen and (max-width: 768px) {
       min-width: 0px;
       width: 70%;
     }
-    @media screen and (max-width:540px) {
+    @media screen and (max-width: 540px) {
       min-width: 0px;
       width: 100%;
     }
@@ -670,7 +692,7 @@ body {
       font-weight: 700;
       font-size: 26px;
       margin-top: 20px;
-      @media screen and (max-width:768px) {
+      @media screen and (max-width: 768px) {
         font-size: 22px;
       }
     }
@@ -679,7 +701,7 @@ body {
       margin-top: 15px;
       font-weight: 400;
       font-size: 15px;
-      @media screen and (max-width:768px) {
+      @media screen and (max-width: 768px) {
         font-size: 14px;
       }
     }
@@ -714,7 +736,7 @@ body {
         margin-top: 25px;
         display: flex;
         align-items: center;
-        @media screen and (max-width:540px) {
+        @media screen and (max-width: 540px) {
           flex-flow: column;
           align-items: flex-start;
         }
@@ -722,7 +744,7 @@ body {
           font-weight: 800;
           font-size: 28px;
           color: var(--color-4);
-          @media screen and (max-width:540px) {
+          @media screen and (max-width: 540px) {
             font-size: 24px;
           }
         }
@@ -734,7 +756,7 @@ body {
           font-size: 13px;
           margin-left: 10px;
           padding: 4px 15px;
-          @media screen and (max-width:540px) {
+          @media screen and (max-width: 540px) {
             margin: 10px 0 0 0;
           }
         }
@@ -873,7 +895,7 @@ body {
         font-weight: 700;
         font-size: 17px;
         margin: 20px 0;
-        @media screen and (max-width:768px) {
+        @media screen and (max-width: 768px) {
           font-size: 15px;
         }
       }
@@ -882,7 +904,7 @@ body {
         font-weight: 500;
         font-size: 14px;
         margin-bottom: 20px;
-        @media screen and (max-width:768px) {
+        @media screen and (max-width: 768px) {
           font-size: 12px;
         }
         .account-number {
@@ -907,7 +929,7 @@ body {
     font-weight: 600;
     font-size: 16px;
     margin: 30px 0 0 0;
-    @media screen and (max-width:768px) {
+    @media screen and (max-width: 768px) {
       font-size: 13px;
     }
   }
@@ -925,7 +947,7 @@ body {
     font-weight: 600;
     font-size: 0.87em;
     margin-bottom: 8px;
-    @media screen and (max-width:768px) {
+    @media screen and (max-width: 768px) {
       font-size: 12px;
     }
     & + input,
@@ -967,7 +989,7 @@ body {
       // &:focus {
       //   font-size: 0.9em !important;
       // }
-      @media screen and (max-width:1024px) {
+      @media screen and (max-width: 1024px) {
         width: 16.5%;
         height: 100%;
         object-fit: cover;
@@ -1527,7 +1549,7 @@ input[type="email"] {
       z-index: 2;
       margin-right: 15px;
       white-space: nowrap;
-      @media screen and (max-width:425px) {
+      @media screen and (max-width: 425px) {
         margin-right: 10px;
       }
     }
@@ -1558,7 +1580,7 @@ input[type="email"] {
       position: absolute;
       z-index: 200;
       background-color: white;
-      @media screen and (max-width:540px) {
+      @media screen and (max-width: 540px) {
         width: 90vw;
       }
       .top {
@@ -1598,7 +1620,7 @@ input[type="email"] {
             font-weight: 800;
             font-size: 43px;
             color: var(--primary-color);
-            @media screen and (max-width:540px) {
+            @media screen and (max-width: 540px) {
               font-size: 30px;
             }
           }
@@ -1609,7 +1631,7 @@ input[type="email"] {
             font-weight: normal;
             font-size: 15px;
             color: var(--primary-color);
-            @media screen and (max-width:540px) {
+            @media screen and (max-width: 540px) {
               font-size: 12px;
               margin-top: 0;
             }
@@ -1619,7 +1641,7 @@ input[type="email"] {
       .content {
         background-color: white;
         padding: 40px;
-        @media screen and (max-width:540px) {
+        @media screen and (max-width: 540px) {
           padding: 30px;
         }
         .item {
@@ -1633,7 +1655,7 @@ input[type="email"] {
             font-size: 14px;
             color: var(--color-6);
             width: 50%;
-            @media screen and (max-width:540px) {
+            @media screen and (max-width: 540px) {
               font-size: 10px;
             }
           }
@@ -1644,7 +1666,7 @@ input[type="email"] {
             font-size: 14px;
             color: var(--color-4);
             line-height: 1.2;
-            @media screen and (max-width:540px) {
+            @media screen and (max-width: 540px) {
               font-size: 10px;
             }
           }
@@ -1662,7 +1684,7 @@ input[type="email"] {
       position: absolute;
       z-index: 200;
       background-color: white;
-      @media screen and (max-width:540px) {
+      @media screen and (max-width: 540px) {
         width: 90vw;
       }
       .top {
@@ -1675,7 +1697,7 @@ input[type="email"] {
           color: var(--color-4);
           font-weight: 900;
           font-size: 23px;
-          @media screen and (max-width:768px) {
+          @media screen and (max-width: 768px) {
             font-size: 22px;
           }
         }
@@ -1839,7 +1861,7 @@ input[type="email"] {
       position: absolute;
       z-index: 200;
       background-color: white;
-      @media screen and (max-width:768px) {
+      @media screen and (max-width: 768px) {
         width: 90vw;
       }
       .top {
@@ -1852,7 +1874,7 @@ input[type="email"] {
           color: var(--color-4);
           font-weight: 900;
           font-size: 23px;
-          @media screen and (max-width:768px) {
+          @media screen and (max-width: 768px) {
             font-size: 22px;
           }
         }
@@ -1880,7 +1902,7 @@ input[type="email"] {
           background-color: var(--primary-color);
           outline: 1px solid slategrey;
         }
-        @media screen and (max-height:540px) {
+        @media screen and (max-height: 540px) {
           height: 440px;
         }
         .activities-title {
@@ -1903,13 +1925,13 @@ input[type="email"] {
             align-items: center;
             background: #ffffff;
             border-bottom: solid 1px #e2e8f0;
-            @media screen and (max-width:540px) {
+            @media screen and (max-width: 540px) {
               align-items: flex-start;
             }
             .status-icon {
               width: 40px;
               flex-shrink: 0;
-              @media screen and (max-width:540px) {
+              @media screen and (max-width: 540px) {
                 width: 45px;
               }
               img {
@@ -1923,7 +1945,7 @@ input[type="email"] {
               align-items: center;
               justify-content: space-between;
               flex-grow: 1;
-              @media screen and (max-width:1024px) {
+              @media screen and (max-width: 1024px) {
                 flex-flow: column;
                 align-items: flex-start;
               }
@@ -1931,14 +1953,14 @@ input[type="email"] {
                 flex-grow: 1;
                 flex-shrink: 0;
                 max-width: 60%;
-                @media screen and (max-width:1024px) {
+                @media screen and (max-width: 1024px) {
                   max-width: 100%;
                 }
                 .item-heading {
                   font-weight: 500;
                   font-size: 14px;
                   color: #374151;
-                  @media screen and (max-width:540px) {
+                  @media screen and (max-width: 540px) {
                     font-size: 16px;
                   }
                 }
@@ -1948,7 +1970,7 @@ input[type="email"] {
                   justify-content: flex-start;
                   margin-top: 11px;
                   max-width: 100%;
-                  @media screen and (max-width:540px) {
+                  @media screen and (max-width: 540px) {
                     flex-flow: column;
                     align-items: flex-start;
                   }
@@ -1965,7 +1987,7 @@ input[type="email"] {
                     margin-left: 2px;
                     padding-left: 7px;
                     border-left: solid 1px rgb(170, 170, 170);
-                    @media screen and (max-width:540px) {
+                    @media screen and (max-width: 540px) {
                       margin: 10px 0 0 0 !important;
                       padding-left: 0;
                       border-left: 0;
@@ -1978,7 +2000,7 @@ input[type="email"] {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                @media screen and (max-width:1024px) {
+                @media screen and (max-width: 1024px) {
                   flex-flow: column;
                   align-items: flex-start;
                   margin-top: 15px;
@@ -1989,7 +2011,7 @@ input[type="email"] {
                   font-size: 11px;
                   margin: 0 5px;
                   flex-shrink: 0;
-                  @media screen and (max-width:1024px) {
+                  @media screen and (max-width: 1024px) {
                     margin: 0;
                   }
                 }
@@ -2002,7 +2024,7 @@ input[type="email"] {
                   font-weight: 600;
                   font-size: 11px;
                   cursor: pointer;
-                  @media screen and (max-width:1024px) {
+                  @media screen and (max-width: 1024px) {
                     margin-top: 15px;
                   }
                 }
@@ -2021,7 +2043,7 @@ input[type="email"] {
       z-index: 200;
       background-color: white;
       padding: 30px 30px 0 30px;
-      @media screen and (max-width:675px) {
+      @media screen and (max-width: 675px) {
         width: 90vw;
       }
       .top {
@@ -2033,7 +2055,7 @@ input[type="email"] {
           color: var(--color-4);
           font-weight: 900;
           font-size: 20px;
-          @media screen and (max-width:768px) {
+          @media screen and (max-width: 768px) {
             font-size: 22px;
           }
         }
@@ -2103,11 +2125,11 @@ input[type="email"] {
       display: flex;
       flex-flow: column;
       align-items: flex-end;
-      @media screen and (max-width:540px) {
+      @media screen and (max-width: 540px) {
         width: 90vw;
         padding: 30px;
       }
-      @media screen and (max-width:425px) {
+      @media screen and (max-width: 425px) {
         padding: 20px;
       }
       .top {
@@ -2116,14 +2138,14 @@ input[type="email"] {
         justify-content: space-between;
         align-items: center;
         padding: 0 10px;
-        @media screen and (max-width:425px) {
+        @media screen and (max-width: 425px) {
           padding: 0;
         }
         .form-heading {
           color: var(--color-4);
           font-weight: 900;
           font-size: 26px;
-          @media screen and (max-width:768px) {
+          @media screen and (max-width: 768px) {
             font-size: 22px;
           }
         }
@@ -2135,7 +2157,7 @@ input[type="email"] {
         width: 100%;
         // overflow-y: scroll;
         padding: 0 10px;
-        @media screen and (max-width:425px) {
+        @media screen and (max-width: 425px) {
           padding: 0;
         }
         &::-webkit-scrollbar {
@@ -2193,7 +2215,7 @@ input[type="email"] {
           color: var(--color-4);
           font-weight: 900;
           font-size: 26px;
-          @media screen and (max-width:768px) {
+          @media screen and (max-width: 768px) {
             font-size: 22px;
           }
         }
@@ -2202,7 +2224,7 @@ input[type="email"] {
           margin-top: 10px;
           font-weight: 400;
           font-size: 15px;
-          @media screen and (max-width:768px) {
+          @media screen and (max-width: 768px) {
             font-size: 14px;
           }
         }
@@ -2340,7 +2362,7 @@ input[type="email"] {
             font-weight: 700;
             font-size: 17px;
             margin: 20px 0;
-            @media screen and (max-width:768px) {
+            @media screen and (max-width: 768px) {
               font-size: 15px;
             }
           }
@@ -2349,7 +2371,7 @@ input[type="email"] {
             font-weight: 500;
             font-size: 14px;
             margin-bottom: 20px;
-            @media screen and (max-width:768px) {
+            @media screen and (max-width: 768px) {
               font-size: 12px;
             }
             .account-number {
@@ -2375,7 +2397,7 @@ input[type="email"] {
             font-size: 14px;
             color: var(--color-6);
             margin-bottom: 2px;
-            @media screen and (max-width:540px) {
+            @media screen and (max-width: 540px) {
               font-size: 10px;
             }
           }
@@ -2386,7 +2408,7 @@ input[type="email"] {
             font-size: 14px;
             color: var(--color-4);
             line-height: 1.2;
-            @media screen and (max-width:540px) {
+            @media screen and (max-width: 540px) {
               font-size: 10px;
             }
           }
@@ -2428,12 +2450,12 @@ input[type="email"] {
     }
     .form-modal-wider {
       width: 550px;
-      @media screen and (max-width:540px) {
+      @media screen and (max-width: 540px) {
       }
     }
     .form-modal-widest {
       width: 650px;
-      @media screen and (max-width:540px) {
+      @media screen and (max-width: 540px) {
         width: 90vw;
       }
     }
@@ -2500,7 +2522,7 @@ input {
 .shadow_ {
   box-shadow: 0px 4px 30px 0px #6875821a;
 }
-@media screen and (max-width:640px) {
+@media screen and (max-width: 640px) {
   .shadow_ {
     box-shadow: none;
   }

@@ -29,7 +29,7 @@
       </span>
       <div
         *ngIf="showDropdown"
-        class="absolute z-[999999] flex flex-col bg-[#fff] shadow-md p-3 w-full rounded-b-[10px] {{
+        class="absolute z-[999999] flex flex-col bg-[#fff] shadow-md w-full rounded-[10px] {{
           !custom ? 'max-h-[350px] overflow-y-auto' : ''
         }}"
       >
@@ -37,7 +37,7 @@
           <span
             *ngFor="let opt of options"
             (click)="selectOption(opt)"
-            class="text-[#6B7280] text-[14px] hover:bg-[#f4f5f756] h-[27px] flex items-center font-[800] cursor-pointer"
+            class="text-[#6B7280] text-[14px] hover:bg-[#f4f5f756] px-[15px] py-[20px] h-[27px] flex items-center font-[800] cursor-pointer"
           >
             {{ opt }}
           </span>
@@ -47,5 +47,6 @@
         </span>
       </div>
     </div>
+    <!-- <span class="text-[12px] text-red-600 min-h-[14px]">{{ error }}</span> -->
   </div>
 </div>
