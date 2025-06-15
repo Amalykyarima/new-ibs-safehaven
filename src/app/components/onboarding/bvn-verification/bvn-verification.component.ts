@@ -1,10 +1,9 @@
-import { Component, inject } from '@angular/core';
-import { SelectBoxComponent } from '../../utilities/select-box/select-box.component';
-import { InputComponent } from "../../utilities/input/input.component";
-import { ButtonFilledComponent } from "../../utilities/button-filled/button-filled.component";
-import { OtpInputComponent } from "../../utilities/otp-input/otp-input.component";
+import { Component } from '@angular/core';
+import { SelectBoxComponent } from '../../../common/utilities/select-box/select-box.component';
+import { InputComponent } from "../../../common/utilities/input/input.component";
+import { ButtonFilledComponent } from "../../../common/utilities/button-filled/button-filled.component";
+import { OtpInputComponent } from "../../../common/utilities/otp-input/otp-input.component";
 import { CommonModule } from '@angular/common';
-import { DisplayStore } from '../../../stores/display.store';
 
 @Component({
   selector: 'app-bvn-verification',
@@ -20,17 +19,13 @@ export class BvnVerificationComponent {
     { name: 'Face', icon: '../../../../assets/icons/identity-face.svg', activeIcon: '../../../../assets/icons/identity-face-active.svg' },
   ];
   loading: boolean = false
-  activeMethod: string = 'SMS';
-  constructor() {}
-  readonly store = inject(DisplayStore);
-  openModal() {
-    this.store.updateModalView('user-info', 'modal');
-  }
+  activeMethod: string = '';
+
 
   setVerificationMethod(value: string) {
     this.activeMethod = value;
   }
   verifyBVN() {
-    
+
   }
 }

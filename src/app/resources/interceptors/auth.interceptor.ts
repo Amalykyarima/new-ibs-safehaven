@@ -1,66 +1,61 @@
-import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
-} from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { inject } from '@angular/core';
+import { HttpRequest, HttpInterceptorFn } from '@angular/common/http';
+import { throwError } from 'rxjs';
+import { catchError, finalize } from 'rxjs/operators';
 import { GeneralService } from '../services/general.service';
 import { Router } from '@angular/router';
+import { LoaderService } from '../services/loader.service';
 
-@Injectable()
-export class AuthInterceptor implements HttpInterceptor {
-  constructor(private generalService: GeneralService, private router: Router) {}
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const generalService = inject(GeneralService);
+  const loaderService = inject(LoaderService);
+  const router = inject(Router);
+  loaderService.show();
 
-  intercept(
-    request: HttpRequest<unknown>,
-    next: HttpHandler
-  ): Observable<HttpEvent<unknown>> {
-    let data = this.generalService.getStorageData();
-    let secureReq;
-    // Don't add header to external APIs
-    if (
-      !request.url.includes('safehavenmfb.com') &&
-      !request.url.includes('localhost') &&
-      !request.url.includes('-feature-')
-    ) {
-      secureReq = request.clone();
-    } else {
-      if (data.clientId && data.jwtToken) {
-        secureReq = request.clone({
-          setHeaders: {
-            ClientID: data.clientId,
-            Authorization: data.jwtToken,
-          },
-        });
-      } else {
-        if (localStorage.sign) {
-          // console.log('found header');
-          const decode = JSON.parse(window.atob(localStorage.sign));
-          secureReq = request.clone({
-            setHeaders: {
-              Authorization: decode.jwtToken,
-            },
-          });
-        } else secureReq = request.clone();
-      }
+  console.log('1111111111111111')
+  const data = generalService.getStorageData();
+  console.log('auth data', data)
+
+  let modifiedReq = req;
+
+  if (
+console.log('22222222'),
+
+    req.url.includes('safehavenmfb.com') ||
+    req.url.includes('localhost') ||
+    req.url.includes('-feature-')
+
+  ) {
+    if (data?.jwtToken && data?.clientId) {
+      console.log('333333333333')
+
+      modifiedReq = req.clone({
+        setHeaders: {
+          Authorization: data.jwtToken,
+          ClientID: data.clientId,
+        }
+      });
     }
-    return next.handle(secureReq).pipe(
-      catchError((error) => {
-        if (error.status === 403) {
-          this.generalService.logoutUser();
-        }
-        if (error.status === 500) {
-          return throwError({
-            statusCode: 500,
-            message: 'An error occured. Please try again later.',
-          });
-        } else {
-          return throwError('User not signed in');
-        }
-      })
-    );
   }
-}
+
+  return next(modifiedReq).pipe(
+    catchError((error) => {
+      if (error.status === 403) {
+        generalService.logoutUser();
+        router.navigate(['/signin']);
+      }
+
+      if (error.status === 500) {
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'An error occurred. Please try again later.',
+        }));
+      }
+
+      return throwError(() => error);
+    }),
+    finalize(() => {
+      loaderService.hide();
+    })
+  );
+};

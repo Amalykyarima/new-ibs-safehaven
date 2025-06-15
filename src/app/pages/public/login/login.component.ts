@@ -4,8 +4,8 @@ import { OnboardingLayoutComponent } from '../../../layouts/onboarding-layout/on
 import { TabComponent } from "../../../common/utilities/tab/tab.component";
 import { AuthService } from '../../../resources/services/auth.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { CorporateLoginComponent } from "../../../common/layout/corporate-login/corporate-login.component";
-import { IndividualLoginComponent } from "../../../common/layout/individual-login/individual-login.component";
+import { CorporateLoginComponent } from "../../../components/onboarding/corporate-login/corporate-login.component";
+import { IndividualLoginComponent } from "../../../components/onboarding/individual-login/individual-login.component";
 
 @Component({
   selector: 'app-login',

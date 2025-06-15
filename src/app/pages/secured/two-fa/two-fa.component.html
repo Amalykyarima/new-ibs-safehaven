@@ -2,10 +2,10 @@
   <div class="flex flex-col gap-[24px] relative p-[24px] mt-[100px] sm:px-[24px] px-0 shadow-[0px_4px_30px_0px_rgba(104,117,130,0.07)] sm:bg-[#fff] rounded-[10px]">
     <div>
       <span class="text-[14px] text-[#64748B] font-[500] mb-[6px] flex justify-center">
-        Enter you 4 digit account PIN
+        Enter your 4-digit account PIN
       </span>
       <div >
-        <ng-otp-input></ng-otp-input>
+        <ng-otp-input (onInputChange)="onPINChange($event)"></ng-otp-input>
       </div>
     </div>
     <div class="w-[408px] flex justify-center">

@@ -1,0 +1,37 @@
+<div class="flex flex-col gap-[24px] relative p-[24px] sm:px-[24px] px-0 shadow_ sm:bg-[#fff] rounded-[10px]">
+  <div>
+    <p class="text-[#64748B] text-[16px] font-[500]">
+      Check your Inbox (+234 705*****8090) for a 6 digit code. If you can’t access this number,
+      <span class="text-[#1E293B] text-[14px] font-[600]">Use the Email Option</span>
+    </p>
+  </div>
+
+  <div class="flex justify-start">
+    <ng-otp-input (onInputChange)="onPINChange($event)" [config]="pinConfig"></ng-otp-input>
+  </div>
+
+  <div class="w-[408px] ">
+    <span *ngIf="!showTimer" class="text-[16px] text-[#64748B] font-[500]">
+      I didn't receive the OTP, resend by
+      <span onclick="resendOtp('VOICE')" class="text-[16px] text-[#034EA2] font-[600]">
+        Voice
+      </span> or <span onclick="resendOtp('SMS')" class="text-[16px] text-[#034EA2] font-[600]">
+        SMS
+      </span>
+    </span>
+  </div>
+  <span *ngIf="showTimer" class="text-[#6B7280] w-full sm:text-[14px] text-[14px] font-[400]">Resend OTP in</span>
+  <app-countdown *ngIf="showTimer" (hideTimer)="clearCountDown()"></app-countdown>
+
+
+  <div *ngIf="!hideBackBtn" (click)="close_()" class="flex text-[#334155] text-[14px] font-[600]">
+    <img src="../../../../assets/icons/black-back-button.svg" alt="">
+    Back
+  </div>
+
+  <div *ngIf="loading"
+    class="flex w-full justify-center absolute bg-[#ffffffaf] top-0 left-0 right-0 bottom-0 items-center">
+    <span class="w-[40px] h-[40px] border border-r-[#9FA6B2] border-[#034EA2] rounded-full animate-spin"></span>
+  </div>
+
+</div>

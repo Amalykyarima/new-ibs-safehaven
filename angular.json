@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "new-ibs-safehaven": {
+    "safhavenIbs": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/new-ibs-safehaven",
+            "outputPath": "dist/safhaven-ibs",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -28,7 +28,6 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/.well-known",
               {
                 "glob": "**/*",
                 "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
@@ -38,12 +37,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
-            "server": "src/main.server.ts",
-            "prerender": true,
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -73,10 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "new-ibs-safehaven:build:production"
+              "buildTarget": "safhavenIbs:build:production"
             },
             "development": {
-              "buildTarget": "new-ibs-safehaven:build:development"
+              "buildTarget": "safhavenIbs:build:development"
             }
           },
           "defaultConfiguration": "development"

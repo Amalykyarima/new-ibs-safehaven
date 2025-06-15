@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { InputComponent } from "../../utilities/input/input.component";
+import { InputComponent } from "../../../common/utilities/input/input.component";
 import { AuthService } from '../../../resources/services/auth.service';
 import { ResetPassword, Signin } from '../../../resources/models/signin';
 import { Router, RouterModule } from '@angular/router';
 import * as onboardingActions from '../../../resources/store/onboarding/onboarding.actions';
 import { Store, StoreModule } from '@ngrx/store';
-// import { State } from '../../../resources/store/onboarding/onboarding.reducer';
+import { State } from '../../../resources/store/onboarding/onboarding.reducer';
+import { GeneralService } from '../../../resources/services/general.service';
 // import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 
@@ -21,9 +22,11 @@ export class IndividualLoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private store: Store
-    // private store: Store<State>,
+    // private store: Store
+    private store: Store<State>,
     // private notification: NzNotificationService,
+    private generalService: GeneralService,
+
 
 
   ) {
@@ -195,7 +198,7 @@ export class IndividualLoginComponent {
             //   { nzClass: 'notification1' }
             // );
 
-            // this.validateUser.emit({ ...this.user, type: 'login' });
+            this.validateUser.emit({ ...this.user, type: 'login' });
             setTimeout(() => {
               this.router.navigate(['/two-factor-authentication']);
             }, 500);
@@ -218,7 +221,7 @@ export class IndividualLoginComponent {
               this.store.dispatch(
                 onboardingActions.setResetAction({ resetType: 'signin' })
               );
-              // this.validateUser.emit({ ...this.user, type: 'reset' });
+              this.validateUser.emit({ ...this.user, type: 'reset' });
               setTimeout(() => {
                 this.router.navigate(['/reset-password-with-otp']);
               }, 500);
@@ -328,7 +331,39 @@ export class IndividualLoginComponent {
       },
     });}
 
-  verifyEmail() {
-  throw new Error('Method not implemented.');
-  }
+    verifyEmail = async () => {
+      if (this.email === '') this.validators.email = 'Required*';
+      else {
+        this.loading = true;
+        this.error = { type: '', message: '' };
+        // this.showPassword = true
+        this.authService
+          .verifyUser({
+            type: 'EMAIL',
+            userIdentifier: this.email?.toLowerCase().trim(),
+            sendOtp: false,
+            accountType: 'Individual',
+          })
+          .subscribe({
+            next: (res: any) => {
+              this.loading = false;
+              if (res.message === 'User found') {
+                this.showPassword = true;
+              } else {
+                this.error = {
+                  type: 'create-account',
+                  message: 'User not found',
+                };
+              }
+            },
+            error: (err: any) => {
+              this.loading = false;
+              this.error = {
+                type: '',
+                message: 'Something went wrong, Please try again',
+              };
+            },
+          });
+      }
+    };
 }

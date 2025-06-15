@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { InputComponent } from "../../utilities/input/input.component";
+import { InputComponent } from "../../../common/utilities/input/input.component";
 import { Signin } from '../../../resources/models/signin';
-import { SelectComponent } from "../../utilities/select/select.component";
-import { SmallButtonComponent } from "../../utilities/small-button/small-button.component";
+import { SelectComponent } from "../../../common/utilities/select/select.component";
+import { SmallButtonComponent } from "../../../common/utilities/small-button/small-button.component";
 import { Router, RouterModule } from '@angular/router';
 
 @Component({

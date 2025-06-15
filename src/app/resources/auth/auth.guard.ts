@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate {
     if (data.clientId && data.jwtToken) {
       return true;
     }
-    if (localStorage.sign) return true;
+    if (localStorage['sign']) return true;
     this.generalService.logoutUser();
     return false;
   }
