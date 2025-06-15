@@ -331,7 +331,39 @@ export class IndividualLoginComponent {
       },
     });}
 
-  verifyEmail() {
-  throw new Error('Method not implemented.');
-  }
+    verifyEmail = async () => {
+      if (this.email === '') this.validators.email = 'Required*';
+      else {
+        this.loading = true;
+        this.error = { type: '', message: '' };
+        // this.showPassword = true
+        this.authService
+          .verifyUser({
+            type: 'EMAIL',
+            userIdentifier: this.email?.toLowerCase().trim(),
+            sendOtp: false,
+            accountType: 'Individual',
+          })
+          .subscribe({
+            next: (res: any) => {
+              this.loading = false;
+              if (res.message === 'User found') {
+                this.showPassword = true;
+              } else {
+                this.error = {
+                  type: 'create-account',
+                  message: 'User not found',
+                };
+              }
+            },
+            error: (err: any) => {
+              this.loading = false;
+              this.error = {
+                type: '',
+                message: 'Something went wrong, Please try again',
+              };
+            },
+          });
+      }
+    };
 }

@@ -11,6 +11,10 @@ import zh from '@angular/common/locales/zh';
 import { provideState, provideStore } from '@ngrx/store';
 import { OnboardingReducer } from './resources/store/onboarding/onboarding.reducer';
 import { GeneralReducer } from './resources/store/general/general.reducer';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
+
 
 
 
@@ -19,6 +23,8 @@ registerLocaleData(zh);
 export const appConfig: ApplicationConfig = {
 
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
+    provideAnimationsAsync(),
+    provideAnimations(),
      provideRouter(routes),
       provideClientHydration(),
        provideHttpClient(withInterceptors([authInterceptor])),

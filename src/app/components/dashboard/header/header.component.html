@@ -1,126 +1,82 @@
-<div class="overall">
-  <div class="header">
-    <div class="title">
-      <div class="hambuger" [ngClass]="this.openSideBar ? 'opened' : ''" (click)="this.toggleSidebar()">
-        <div class="h1"></div>
-        <div class="h2"></div>
-      </div>
-      <div *ngIf="fetchingData" class="w-[150px] h-[30px] mb-0 bg-gray-300 rounded animate-pulse"></div>
+<div class="hidden md:flex items-center justify-between px-4 py-3 lg:px-6 lg:py-4 bg-white sticky top-0 z-10">
+  <!-- Greeting - responsive text size -->
+  <div class="font-semibold text-sm lg:text-base">
+    <span class="text-slate-500">Good Morning, </span>
+    <span class="text-slate-800">{{this.currentUser?.user?.firstName}}👋</span>
+  </div>
 
-      <ng-container *ngIf="!this.fetchingData">
-        <div class="logo" routerLink="/dashboard/signin">
-          <img src="../../../../assets/images/SafeHaven.png" />
-        </div>
-        <p class="text-big" *ngIf="!this.showBackButton">{{ this.title }}</p>
-        <div class="nav-big" *ngIf="this.showBackButton && this.backUrl == ''" (click)="this.generalService.goBack()">
-          <div class="back-icon">
-            <img src="assets/images/arrow-back.svg" />
-          </div>
-          <span>Back</span>
-        </div>
-        <div class="nav-big" *ngIf="this.showBackButton && this.backUrl != ''" [routerLink]="[this.backUrl]"
-          [queryParams]="this.urlQuery">
-          <div class="back-icon">
-            <img src="assets/images/arrow-back.svg" />
-          </div>
-          <span>Back</span>
-        </div>
-      </ng-container>
+  <!-- Right side header elements - responsive layout -->
+  <div class="flex items-center gap-2 lg:gap-4 xl:gap-6">
+    <!-- KYC Section - responsive sizing -->
+    <div class="flex items-center bg-slate-200 rounded-[10px] px-2 py-1 lg:px-3 lg:py-2">
+      <div class="flex items-center gap-1 mr-1 lg:mr-2 lg:gap-1.5">
+        <img src="../../../../assets/icons/kyc-1.svg" alt="KYC Level" class="w-5 h-5 lg:w-6 lg:h-6">
+        <span class="font-semibold text-slate-800 text-xs lg:text-sm">KYC Level {{this.currentUser?.client?.kycLevel}}</span>
+      </div>
+      <img src="../../../../assets/icons/warn.svg" alt="Info" class="w-4 h-4 mr-1 lg:w-5 lg:h-5 lg:mr-2">
+      <button
+        class="h-7 px-2 lg:h-8 lg:px-3 bg-white rounded-[10px] border border-slate-300 text-xs lg:text-sm font-semibold text-slate-700">
+        <span class="hidden sm:inline">Upgrade Account</span>
+        <span class="sm:hidden">Upgrade</span>
+      </button>
     </div>
 
-    <div class="right-con">
-      <div class="right" *ngIf="this.fetchingData">
-        <div class="w-[100px] h-[40px] mb-0 bg-gray-300 rounded animate-pulse"></div>
+    <!-- Notification and User Profile - responsive layout -->
+    <div class="flex items-center gap-2 lg:gap-4">
+      <!-- Notification Button - responsive size -->
+      <button
+        class="w-8 h-8 lg:w-10 lg:h-10 p-1 lg:p-1.5 bg-slate-50 rounded-full flex items-center justify-center">
+        <img src="../../../../assets/icons/newBluebell.svg" alt="Notifications" class="w-4 h-4 lg:w-5 lg:h-5">
+      </button>
 
-      </div>
-      <div class="right" *ngIf="!this.fetchingData" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu"
-        [nzOverlayClassName]="'dropdown1'" [nzPlacement]="'bottomCenter'">
-        <span class="headway-container"></span>
-        <div class="avatar">
-          <!-- <ngx-avatar class="big-avatar" [name]="
-              this.currentUser?.user?.firstName +
-              ' ' +
-              this.currentUser?.user?.lastName
-            " [round]="true"></ngx-avatar> -->
-          <app-avatar [name]="
-            this.currentUser?.user?.firstName +
-            ' ' +
-            this.currentUser?.user?.lastName">
-          </app-avatar>
-
-          <!-- <ngx-avatar class="small-avatar" [name]="
-              this.currentUser?.user?.firstName +
-              ' ' +
-              this.currentUser?.user?.lastName
-            " size="42" [round]="true"></ngx-avatar> -->
-          <app-avatar [name]="
-            this.currentUser?.user?.firstName +
-            ' ' +
-            this.currentUser?.user?.lastName
-          " size="42">
-          </app-avatar>
-          <!-- <ngx-avatar class="smaller-avatar" [name]="
-              this.currentUser?.user?.firstName +
-              ' ' +
-              this.currentUser?.user?.lastName
-            " size="35" [round]="true"></ngx-avatar> -->
-          <app-avatar [name]="
-          this.currentUser?.user?.firstName +
-          ' ' +
-          this.currentUser?.user?.lastName
-        " size="35">
-          </app-avatar>
-          <img [src]="'https://identicon-api.herokuapp.com/'+this.currentUser.user._id+'/100?format=png'" />
+      <!-- User Profile - responsive elements -->
+      <!-- <div class="flex items-center gap-1 lg:gap-2">
+        <img class="w-8 h-8 lg:w-10 lg:h-10 rounded-full" src="../../../../assets/icons/new-Avatars.svg"
+          alt="User avatar" />
+        <div class="hidden xl:flex flex-col">
+          <div class="font-semibold text-slate-800 text-sm">{{this.currentUser?.client?.fullName}}</div>
+          <div class="text-xs text-slate-500">{{this.currentUser?.user?.emailAddress}}</div>
         </div>
-        <div class="name">
-          <div class="details">
-            <p class="heading">{{ this.currentUser?.client?.fullName }}</p>
-            <p class="subheading">{{ this.currentUser?.user?.emailAddress }}</p>
+        <img src="../../../../assets/icons/newdropdown.svg" alt="Dropdown"
+          class="w-5 h-5 lg:w-6 lg:h-6 hidden lg:block">
+      </div> -->
+      <div class="flex items-center gap-1 lg:gap-2">
+        <!-- Dropdown trigger -->
+        <div nz-dropdown [nzDropdownMenu]="userMenu" [nzPlacement]="'bottomRight'">
+          <div class="flex items-center gap-1 lg:gap-2 cursor-pointer">
+            <img class="w-8 h-8 lg:w-10 lg:h-10 rounded-full" src="../../../../assets/icons/new-Avatars.svg" alt="User avatar" />
+            <div class="hidden xl:flex flex-col">
+              <div class="font-semibold text-slate-800 text-sm">{{this.currentUser?.client?.fullName}}</div>
+              <div class="text-xs text-slate-500">{{this.currentUser?.user?.emailAddress}}</div>
+            </div>
+            <img src="../../../../assets/icons/newdropdown.svg" alt="Dropdown" class="w-5 h-5 lg:w-6 lg:h-6 hidden lg:block">
           </div>
-          <div class="arrow"><img src="assets/images/chevron-down.svg" /></div>
         </div>
+
+        <!-- Dropdown menu -->
+        <nz-dropdown-menu #userMenu="nzDropdownMenu">
+          <ul nz-menu class="w-48">
+            <li nz-menu-item [routerLink]="['/dashboard/settings']">
+              <div class="flex items-center gap-2">
+                <img class="small-icons" src="assets/images/profile.svg" />
+                <span>Profile</span>
+              </div>
+            </li>
+            <li nz-menu-item [routerLink]="['/dashboard/settings']">
+              <div class="flex items-center gap-2">
+                <img class="small-icons" src="assets/images/password.svg" />
+                <span>Change Password</span>
+              </div>
+            </li>
+            <li nz-menu-item (click)="logout()" class="text-red-500 hover:!text-red-500">
+              <div class="flex items-center gap-2">
+                <img class="small-icons" src="assets/images/log-out.svg" />
+                <span>Sign Out</span>
+              </div>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
       </div>
     </div>
   </div>
 </div>
-<div class="warning-notification" *ngIf="!this.fetchingData && !this.currentUser?.user?.emailAddressVerified">
-  <div class="icon"><img src="assets/images/warning.svg" /></div>
-  <p>
-    Your Email is not verified.
-    <span (click)="resendVerificationEmail()">Click here to resend verification link</span>
-  </p>
-</div>
-<div class="space">
-  <div class="text-small" *ngIf="!this.showBackButton">{{ this.title }}</div>
-  <div class="nav-small" *ngIf="this.showBackButton && this.backUrl == ''" (click)="this.generalService.goBack()">
-    <div class="back-icon">
-      <img src="assets/images/arrow-back.svg" />
-    </div>
-    <span>Back</span>
-  </div>
-  <div class="nav-small" *ngIf="this.showBackButton && this.backUrl != ''" [routerLink]="[this.backUrl]"
-    [queryParams]="this.urlQuery">
-    <div class="back-icon">
-      <img src="assets/images/arrow-back.svg" />
-    </div>
-    <span>Back</span>
-  </div>
-  <div class="line" *ngIf="!this.showBackButton"></div>
-</div>
-<nz-dropdown-menu #menu="nzDropdownMenu">
-  <ul nz-menu>
-    <li nz-menu-item [routerLink]="['/dashboard/settings']" [queryParams]="{ tab: 'profile' }">
-      <img class="small-icons" src="assets/images/profile.svg" />
-      <span>Profile</span>
-    </li>
-    <li nz-menu-item [routerLink]="['/dashboard/settings']" [queryParams]="{ tab: 'password' }">
-      <img class="small-icons" src="assets/images/password.svg" />
-      <span>Change Password</span>
-    </li>
-    <li nz-menu-divider></li>
-    <li nz-menu-item (click)="logout()">
-      <img class="small-icons" src="assets/images/log-out.svg" />
-      <span>Sign Out</span>
-    </li>
-  </ul>
-</nz-dropdown-menu>

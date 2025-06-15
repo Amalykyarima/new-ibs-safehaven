@@ -12,7 +12,7 @@ import { TotpRegisterComponent } from "../../../components/onboarding/totp-regis
 @Component({
   selector: 'app-create-account',
   standalone: true,
-  imports: [RouterModule, OnboardingLayoutComponent, CommonModule, TabComponent, OtpComponent, PinComponent, TotpRegisterComponent],
+  imports: [RouterModule, OnboardingLayoutComponent, CommonModule, TabComponent, OtpComponent, PinComponent, TotpRegisterComponent, IndividualLoginComponent, CorporateLoginComponent],
   templateUrl: './create-account.component.html',
   styleUrl: './create-account.component.scss'
 })

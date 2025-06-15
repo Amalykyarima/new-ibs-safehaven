@@ -1,16 +1,22 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgOtpInputModule } from 'ng-otp-input';
+// import { Router } from 'react-router-dom';
+import { AuthService } from '../../../resources/services/auth.service';
+import { Router } from '@angular/router';
+import { CountdownComponent } from '../../../common/utilities/countdown/countdown.component';
 
 
 @Component({
   selector: 'app-totp-register',
   standalone: true,
-  imports: [CommonModule, NgOtpInputModule],
+  imports: [CommonModule, NgOtpInputModule, CountdownComponent],
   templateUrl: './totp-register.component.html',
   styleUrl: './totp-register.component.scss'
 })
 export class TotpRegisterComponent {
+  constructor(private authService: AuthService, private router: Router) {}
+
   pinConfig = {
     length: 6,
     disableAutoFocus: true,
@@ -25,9 +31,94 @@ export class TotpRegisterComponent {
 
   onPINChange(event: any) {
     console.log(event, 'onPinChnage')
-    // this.pin = event;
-    // if (event.length == 4) {
-    //   this.twoFactorAction == 'signin' ? this.verify('PIN') : this.enrol('PIN');
-    // }
+    this.error = '';
+    this.pin = event;
+    // //(event);
+    console.log(event);
+    this.errorMessage = '';
+    if (this.pin.length === 6) {
+      // this.validate.emit('this.pin');
+      this.verifyOtp();
+    }
+  }
+
+  ngOnInit(): void {
+    console.log(this.loginData);
+  }
+
+  pin = '';
+  resendType = '';
+  errorMessage = '';
+  loading = false;
+  @Input() showTimer = false;
+
+  @Input() error = '';
+  @Input() loginData: any = {};
+  @Input() hideBackBtn: boolean = false;
+  @Output() validate: EventEmitter<any> = new EventEmitter<any>();
+  @Output() close: EventEmitter<any> = new EventEmitter<any>();
+  @Output() resend: EventEmitter<any> = new EventEmitter<any>();
+
+  verifyOtp = () => {
+    // this.error = 'Invalid otp';
+    //('click', this.loginData);
+    if (this.pin.length !== 6) this.error = 'Required*';
+    else {
+      this.loading = true;
+      this.authService
+        .validateNewUserOtp(this.loginData._id, {
+          otp: this.pin,
+        })
+        .subscribe({
+          next: (res: any) => {
+            this.loading = false;
+            if (res.statusCode === 200) {
+              const encoded = window.btoa(JSON.stringify(this.loginData));
+              //(encoded);
+              this.router.navigate(['/onboarding/profile-setup/' + encoded]);
+            } else if (
+              res.statusCode === 400 &&
+              res.message === 'Incorrect OTP.'
+            ) {
+              this.errorMessage = res.message;
+              this.error = res.message;
+            } else {
+              this.errorMessage = 'Something went wrong, please try again';
+              this.error = 'Something went wrong, please try again';
+            }
+          },
+          error: (err) => {
+            this.loading = false;
+            this.errorMessage = 'Something went wrong, please try again';
+            this.error = 'Something went wrong, please try again';
+          },
+        });
+    }
+    this.validate.emit('this.pin');
+  };
+  onPinChange = (event: any) => {
+    this.error = '';
+    this.pin = event;
+    // //(event);
+    console.log(event);
+    this.errorMessage = '';
+    if (this.pin.length === 6) {
+      this.validate.emit('this.pin');
+      this.verifyOtp();
+    }
+  };
+  resendOtp = (type: 'SMS' | 'VOICE' = 'SMS') => {
+    this.resend.emit(type);
+    this.resendType ='SMS'
+    this.showTimer = true;
+  };
+
+
+  close_ = () => this.close.emit();
+
+  clearCountDown = ()=>{
+    this.showTimer = false
+    this.resendType =''
   }
 }
+

@@ -1,11 +1,19 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Router } from 'express';
+// import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AuthService } from '../../../resources/services/auth.service';
+// import { AuthService } from 'src/app/services/auth.service';
 import { GeneralService } from '../../../resources/services/general.service';
-import { AvatarComponent } from "../../../common/utilities/avatar/avatar.component";
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { Router } from '@angular/router';
+import { from } from 'rxjs';
+import { Location } from '@angular/common';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { RouterModule } from '@angular/router';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzWaveModule } from 'ng-zorro-antd/core/wave';
+
+
+
 
 
 declare var Headway: any;
@@ -14,12 +22,11 @@ declare var Headway: any;
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule,AvatarComponent, RouterModule, NzDropDownModule],
+  imports: [NzDropDownModule, RouterModule, NzMenuModule, NzWaveModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-
   emailVerified: boolean = true
   @Input() openSideBar: boolean = false;
   @Input() currentUser: any = {};
@@ -29,10 +36,11 @@ export class HeaderComponent {
   @Input() backUrl: string = "";
   @Input() urlQuery: any = {};
   @Output() openSideBarChange: EventEmitter<boolean> = new EventEmitter();
+
   constructor(
     public generalService: GeneralService,
     private authService: AuthService,
-    // private notification: NzNotificationService,
+    private notification: NzNotificationService,
     private router: Router,
     private location: Location
   ) {
@@ -56,18 +64,18 @@ export class HeaderComponent {
     this.authService.resendEmail().subscribe(
       (res: any) => {
         if (res.statusCode === 200) {
-          // this.notification.success(
-          //   'Email verification link resent successfully.',
-          //   '' + res.message,
-          //   { nzClass: 'notification1' }
-          // );
+          this.notification.success(
+            'Email verification link resent successfully.',
+            '' + res.message,
+            { nzClass: 'notification1' }
+          );
         }
         else {
-          // this.notification.error(
-          //   'Email verification could not be resent.',
-          //   '' + res.message,
-          //   { nzClass: 'notification1' }
-          // );
+          this.notification.error(
+            'Email verification could not be resent.',
+            '' + res.message,
+            { nzClass: 'notification1' }
+          );
         }
       }
     )

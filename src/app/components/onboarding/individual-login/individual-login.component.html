@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-[1px] relative p-[24px] sm:px-[24px] px-0 shadow_ sm:bg-[#fff] rounded-[10px]">
-  <!-- Error message (static example) -->
+  <!-- Error message -->
   <div *ngIf="error.message !== ''" class="w-full flex items-center gap-[8px]">
     <span class="min-w-[30px] h-[30px] flex items-center justify-center rounded-[5px]">
       <img src="../../../../assets/icons/error-icon.svg" alt="" />
@@ -12,18 +12,17 @@
       (userType === "phone" ? "number" : "email") + " isn’t linked to any account. Please check and try again, or"
       }}
       <span *ngIf="error.type === 'create-account'" (click)="sendOtp()"
-        class="font-[900] underline text-[#034EA2] cursor-pointer">Create Account.
+        class="font-[900] underline text-[#1E293B] cursor-pointer">Create Account.
       </span>
       <span *ngIf="error.type === 'reset-password'" [routerLink]="['/create-account']"
-        class="font-[900] underline text-[#034EA2] cursor-pointer">Reset Password.
+        class="font-[900] underline text-[#1E293B] cursor-pointer">Reset Password.
       </span>
       <span *ngIf="error.type === 'signin'" (click)="navigate()"
-        class="font-[900] underline text-[#034EA2] cursor-pointer">Sign In.
+        class="font-[900] underline text-[#1E293B] cursor-pointer">Sign In.
       </span>
     </span>
   </div>
 
-  <!-- Success message (static example) -->
   <div *ngIf="(success.message && success.message !== '') || loading_"
     class="bg-[#034da20d] w-full px-[16px] py-[13px]">
     <div *ngIf="!loading_" class="w-full flex items-center gap-[8px]">
@@ -38,103 +37,96 @@
     </div>
   </div>
 
-  <!-- Loading spinner (static) -->
-  <!-- <div class="w-full flex justify-center items-center">
-    <span class="w-[27px] h-[27px] border border-l-[#fff] rounded-full animate-spin border-[#034EA2]"></span>
-  </div> -->
-
-  <!-- Input fields (static examples) -->
-  <!-- <div class="input-container">
-    <label>Phone Number</label>
-    <input type="number" placeholder="Enter your phone number" />
-  </div> -->
-  <app-input *ngIf="userType === 'phone'" [type]="'number'" [value]="phoneNumber" [phone]="true"
-    [placeholder]="'Phone number'" [error]="validators.phoneNumber"
-    (submit)="!showPassword ? verifyPhoneNumber() : login()" (onChange)="handleChange('phoneNumber', $event)"
-    (getCountryCode)="getCountryCode($event)" />
-    <app-input *ngIf="userType === 'email'" [value]="email"
-    [placeholder]="'Enter your email address'" [error]="validators.email" (onChange)="handleChange('email', $event)"
-    (submit)="!showPassword ? verifyEmail() : login()"></app-input>
-
-
-  <!-- <div *ngIf="showPassword">
-    <app-input *ngIf="phoneNumberLength >= 10" [type]="'password'" [placeholder]="'Enter your password'"
-      [value]="password" [phone]="false" [error]="validators.password" (onChange)="handleChange('password', $event)"
-      (submit)="login()" />
-  </div> -->
-  <div *ngIf="showPassword && path === 'login'" class="flex flex-col gap-[8px] w-full">
-    <app-input [type]="passwordType" [placeholder]="'Enter your password'" [value]="password"
-      [error]="validators.password" (onChange)="handleChange('password', $event)" (submit)="login()"
-      [autoFocus]="showPassword">
-      <img *ngIf="passwordType === 'password'" (click)="passwordType = 'text'" class="w-[14px] cursor-pointer"
-        src="../../../../assets/icons/eye.svg" alt="" />
-      <img *ngIf="passwordType === 'text'" (click)="passwordType = 'password'" class="w-[14px] cursor-pointer"
-        src="../../../../assets/icons/eye-off.svg" alt="" />
+  <app-input
+    *ngIf="userType === 'phone'"
+    [type]="'number'"
+    [value]="phoneNumber"
+    [phone]="true"
+    [placeholder]="'Enter your phone number'"
+    [error]="validators.phoneNumber"
+    (onChange)="handleChange('phoneNumber', $event)"
+    (getCountryCode)="getCountryCode($event)"
+    (submit)="!showPassword ? verifyPhoneNumber() : login()"
+  ></app-input>
+  <app-input
+    *ngIf="userType === 'email'"
+    [value]="email"
+    [placeholder]="'Enter your email address'"
+    [error]="validators.email"
+    (onChange)="handleChange('email', $event)"
+    (submit)="!showPassword ? verifyEmail() : login()"
+  ></app-input>
+  <!--  -->
+  <div
+    *ngIf="showPassword && path === 'login'"
+    class="flex flex-col gap-[8px] w-full"
+  >
+    <app-input
+      [type]="passwordType"
+      [placeholder]="'Enter your password'"
+      [value]="password"
+      [error]="validators.password"
+      (onChange)="handleChange('password', $event)"
+      (submit)="login()"
+      [autoFocus]="showPassword"
+    >
+      <img
+        *ngIf="passwordType === 'password'"
+        (click)="passwordType = 'text'"
+        class="w-[14px] cursor-pointer"
+        src="../../../../assets/icons/eye.svg"
+        alt=""
+      />
+      <img
+        *ngIf="passwordType === 'text'"
+        (click)="passwordType = 'password'"
+        class="w-[14px] cursor-pointer"
+        src="../../../../assets/icons/eye-off.svg"
+        alt=""
+      />
     </app-input>
-    <span [routerLink]="['/forgot-password']"
-      class="text-end cursor-pointer text-[14px] font-[500] text-[#94A3B8]">Forgot password?</span>
-  </div>
-  <div *ngIf="loading" class="absolute top-0 left-0 bottom-0 right-0 bg-[#ffffff54]"></div>
-
-
-
-
-
-  <!-- <div class="input-container">
-    <label>Email Address</label>
-    <input type="email" placeholder="Enter your email address" />
-  </div> -->
-
-  <!-- Password field (static) -->
-  <!-- <div class="flex flex-col gap-[8px] w-full">
-    <div class="input-container">
-      <label>Password</label>
-      <input type="password" placeholder="Enter your password" />
-      <img class="w-[14px] cursor-pointer" src="../../../../assets/icons/eye.svg" alt="" />
-    </div>
-    <span class="text-end cursor-pointer text-[14px] font-[800] text-[#6B7280]">Forgot password?</span>
-  </div> -->
-
-  <!-- Button (static) -->
-  <!-- <div class="flex flex-col items-end gap-[28px] justify-end" >
     <span
-      class="{{
-     'sm:w-[157px] w-full'
-  }} h-[53px] transition-all ease-in duration-100 capitalize flex items-center justify-center bg-[#034EA2] text-[#fff] rounded-[5px] cursor-pointer text-[16px] font-[800]"><span
-        *ngIf="loading"
-        class="min-w-[27px] h-[27px] rounded-full capitalize border border-l-[#034EA2] animate-spin"></span>
-      {{ "Continue" }}
-    </span>
-    <span class="text-[14px] font-[400] text-[#9FA6B2]">
-      Having Issues?
-      <span (click)="
-      userType === 'email' ? (userType = 'phone') : (userType = 'email')
-    " class="text-[#034EA2] cursor-pointer font-[700]">Sign in with your
-        {{ userType === "email" ? "Phone Number" : "Email" }}
-      </span> </span>
-  </div> -->
-  <div class="flex flex-col items-end gap-[28px] justify-end mt-[24px]">
+      [routerLink]="['/forgot-password']"
+      class="text-end cursor-pointer text-[14px] font-[800] text-[#6B7280]"
+      >forgot password?</span
+    >
+  </div>
+  <div
+    *ngIf="loading"
+    class="absolute top-0 left-0 bottom-0 right-0 bg-[#ffffff54]"
+  ></div>
+
+  <div class="flex flex-col items-end gap-[28px] justify-end">
     <!-- *ngIf="error.type !== 'create-account'" -->
-    <span (click)="
+    <span
+      (click)="
         showPassword && path === 'login'
           ? login()
           : userType === 'phone'
           ? verifyPhoneNumber()
           : verifyEmail()
-      " class="{{
+      "
+      class="{{
         showPassword || path === 'create-account'
           ? 'w-full'
           : 'sm:w-[157px] w-full'
-      }} h-[53px] transition-all ease-in duration-100 capitalize flex items-center
-      justify-center bg-[#034EA2] text-[#fff] rounded-[5px] cursor-pointer text-[16px] font-[800]">
-      <span *ngIf="loading"
-        class="min-w-[27px] h-[27px] rounded-full capitalize border border-l-[#034EA2] animate-spin"></span>
+      }} h-[53px] transition-all ease-in duration-100 capitalize flex items-center justify-center bg-[#034EA2] text-[#fff] rounded-[5px] cursor-pointer text-[16px] font-[800]"
+      ><span
+        *ngIf="loading"
+        class="min-w-[27px] h-[27px] rounded-full capitalize border border-l-[#034EA2] animate-spin"
+      ></span>
       {{ loading ? "" : showPassword ? path.replace("-", " ") : "Continue" }}
     </span>
-    <span *ngIf="!showPassword && path === 'login'" class="text-[14px] font-[400] text-[#9FA6B2]">Having Issues?
-      <span (click)="
+    <span
+      *ngIf="!showPassword && path === 'login'"
+      class="text-[14px] font-[400] text-[#9FA6B2]"
+      >Having Issues?
+      <span
+        (click)="
           userType === 'email' ? (userType = 'phone') : (userType = 'email')
-        " class="text-[#034EA2] cursor-pointer font-[700]">Sign in with your
+        "
+        class="text-[#034EA2] cursor-pointer font-[700]"
+        >Sign in with your
         {{ userType === "email" ? "Phone Number" : "Email" }}
       </span>
     </span>

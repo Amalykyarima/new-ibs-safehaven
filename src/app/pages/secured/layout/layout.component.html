@@ -9,7 +9,7 @@
       </button>
       <div class="font-semibold text-sm">
         <span class="text-slate-500">Hi, </span>
-        <span class="text-slate-800">Abasifreke</span>
+        <span class="text-slate-800">{{this.currentUser?.user?.firstName}}</span>
       </div>
     </div>
     <div class="flex items-center gap-2">
@@ -220,51 +220,16 @@
   <!-- Main Content -->
   <div class="flex-1 md:ml-[260px]">
     <!-- Desktop Header (hidden on mobile) -->
-    <header class="hidden md:flex items-center justify-between px-4 py-3 lg:px-6 lg:py-4 bg-white sticky top-0 z-10">
-      <!-- Greeting - responsive text size -->
-      <div class="font-semibold text-sm lg:text-base">
-        <span class="text-slate-500">Good Morning, </span>
-        <span class="text-slate-800">Malik 👋</span>
-      </div>
+    <app-header
+      [title]="this.headerTitle"
+      [(openSideBar)]="this.openSideBar"
+      [fetchingData]="this.fetchingData"
+      [currentUser]="this.currentUser"
+      [showBackButton]="this.showHeaderBackButton"
+      [backUrl]="this.backUrl"
+      [urlQuery]="this.urlQuery"
+    ></app-header>
 
-      <!-- Right side header elements - responsive layout -->
-      <div class="flex items-center gap-2 lg:gap-4 xl:gap-6">
-        <!-- KYC Section - responsive sizing -->
-        <div class="flex items-center bg-slate-200 rounded-[10px] px-2 py-1 lg:px-3 lg:py-2">
-          <div class="flex items-center gap-1 mr-1 lg:mr-2 lg:gap-1.5">
-            <img src="../../../../assets/icons/kyc-1.svg" alt="KYC Level" class="w-5 h-5 lg:w-6 lg:h-6">
-            <span class="font-semibold text-slate-800 text-xs lg:text-sm">KYC Level 1</span>
-          </div>
-          <img src="../../../../assets/icons/warn.svg" alt="Info" class="w-4 h-4 mr-1 lg:w-5 lg:h-5 lg:mr-2">
-          <button
-            class="h-7 px-2 lg:h-8 lg:px-3 bg-white rounded-[10px] border border-slate-300 text-xs lg:text-sm font-semibold text-slate-700">
-            <span class="hidden sm:inline">Upgrade Account</span>
-            <span class="sm:hidden">Upgrade</span>
-          </button>
-        </div>
-
-        <!-- Notification and User Profile - responsive layout -->
-        <div class="flex items-center gap-2 lg:gap-4">
-          <!-- Notification Button - responsive size -->
-          <button
-            class="w-8 h-8 lg:w-10 lg:h-10 p-1 lg:p-1.5 bg-slate-50 rounded-full flex items-center justify-center">
-            <img src="../../../../assets/icons/newBluebell.svg" alt="Notifications" class="w-4 h-4 lg:w-5 lg:h-5">
-          </button>
-
-          <!-- User Profile - responsive elements -->
-          <div class="flex items-center gap-1 lg:gap-2">
-            <img class="w-8 h-8 lg:w-10 lg:h-10 rounded-full" src="../../../../assets/icons/new-Avatars.svg"
-              alt="User avatar" />
-            <div class="hidden xl:flex flex-col">
-              <div class="font-semibold text-slate-800 text-sm">Abdulmalik Masud</div>
-              <div class="text-xs text-slate-500">abdulmalik.masud2gmail.com</div>
-            </div>
-            <img src="../../../../assets/icons/newdropdown.svg" alt="Dropdown"
-              class="w-5 h-5 lg:w-6 lg:h-6 hidden lg:block">
-          </div>
-        </div>
-      </div>
-    </header>
 
     <!-- Main Content Area -->
     <main
