@@ -1,62 +1,39 @@
-<div
-  class="flex flex-col gap-[14px] relative p-[24px] sm:px-[24px] px-0 shadow_ sm:bg-[#fff] rounded-[10px]"
->
+<div class="flex flex-col gap-[1px] relative p-[24px] sm:px-[24px] px-0 shadow_ sm:bg-[#fff] rounded-[10px]">
   <!-- Error message -->
-  <div
-    *ngIf="error.message !== ''"
-    class="bg-[#FDF2F2] w-full px-[16px] py-[13px] flex items-center gap-[8px]"
-  >
-    <span
-      class="min-w-[30px] h-[30px] flex items-center justify-center bg-[#FBD5D5] rounded-[5px]"
-      ><img src="../../../../assets/icons/red_warn.svg" alt=""
-    /></span>
+  <div *ngIf="error.message !== ''" class="w-full flex items-center gap-[8px]">
+    <span class="min-w-[30px] h-[30px] flex items-center justify-center rounded-[5px]">
+      <img src="../../../../assets/icons/error-icon.svg" alt="" />
+    </span>
     <span class="text-[13px] text-[#E02424] font-[800]">
       {{
-        error.type !== "create-account"
-          ? error.message
-          : "This" +
-            (userType === "phone" ? "number" : "email") +
-            "
-      is not assigned to any user, you may want to check and retry, otherwise"
+      error.type !== "create-account"
+      ? error.message
+      : "This" +
+      (userType === "phone" ? "number" : "email") + " isn’t linked to any account. Please check and try again, or"
       }}
-      <span
-        *ngIf="error.type === 'create-account'"
-        (click)="sendOtp()"
-        class="font-[900] underline text-[#034EA2] cursor-pointer"
-        >Create Account.
+      <span *ngIf="error.type === 'create-account'" (click)="sendOtp()"
+        class="font-[900] underline text-[#1E293B] cursor-pointer">Create Account.
       </span>
-      <span
-        *ngIf="error.type === 'reset-password'"
-        [routerLink]="['/forgot-password']"
-        class="font-[900] underline text-[#034EA2] cursor-pointer"
-        >Reset Password.
+      <span *ngIf="error.type === 'reset-password'" [routerLink]="['/create-account']"
+        class="font-[900] underline text-[#1E293B] cursor-pointer">Reset Password.
       </span>
-      <span
-        *ngIf="error.type === 'signin'"
-        (click)="navigate()"
-        class="font-[900] underline text-[#034EA2] cursor-pointer"
-        >Sign In.
+      <span *ngIf="error.type === 'signin'" (click)="navigate()"
+        class="font-[900] underline text-[#1E293B] cursor-pointer">Sign In.
       </span>
     </span>
   </div>
 
-  <div
-    *ngIf="(success.message && success.message !== '') || loading_"
-    class="bg-[#034da20d] w-full px-[16px] py-[13px]"
-  >
+  <div *ngIf="(success.message && success.message !== '') || loading_"
+    class="bg-[#034da20d] w-full px-[16px] py-[13px]">
     <div *ngIf="!loading_" class="w-full flex items-center gap-[8px]">
-      <span
-        class="min-w-[30px] h-[30px] flex items-center justify-center bg-[#034da232] rounded-[5px]"
-        ><img src="../../../../assets/icons/warn_.svg" alt=""
-      /></span>
+      <span class="min-w-[30px] h-[30px] flex items-center justify-center bg-[#034da232] rounded-[5px]"><img
+          src="../../../../assets/icons/warn_.svg" alt="" /></span>
       <span class="text-[13px] text-[#034EA2] font-[800]">
         {{ success.message }}
       </span>
     </div>
     <div *ngIf="loading_" class="w-full flex justify-center items-center">
-      <span
-        class="w-[27px] h-[27px] border border-l-[#fff] rounded-full animate-spin border-[#034EA2]"
-      ></span>
+      <span class="w-[27px] h-[27px] border border-l-[#fff] rounded-full animate-spin border-[#034EA2]"></span>
     </div>
   </div>
 

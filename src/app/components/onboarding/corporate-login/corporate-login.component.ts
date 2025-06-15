@@ -2,10 +2,15 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { InputComponent } from '../../../common/utilities/input/input.component';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../resources/services/auth.service';
-import { Signin } from '../../../resources/models/signin';
+import { ResetPassword, Signin } from '../../../resources/models/signin';
 import { RouterModule } from '@angular/router';
 import { GeneralService } from '../../../resources/services/general.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import * as onboardingActions from '../../../resources/store/onboarding/onboarding.actions';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { Store, StoreModule } from '@ngrx/store';
+import { State } from '../../../resources/store/onboarding/onboarding.reducer';
+
 
 
 @Component({
@@ -19,8 +24,12 @@ export class CorporateLoginComponent {
 
   constructor(
     private authService: AuthService,
-    // public generalService: GeneralService,
+    public generalService: GeneralService,
     private router: Router,
+    private notification: NzNotificationService,
+    private store: Store<State>,
+    private routes: ActivatedRoute
+
 
 
   ) {
@@ -33,9 +42,7 @@ export class CorporateLoginComponent {
   loading = false;
   loading_ = false;
   success: any = {};
-
   countryCode = '+234';
-
   password: string = '';
   passwordType = 'password';
   showPassword = false;
@@ -58,63 +65,37 @@ export class CorporateLoginComponent {
     : 'login';
 
   user: Signin;
+  isEmailValid: boolean = false;
+  emailAddressLength: number = 0;
+  referralId = '';
+
+
+
   @Output() validateUser: EventEmitter<any> = new EventEmitter<any>();
   @Output() getUser: EventEmitter<any> = new EventEmitter<any>();
 
-  // handleChange(field: keyof typeof this.formData, value: string) {
-  //   this.formData[field] = value;
-  // }
 
-  // handleChange(field: 'email' | 'password', value: string) {
-  //   this[field] = value;
-  // }
-
-
-
-  verifyPhoneNumber() {
-    console.log('Verify phone number:', this.phoneNumber);
+  ngOnInit(): void {
+    this.routes.queryParamMap.subscribe((paths: any) => {
+      this.email = paths ? paths.params.user : '';
+      this.referralId = paths.params.referringUserId
+        ? paths.params.referringUserId
+        : '';
+      if (paths.params.referringUserId)
+        localStorage.setItem('referralId', paths.params.referringUserId);
+    });
   }
 
-  login() {
-    console.log('Login...');
-  }
-
-
-  getCountryCode = (code: any) => {
-    this.countryCode = code;
-    this.showPassword = false;
-  };
-
-
-  isPhoneValid(): boolean {
-    return /^\d{10,}$/.test(this.phoneNumber); // checks if 10+ digits
-  }
-
-  emailAddressLength: number = 0;
-
-  handleChange(field: string, value: string) {
-    if (field === 'email') {
-      this.email = value;
-      this.validateEmailFormat(value);
+  handleChange = (name: 'email' | 'password', value: string) => {
+    if (name === 'email' && this.email !== value) {
+      this.showPassword = false;
+      this.getUser.emit({ user: value.trim(), countryCode: '' });
     }
-    // handle other fields...
-  }
-
-
-  isEmailValid: boolean = false;
-
-  validateEmailFormat(email: string): void {
-    const allowedDomains = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com'];
-    const trimmedEmail = email.trim().toLowerCase();
-
-    const atIndex = trimmedEmail.lastIndexOf('@');
-    const domain = atIndex !== -1 ? trimmedEmail.slice(atIndex + 1) : '';
-
-    this.isEmailValid =
-      atIndex > 0 &&
-      allowedDomains.includes(domain) &&
-      trimmedEmail.endsWith('.com');
-  }
+    this.error = { type: '', message: '' };
+    this[name] = value.trim();
+    if (value && value === '') this.validators[name] = 'Required*';
+    else this.validators[name] = '';
+  };
 
   validateEmail = (email: string) => {
     return String(email)
@@ -147,22 +128,22 @@ export class CorporateLoginComponent {
             if (res.message === 'User found') {
               this.path === 'create-account'
                 ? (this.error = {
-                  type: 'signin',
-                  message: 'User already exist',
-                })
+                    type: 'signin',
+                    message: 'User already exist',
+                  })
                 : (this.showPassword = true);
             } else {
               this.path === 'create-account'
                 ? this.validateUser.emit({
-                  ...this.user,
-                  type: 'otp',
-                  user: this.email.toLowerCase().trim(),
-                  ...res.data,
-                })
+                    ...this.user,
+                    type: 'otp',
+                    user: this.email.toLowerCase().trim(),
+                    ...res.data,
+                  })
                 : (this.error = {
-                  type: 'create-account',
-                  message: res.message,
-                });
+                    type: 'create-account',
+                    message: res.message,
+                  });
             }
           },
           error: (err: any) => {
@@ -175,7 +156,6 @@ export class CorporateLoginComponent {
         });
     }
   };
-
   sendOtp = async () => {
     this.loading = true;
 
@@ -208,26 +188,123 @@ export class CorporateLoginComponent {
       });
   };
 
-  // navigate = () => {
-  //   this.router.navigate(['/signin'], {
-  //     queryParams: {
-  //       countryCode: '',
-  //       user: this.email.toLowerCase().trim(),
-  //       type: 'Corporate',
-  //     },
-  //   });
-  // };
+  login = () => {
+    if (this.password === '') {
+      this.validators = { ...this.validators, password: 'Required*' };
+      return;
+    }
 
+    let loginData: any = {
+      emailAddress: this.email.toLowerCase().trim(),
+      password: this.password,
+      type: 'EMAIL',
+    };
+    this.error = { type: '', message: '' };
+    this.loading = true;
+    this.authService
+      .login({
+        ...loginData,
+        userAgent: this.user.userAgent,
+        type: 'EMAIL',
+        accountType: 'Corporate',
+      })
+      .subscribe({
+        next: (res: any) => {
+          //('response', res);
+          if (/^20.*/.test(res.statusCode)) {
+            this.loading = false;
+            this.notification.success(
+              'Account signin successful.',
+              '' + res.message,
+              { nzClass: 'notification1' }
+            );
+            if (res.statusCode == 202 || res.statusCode == 201) {
+              this.store.dispatch(
+                onboardingActions.setSignInDetails({
+                  signInDetails: {
+                    ...this.user,
+                    ...loginData,
+                  },
+                })
+              );
+              //(res.data);
+              this.store.dispatch(
+                onboardingActions.setTempUserDetails({
+                  tempUser: {
+                    ...res.data,
+                  },
+                })
+              );
+
+              if (
+                res.data.twoFactorAuthMethods &&
+                res.data.twoFactorAuthMethods.length >= 1
+              ) {
+                this.store.dispatch(
+                  onboardingActions.setTwoFAAction({ twoFAType: 'signin' })
+                );
+              } else {
+                this.generalService.saveUser(res.data);
+                this.store.dispatch(
+                  onboardingActions.setTwoFAAction({ twoFAType: 'signup' })
+                );
+              }
+              setTimeout(() => {
+                this.router.navigate(['/signin/two-factor-authentication']);
+              }, 500);
+            } else if (res.statusCode == 200) {
+              if (res.data?.otpId) {
+                let data: ResetPassword = new ResetPassword();
+                data = {
+                  ...data,
+                  phoneNumber: res.data.phoneNumber.split(' ').join('').trim(),
+                  otpId: res.data.otpId,
+                };
+                this.store.dispatch(
+                  onboardingActions.setResetDetails({ resetDetails: data })
+                );
+                this.store.dispatch(
+                  onboardingActions.setResetAction({ resetType: 'signin' })
+                );
+                setTimeout(() => {
+                  this.router.navigate(['/reset-password-with-otp']);
+                }, 500);
+              } else if (res.data?.requiredVerification) {
+                const encoded = window.btoa(JSON.stringify(res.data));
+                setTimeout(() => {
+                  this.router.navigate(['/identity/' + encoded]);
+                }, 300);
+              } else {
+                this.success = { message: res.message };
+
+                // setTimeout(() => {
+                //   this.router.navigate(['/reset-password']);
+                // }, 500);
+              }
+            }
+          } else {
+            this.error = { message: '' + res.message, type: '' };
+            this.loading = false;
+          }
+        },
+        error: (err) => {
+          this.error = {
+            type: '',
+            message: 'Something went wrong, please try again.',
+          };
+          this.loading = false;
+        },
+      });
+  };
   navigate = () => {
     this.router.navigate(['/signin'], {
       queryParams: {
-        countryCode: this.countryCode,
-        user: this.phoneNumber,
-        type: 'Individual',
+        countryCode: '',
+        user: this.email.toLowerCase().trim(),
+        type: 'Corporate',
       },
     });
   };
-
 
 
 
