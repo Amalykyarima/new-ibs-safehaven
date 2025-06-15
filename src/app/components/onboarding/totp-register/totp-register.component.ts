@@ -75,7 +75,8 @@ export class TotpRegisterComponent {
             if (res.statusCode === 200) {
               const encoded = window.btoa(JSON.stringify(this.loginData));
               //(encoded);
-              this.router.navigate(['/onboarding/profile-setup/' + encoded]);
+              // this.router.navigate(['/onboarding/profile-setup/' + encoded]);
+              this.router.navigate(['/setup-account' + encoded]);
             } else if (
               res.statusCode === 400 &&
               res.message === 'Incorrect OTP.'
