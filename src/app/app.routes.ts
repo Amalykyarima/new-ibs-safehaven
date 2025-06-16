@@ -65,7 +65,7 @@ export const routes: Routes = [
   //   import('./pages/secured/dashboard/dashboard.component').then((m) => m.DashboardComponent),
   // },
   {
-    path: 'setup-account',
+    path: 'setup-account-corporate',
     loadComponent: () =>
     import('./pages/public/setup-account/setup-account.component').then((m) => m.SetupAccountComponent),
 

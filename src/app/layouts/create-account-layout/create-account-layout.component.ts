@@ -52,11 +52,6 @@ export class CreateAccountLayoutComponent {
     passwordSetup: false,
   };
 
-  // navigationSteps = [
-  //   { id: 1, label: 'Additional Information', active: true },
-  //   { id: 2, label: 'Home Address', active: false },
-  //   { id: 3, label: 'Password Setup', active: false }
-  // ];
   spinner: boolean = false;
   loading: boolean = false;
 

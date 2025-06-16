@@ -62,7 +62,7 @@
         </div>
       </div>
     </ng-container>
-    <div *ngIf="!searchCompany" class="mt-[32px] flex justify-between">
+    <div *ngIf="!this.searchCompany" class="mt-[32px] flex justify-between">
         <!-- <button
           class="bg-gray-200 px-4 py-2 rounded"
           (click)="back()"
@@ -73,18 +73,17 @@
             <img src="../../../../assets/icons/left-arrow.svg" alt="">
             <span class="text-[#334155] font-[600] text-[14px]">Back</span>
         </div>
-      
+
         <!-- <button
           class="bg-blue-600 text-white px-4 py-2 rounded"
           (click)="next()"
           [disabled]="step === totalSteps - 1">
           Next
         </button> -->
-        <div class="w-full max-w-[157px]"> 
+        <div class="w-full max-w-[157px]">
             <app-button-filled [action]="next" [text]="'Continue'" />
         </div>
       </div>
   </div>
-  
-  
-  
+
+

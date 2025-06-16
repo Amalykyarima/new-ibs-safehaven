@@ -76,7 +76,16 @@ export class TotpRegisterComponent {
               const encoded = window.btoa(JSON.stringify(this.loginData));
               //(encoded);
               // this.router.navigate(['/onboarding/profile-setup/' + encoded]);
-              this.router.navigate(['/setup-account' + encoded]);
+            console.log('logindataaa', this.loginData)
+              if (this.loginData.accountType === 'Corporate'){
+                setTimeout(() => {
+                  this.router.navigate(['/setup-account-corporate']);
+                }, 500);
+              } else {
+                setTimeout(() => {
+                  this.router.navigate(['/setup-account-individual']);
+                }, 500);
+              }
             } else if (
               res.statusCode === 400 &&
               res.message === 'Incorrect OTP.'
