@@ -38,6 +38,7 @@ export class SetupProfileCorporateComponent {
   passwordType2 = 'password'
   password = '';
   confirmPassword = '';
+  emailAddress = '';
 
   // validators = {
 
@@ -121,6 +122,8 @@ export class SetupProfileCorporateComponent {
     city: '',
     password: '',
     confirmPassword: '',
+    emailAddress: '',
+
   };
 
   searchResults: any = [];
@@ -207,6 +210,8 @@ export class SetupProfileCorporateComponent {
       );
   };
 
+
+
   handleChange = (
     name:
       | 'companyName'
@@ -215,7 +220,8 @@ export class SetupProfileCorporateComponent {
       | 'natureOfBusiness'
       | 'registrationType'
       | 'tin'
-      | 'accountType',
+      | 'accountType'
+      | 'emailAddress',
     value: any
   ) => {
     // //(value);

@@ -27,7 +27,12 @@
                     <app-datepicker [max]="today" [label]="'Date of Registration'" [selectedDate]="registrationDate"
                     (onChange)="handleChange('registrationDate', $event)" [error]="validators.registrationDate"/>
                 </div>
-                <app-input [placeholder]="'Company Email Address'" />
+                <app-input [placeholder]="'Company Email Address'" [label]="'Email'"
+                [value]="emailAddress"
+                [error]="validators.emailAddress"
+                (onChange)="handleChange('emailAddress', $event)"
+                [placeholder]="'Enter your email address'"
+                (submit)="handleSubmit()" />
                 <app-select [placeholder]="'Incorporation Type'" [options]="['Private Limited', 'Public Limited', 'Sole Proprietorship', 'Partnership']" />
                 <app-select [placeholder]="'Nature of Business'" [options]="['Agriculture', 'Manufacturing', 'Services', 'Other']" />
                 <app-input [placeholder]="'Tax Identification Number'" [label]="'TIN (Optional)'" [value]="tin" [error]="validators.tin"
