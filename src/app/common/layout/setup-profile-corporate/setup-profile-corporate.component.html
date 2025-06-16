@@ -8,7 +8,7 @@
            </div>
            <div class="w-full flex flex-col gap-[32px]">
            <app-search />
-            <span class="font-[500] text-[14px] text-[#64748B]">I didn’t find my company name, <span (click)="searchCompanyToggle()" class="font-[600] cursor-pointer text-[#034EA2] text-[14px]">Click Here</span></span>
+            <span class="font-[500] text-[14px] text-[#64748B]">I didn’t find my company name, <span (click)="nextt()" class="font-[600] cursor-pointer text-[#034EA2] text-[14px]">Click Here</span></span>
            </div>
         </div>
         <div *ngIf="!searchCompany" class="w-full flex flex-col gap-[28px]">
@@ -17,15 +17,21 @@
                 <span class="font-[500] text-[18px] text-[#64748B]">Please provide just a bit more information to complete your profile setup.</span>
             </div>
             <div class="flex flex-col gap-[8px]">
-                <app-input [placeholder]="'Company Name'" />
+                <app-input [placeholder]="'Company Name'" [value]="companyName" [error]="validators.companyName"
+                (onChange)="handleChange('companyName', $event)" [placeholder]="'Enter your companyName'"
+                (submit)="handleSubmit()" />
                 <div class="w-full items-center grid grid-cols-2 gap-[10px]">
-                    <app-input [placeholder]="'RC Number'" />
-                    <app-datepicker />
+                    <app-input [placeholder]="'RC Number'" [value]="registrationNumber" [error]="validators.registrationNumber"
+                    (onChange)="handleChange('registrationNumber', $event)" [placeholder]="'Enter your RC Number'"
+                    (submit)="handleSubmit()"/>
+                    <app-datepicker [max]="today" [label]="'Date of Registration'" [selectedDate]="registrationDate"
+                    (onChange)="handleChange('registrationDate', $event)" [error]="validators.registrationDate"/>
                 </div>
                 <app-input [placeholder]="'Company Email Address'" />
                 <app-select [placeholder]="'Incorporation Type'" [options]="['Private Limited', 'Public Limited', 'Sole Proprietorship', 'Partnership']" />
                 <app-select [placeholder]="'Nature of Business'" [options]="['Agriculture', 'Manufacturing', 'Services', 'Other']" />
-                <app-input [placeholder]="'Tax Identification Number'" />
+                <app-input [placeholder]="'Tax Identification Number'" [label]="'TIN (Optional)'" [value]="tin" [error]="validators.tin"
+                (onChange)="handleChange('tin', $event)" (submit)="handleSubmit()" />
             </div>
         </div>
       </div>
@@ -47,7 +53,12 @@
         </div>
         <div class="flex flex-col gap-[8px]">
             <app-input [placeholder]="'Address Line 1'" />
-            <app-select [placeholder]="'State'" [options]="['Abia', 'Adamawa', 'Yola', 'Oyo']" />
+            <app-select [placeholder]="'State'" [label]="'State'"
+            [options]="states"
+            [placeholder]="'Select your state'"
+            [option]="state"
+            [error]="validators.state"
+            (select)="handleChange1('state', $event)"/>
             <app-select [placeholder]="'City'" [options]="['Aba', 'Abakaliki']" />
         </div>
       </div>
@@ -57,8 +68,20 @@
             <span class="font-[500] text-[18px] text-[#64748B]">Set a strong password to protect your account. This will be used to protect your account</span>
         </div>
         <div class="flex flex-col gap-[8px]">
-            <app-input [placeholder]="'Password'" />
-            <app-input [placeholder]="'Confirm Password'" />
+            <app-input [placeholder]="'Password'" [type]="passwordType1"
+            [label]="'Password'"
+            [placeholder]="'Enter your password'"
+            [value]="password"
+            [error]="validators.password"
+            (onChange)="handleChange2('password', $event)"
+            (submit)="handleSubmit()"/>
+            <app-input [placeholder]="'Confirm Password'" [type]="'password'"
+            [label]="'Confirm Password'"
+            [placeholder]="'Confirm your password'"
+            [value]="confirmPassword"
+            [error]="validators.confirmPassword"
+            (onChange)="handleChange2('confirmPassword', $event)"
+            (submit)="handleSubmit()"/>
         </div>
       </div>
     </ng-container>

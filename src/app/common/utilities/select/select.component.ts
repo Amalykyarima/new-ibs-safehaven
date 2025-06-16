@@ -15,10 +15,13 @@ export class SelectComponent {
   @Input() placeholder: string = 'Select an option';
   @Input() placeholderText: string = '';
   @Input() placeholderHelper: string = '';
-  @Input() options: string[] = [];
+  // @Input() options: string[] = [];
   @Input() error: string = '';
   @Input() custom: boolean = false;
   @Input() customValue: boolean = false;
+  @Input() options: any[] = [];
+  @Input() option: any;
+
 
   @Output() optionSelected = new EventEmitter<string>();
 
