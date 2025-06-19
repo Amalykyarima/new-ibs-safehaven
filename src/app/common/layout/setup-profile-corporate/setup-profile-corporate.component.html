@@ -34,7 +34,7 @@
             [placeholder]="'Enter your email address'" (submit)="handleSubmitStep1()" />
 
           <app-select [placeholder]="'Incorporation Type'"
-            [options]="['Private Limited', 'Public Limited', 'Sole Proprietorship', 'Partnership']"
+            [options]="['Limited Liability Companies', 'Non-Limited Companies', 'Associations and Cooperatives']"
             [error]="validators.registrationType"
             (optionSelected)="handleChangeStep1('registrationType', $event)"></app-select>
 
@@ -97,10 +97,10 @@
       <div class="flex flex-col gap-[8px]">
         <app-input [placeholder]="'Password'" [type]="passwordType1" [label]="'Password'"
           [placeholder]="'Enter your password'" [value]="password" [error]="validators.password"
-          (onChange)="handleChange2('password', $event)" (submit)="handleSubmitStep3()" />
+          (onChange)="handleChangeStep4('password', $event)" (submit)="handleSubmitStep3()" />
         <app-input [placeholder]="'Confirm Password'" [type]="'password'" [label]="'Confirm Password'"
           [placeholder]="'Confirm your password'" [value]="confirmPassword" [error]="validators.confirmPassword"
-          (onChange)="handleChange2('confirmPassword', $event)" (submit)="handleSubmitStep3()" />
+          (onChange)="handleChangeStep4('confirmPassword', $event)" (submit)="handleSubmitStep3()" />
       </div>
     </div>
   </ng-container>

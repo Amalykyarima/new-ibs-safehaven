@@ -10,6 +10,8 @@ import {
 import { CommonModule } from '@angular/common';
 import moment from 'moment';
 import { getStates, getLgas } from 'ngn-states-lgas';
+import { FormGroup } from '@angular/forms';
+
 
 
 // import { Component, EventEmitter, Input, Output } from '@angular/core';
@@ -24,20 +26,21 @@ import { CompanySignup } from '../../../resources/models/signup';
 import { Signin } from '../../../resources/models/signin';
 import { AuthService } from '../../../resources/services/auth.service';
 import { SharedDataService } from '../../../resources/services/shared-data.service';
-
+import { Router } from '@angular/router';
+import { SmallButtonComponent } from '../../utilities/small-button/small-button.component';
 @Component({
-  selector: 'app-setup-profile-corporate',
+  selector: 'app-setup-profile-individual',
   standalone: true,
-  imports: [CommonModule, SearchComponent, InputComponent, DatepickerComponent, SelectComponent, ButtonFilledComponent],
-  templateUrl: './setup-profile-corporate.component.html',
-  styleUrl: './setup-profile-corporate.component.scss'
+  imports: [CommonModule, SmallButtonComponent, InputComponent, SelectComponent, ButtonFilledComponent],
+  templateUrl: './setup-profile-individual.component.html',
+  styleUrl: './setup-profile-individual.component.scss'
 })
-export class SetupProfileCorporateComponent {
+export class SetupProfileIndividualComponent {
+
   newUser: CompanySignup;
   date: any = new Date();
 
   signUpSuccess = false;
-  // newUser: CompanySignup;
   errorMessage: string = '';
   processLoading: boolean = false;
 
@@ -45,11 +48,60 @@ export class SetupProfileCorporateComponent {
   referralCode: string = '';
   referralCodeEntered: string = '';
   loginData: any;
+
+
+  active: boolean = false;
+
+  @Output() validateUser: EventEmitter<any> = new EventEmitter<any>();
+  @Output() getUser: EventEmitter<any> = new EventEmitter<any>();
+
+  // user: Signin;
+  // userType = 'phone';
+  error: any = { type: '', message: '' };
+  phoneNumber: any = '';
+
+  loading = false;
+  loading_ = false;
+  success: any = {};
+
+  countryCode = '+234';
+  passwordType = 'password';
+  showPassword = false;
+  email: string = '';
+  gender: string ='';
+
+
+
+  @Input() additional: boolean = false;
+  @Input() home: boolean = true;
+  @Input() passwordSetup: boolean = false;
+
+  spinner: boolean = false;
+
+  accountTypes = [
+    {
+      id: 1,
+      type: 'Savings Account',
+      icon: '../../../../assets/icons/savings.svg',
+      active: '../../../../assets/icons/savings-active.svg',
+    },
+    {
+      id: 2,
+      type: 'Current Account',
+      icon: '../../../../assets/icons/current.svg',
+      active: '../../../../assets/icons/current-active.svg'
+
+    }
+  ];
+
+
+
   constructor(
     private identityService: IdentitiesService,
     private generalService: GeneralService,
     private authService: AuthService,
-    private sharedDataService: SharedDataService
+    private sharedDataService: SharedDataService,
+    private router: Router,
   ) {
     this.newUser = new CompanySignup();
   }
@@ -158,7 +210,9 @@ export class SetupProfileCorporateComponent {
     password: '',
     confirmPassword: '',
     emailAddress: '',
-
+    phoneNumber:'',
+    email:'',
+    gender: ''
   };
 
   searchResults: any = [];
@@ -199,7 +253,6 @@ export class SetupProfileCorporateComponent {
     }
 
     if (changes['form']) {
-      //("changes['form'].currentValue", changes['form'].currentValue);
       this.state = changes['form'].currentValue.state;
       this.address = changes['form'].currentValue.address;
       this.city = changes['form'].currentValue.city;
@@ -208,9 +261,7 @@ export class SetupProfileCorporateComponent {
 
   }
 
-  // activeButton() {
-  //   this.isLoading = true;
-  // }
+
 
   activeButton = () => {
     console.log('activeButton')
@@ -230,122 +281,6 @@ export class SetupProfileCorporateComponent {
   nextt() {
     this.searchCompany = !this.searchCompany
   }
-
-  // async signUpCorporate() {
-  //   // Only continue if process is not loading
-  //   // if (this.processLoading) return;
-  //   // this.errorMessage = "";
-  //   // this.processLoading = true;
-  //   // this.referralCode = await this.generalService.getReferralId();
-  //   // console.log("getReferralId signUpIndividual", this.referralCode)
-
-  //   if (this.referralCode === null || this.referralCode === '') {
-  //     this.referralCode = this.referralCodeEntered
-  //   }
-  //   // console.log('this.referralCode else', this.referralCode)
-
-  //   let data: CompanySignup = new CompanySignup();
-  //   data = {
-  //     ...data,
-  //     // type: 'EMAIL',
-  //     // identityId: this.identityId,
-  //     // emailAddress: this.userIdentifier.toLowerCase(),
-  //     // accountType: 'Current',
-  //     // title: this.title,
-  //     // gender: this.selectedGender,
-  //     companyName: this.companyName,
-  //     // maritalStatus: this.maritalStatus,
-  //     password: this.password,
-  //     registrationType: this.registrationType,
-  //     registrationNumber: this.registrationNumber,
-  //     // registrationDate: this.dateOfBirth,
-  //     // NatureOfBusiness: this.natureOfBusiness,
-  //     // natureOfBusiness: this.natureOfBusiness,
-  //     natureOfBusiness: this.natureOfBusiness as NatureOfBusiness, // ✅ Fix
-
-
-  //     tin: this.tin,
-  //     // referralCode: this.referralCode,
-  //     address: {
-  //       address: this.address,
-  //       city: this.city,
-  //       state: this.state,
-  //       // country: this.country
-  //     },
-  //     CompanyAddress: {
-  //       address: this.company_address,
-  //       city: this.company_city,
-  //       state: this.company_state,
-  //       // country: this.company_country
-  //     },
-
-  //   }
-  //   // let signInData: Signin = new Signin();
-
-  //   // signInData = {
-  //   //   ...signInData,
-  //   //   password: this.form.value.password,
-  //   //   emailAddress: this.signInType == 'email' ? this.form.value.emailAddress : '',
-  //   //   phoneNumber: this.signInType === 'phoneNumber' ? `+234${this.form.value.phoneNumber}` : '',
-  //   //   // phoneNumber: this.signInType == 'phoneNumber' ? '+234' + this.form.value.phoneNumber : '',
-  //   //   // phoneNumber: this.signInType == 'phoneNumber' ? this.form.value.phoneNumber.internationalNumber : undefined,
-  //   //   type: this.signInType == 'email' ? 'EMAIL' : 'PHONE',
-  //   //   // biometricType: this.form.value.biometricType,
-  //   // }
-
-  //   if ([
-  //     // this.address.street,
-  //   // this.address.country,
-  //   this.state,
-  //   this.city,
-  //   // this.company_street,
-  //   // this.company_country,
-  //   this.company_state,
-  //   this.company_city,
-  //   this.accountType,
-  //   // this.title,
-  //   // this.gender,
-  //   // this.maritalStatus,
-  //   this.companyName,
-  //   this.password].includes("")) {
-  //     // this.generalService.showErrorMessage('All fields are required.');
-  //     // this.currentStep === 2;
-  //     // this.errorMessage = "All fields are required.";
-  //     // this.processLoading = false;
-  //   }
-  //   else {
-  //     // this.identityId = this.identityId;
-  //     // this.dateOfBirth = this.generalService.formatDateISO(this.date);
-  //     this.emailAddress = this.emailAddress.toLowerCase();
-  //     // console.log('data', data)
-  //     this.authService.registerCorporate(data).subscribe(
-  //       (res: any) => {
-  //         if (res.statusCode === 200) {
-  //           // this.store.dispatch(generalActions.setSignInDetails({ signInDetails: signInData }));
-  //           //   console.log('generalService.saveUser(res.data)1', res.data)
-  //           this.generalService.newSaveUser1(res);
-  //           // this.processLoading = false;
-  //           // this.generalService.showSuccessMessage(res.message);
-  //           // setTimeout(() => {
-  //           //   this.currentStep = 6;
-  //           // }, 1000);
-
-  //         }
-  //         else {
-  //           // this.generalService.showErrorMessage(res.message);
-  //           // this.errorMessage = '' + res.message;
-  //           // this.processLoading = false;
-  //         }
-  //       },
-  //       (error: any) => {
-  //         // this.errorMessage = 'An error occured. Please try again later';
-  //         // this.processLoading = false;
-  //       }
-  //     )
-  //   }
-  // }
-
-
 
   searchCompanyToggle() {
     this.searching = true;
@@ -408,9 +343,7 @@ export class SetupProfileCorporateComponent {
       this.signUp();
     }
 
-    // if (this.step < this.totalSteps - 1) {
-    //   this.stepChange.emit(this.step + 1);
-    // }
+
   }
 
   back() {
@@ -425,169 +358,6 @@ export class SetupProfileCorporateComponent {
       .match(
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
-  };
-
-
-
-  // handleChangeStep1 = (
-  //   name:
-  //     | 'companyName'
-  //     | 'registrationNumber'
-  //     // | 'registrationDate'
-  //     | 'natureOfBusiness'
-  //     | 'registrationType'
-  //     | 'tin'
-  //     | 'emailAddress',
-  //   value: any
-  // ) => {
-  //   console.log({
-  //     companyName: this.companyName,
-  //     registrationNumber: this.registrationNumber,
-  //     natureOfBusiness: this.natureOfBusiness,
-  //     registrationType: this.registrationType,
-  //     tin: this.tin,
-  //     email:this.emailAddress,
-  //   });
-  //   if (this.companyName !== '' && this.registrationNumber !== '' && this.natureOfBusiness !== '' && this.registrationType !== '' && this.tin !== '' && this.emailAddress !== '') {
-  //     console.log('activeButtom')
-  //   }
-
-  //   if (name === 'emailAddress') {
-  //     const isValidEmail = this.generalService.validateEmailAddress(value);
-  //     if (!isValidEmail || isValidEmail === null) {
-  //       console.log('nameeee', name)
-
-  //       name === 'emailAddress'
-  //       this.validators[name] = 'Required*'
-  //     } else {
-  //     this.activeButton();
-  //     }
-  //   }
-  //   // //(value);
-  //   // this.activeButton();
-
-  //   if (name === 'companyName') {
-  //     let regex = /[^a-zA-Z0-9 .,'&,@-]/g;
-  //     this[name] = value.replace(regex, '').replaceAll('&', ' And ');
-  //   } else this[name] = value;
-
-
-
-  //   if (value === '' && name !== 'tin') this.validators[name] = 'Required*';
-  //   else this.validators[name] = '';
-  // };
-
-  // handleChangeStep1 = (
-  //   name:
-  //     | 'companyName'
-  //     | 'registrationNumber'
-  //     // | 'registrationDate'
-  //     | 'natureOfBusiness'
-  //     | 'registrationType'
-  //     | 'tin'
-  //     | 'emailAddress',
-  //   value: any
-  // ) => {
-  //   console.log({
-  //     companyName: this.companyName,
-  //     registrationNumber: this.registrationNumber,
-  //     natureOfBusiness: this.natureOfBusiness,
-  //     registrationType: this.registrationType,
-  //     tin: this.tin,
-  //     email: this.emailAddress,
-  //   });
-
-  //   // Email validation
-  //   if (name === 'emailAddress') {
-  //     const isValidEmail = this.generalService.validateEmailAddress(value);
-  //     this.emailAddress = value;
-
-
-  //     if (!value || !isValidEmail) {
-  //       this.validators[name] = 'Invalid Email Address*';
-  //       // this.inactiveButton();
-  //     } else {
-  //       this.validators[name] = '';
-  //     }
-
-  //     this[name] = value;
-  //     // this.checkAllValidatorsClear(); // 👈 Check after update
-  //     return;
-  //   }
-
-
-  //   // Clean company name
-  //   if (name === 'companyName') {
-  //     let regex = /[^a-zA-Z0-9 .,'&,@-]/g;
-  //     this[name] = value.replace(regex, '').replaceAll('&', ' And ');
-  //   } else {
-  //     this[name] = value;
-  //   }
-
-  //   // Required validation
-  //   if (value === '' && name !== 'tin') {
-  //     this.validators[name] = 'Required*';
-  //     this.inactiveButton();
-  //   } else {
-  //     this.validators[name] = '';
-  //     this.activeButton()
-  //   }
-
-  // };
-  handleChangeStep1 = (
-    name:
-      | 'companyName'
-      | 'registrationNumber'
-      // | 'registrationDate'
-      | 'natureOfBusiness'
-      | 'registrationType'
-      | 'tin'
-      | 'emailAddress',
-    value: any
-  ) => {
-    console.log({
-      companyName: this.companyName,
-      registrationNumber: this.registrationNumber,
-      natureOfBusiness: this.natureOfBusiness,
-      registrationType: this.registrationType,
-      tin: this.tin,
-      email: this.emailAddress,
-    });
-
-    // Handle email validation separately
-    if (name === 'emailAddress') {
-      const isValidEmail = this.generalService.validateEmailAddress(value);
-      this.emailAddress = value;
-
-      if (!value || !isValidEmail) {
-        this.validators[name] = 'Invalid Email Address*';
-      } else {
-        this.validators[name] = '';
-        this.activeButton
-      }
-
-      this[name] = value;
-      this.checkAllFieldsValid(); // ✅ check after update
-      return;
-    }
-
-    // Clean company name
-    if (name === 'companyName') {
-      let regex = /[^a-zA-Z0-9 .,'&,@-]/g;
-      this[name] = value.replace(regex, '').replaceAll('&', ' And ');
-    } else {
-      this[name] = value;
-    }
-
-    // Required field validation
-    if (value === '' && name !== 'tin') {
-      this.validators[name] = 'Required*';
-    } else {
-      this.validators[name] = '';
-      // this.activeButton()
-    }
-
-    this.checkAllFieldsValid(); // ✅ check at the end
   };
 
   checkAllFieldsValid = () => {
@@ -620,10 +390,14 @@ export class SetupProfileCorporateComponent {
     });
 
     this[name] = value;
+    // if (value === '') this.validators[name] = 'Required*' ;
+    // else this.validators[name] = '';
     if (value === '') {
       this.validators[name] = 'Required*';
+      // this.inactiveButton(); // 👈 Call inactive when value is empty
     } else {
       this.validators[name] = '';
+      // this.activeButton();
     }
     this.checkAllFieldsValid2()
 
@@ -648,19 +422,24 @@ export class SetupProfileCorporateComponent {
   };
 
   handleChangeStep3 = (name: 'address' | 'state' | 'city', value: any) => {
+    // console.log(name, value);
     this[name] = value;
+    // if (value === '') this.validators[name] = 'Required*';
+    // else this.validators[name] = '';
     if (value === '') {
       this.validators[name] = 'Required*';
+      // this.inactiveButton();
     } else {
       this.validators[name] = '';
+      // this.activeButton();
     }
     this.checkAllFieldsValid3()
   };
 
   checkAllFieldsValid3 = () => {
     const fields = [
-      this.address,
-      this.state,
+      this.phoneNumber,
+      this.gender,
       this.city,
     ];
 
@@ -705,36 +484,16 @@ export class SetupProfileCorporateComponent {
     if (allFilled && !hasError) {
       this.activeButton();
     } else {
-      this.inactiveButton?.(); // Optional fallback
+      this.inactiveButton?.();
     }
   };
 
-
-  // handleChange2 = (name: 'password' | 'confirmPassword', value: any) => {
-  //   this[name] = value;
-  //   if (value === '') this.validators[name] = 'Required*';
-  //   else if (name === 'password' && !this.passwordIsStrong)
-  //     this.validators[name] = 'Password is weak*';
-  //   else if (name === 'confirmPassword' && this.password !== value)
-  //     this.validators[name] = 'Passwords do not match*';
-  //   else this.validators[name] = '';
-  // };
-
-  // handleChangeStep3 = (
-  //   name: 'address' | 'state' | 'city' | 'phoneNumber',
-  //   value: any
-  // ) => {
-  //   this[name] = value;
-  //   if (value === '') this.validators[name] = 'Required*';
-  //   else this.validators[name] = '';
-  // };
 
   validateFormStep1 = () => {
     const err: any = {};
 
     if (this.companyName === '') err.companyName = 'Required*';
     if (this.registrationNumber === '') err.registrationNumber = 'Required*';
-    // if (this.registrationDate === '') err.registrationDate = 'Required*';
     if (this.natureOfBusiness === '') err.natureOfBusiness = 'Required*';
     if (this.registrationType === '') err.registrationType = 'Required*';
     if (this.accountType === '') err.accountType = 'Required*';
@@ -742,104 +501,27 @@ export class SetupProfileCorporateComponent {
 
   };
 
-  // signUp() {
-  //   // Only continue if process is not loading
-  //   // if (this.processLoading) return;
-  //   console.log('newUser',
-  //     this.newUser.CompanyAddress.address,
-  //       this.newUser.CompanyAddress.state,
-  //       this.newUser.CompanyAddress.city,
-  //   )
-  //   this.errorMessage = '';
-  //   this.processLoading = true;
-  //   if (
-  //     [
-  //       this.newUser.CompanyAddress.address,
-  //       this.newUser.CompanyAddress.state,
-  //       this.newUser.CompanyAddress.city,
-  //     ].includes('')
-  //   ) {
-  //     this.errorMessage = 'All director address fields are required.';
-  //     this.processLoading = false;
-  //     window.scrollTo(0, 0);
-  //   } else if (
-  //     [
-  //       this.newUser.address.state,
-  //       this.newUser.address.city,
-  //       this.newUser.password,
-  //     ].includes('')
-  //   ) {
-  //     this.errorMessage = 'All fields are required.';
-  //     this.processLoading = false;
-  //     window.scrollTo(0, 0);
-  //   } else {
-  //     // this.newUser.identityId = this.validationID;
-  //     // this.newUser.registrationDate = this.generalService.formatDateISO(
-  //     //   this.date
-  //     // );
-  //     this.newUser.registrationNumber = '' + this.newUser.registrationNumber;
-  //     this.newUser.emailAddress = this.newUser.emailAddress.toLowerCase();
-  //     this.newUser.tin = '' + this.newUser.tin;
-  //     // this.newUser.type = 'CAC-BVN';
-  //     this.authService.register(this.newUser).subscribe(
-  //       (res: any) => {
-  //         if (res.statusCode === 200) {
-  //           this.processLoading = false;
-  //           this.signUpSuccess = true;
-  //           // this.notification.success(
-  //           //   'Account signup successful.',
-  //           //   '' + res.message,
-  //           //   { nzClass: 'notification1' }
-  //           // );
-  //           localStorage.removeItem('reg_type');
-  //         } else {
-  //           this.errorMessage = '' + res.message;
-  //           this.processLoading = false;
-  //           window.scrollTo(0, 0);
-  //         }
-  //       },
-  //       (error: any) => {
-  //         this.errorMessage = 'An error occured. Please try again later';
-  //         this.processLoading = false;
-  //         window.scrollTo(0, 0);
-  //       }
-  //     );
-  //   }
-  // }
+
 
   signUp() {
     const data = {
-      type: 'CAC-BVN',
+      identityId: this.loginData._id,
+      phoneNumber: this.loginData.user,
+      type: 'PHONE',
       title: 'Mr',
       gender: 'Male',
       maritalStatus: 'Single',
-      identityId: this.loginData._id,
       emailAddress: this.emailAddress,
       identityType: 'International Passport',
       companyName: this.companyName,
       registrationDate: '01-01-2024',
-      registrationNumber: this.registrationNumber,
-      natureOfBusiness: this.natureOfBusiness,
-      registrationType: this.registrationType,
       tin: this.tin,
-      directorAddress: {
+      address: {
         address: this.address,
         state: this.state,
         city: this.city
       },
-      address: {
-        address: this.company_address,
-        state: this.company_state,
-        city: this.company_city
-      },
-
-      // company_address: this.company_address,
-      // company_state: this.company_state,
-      // company_city: this.company_city,
-      // address: this.address,
-      // state: this.state,
-      // city: this.city,
-      accountType: 'Current',
+      accountType: this.accountType,
       password: this.confirmPassword,
       referralCode: localStorage['referralId']
         ? localStorage['referralId']
@@ -948,4 +630,36 @@ export class SetupProfileCorporateComponent {
     }
 
   };
+
+  onBack(): void {
+    if (this.additional) {
+      // Case: First screen — go to home page
+      this.router.navigate(['/home']); // adjust this path as needed
+    } else if (this.home) {
+      // Case: Second screen — go back to 'additional'
+      this.additional = true;
+      this.home = false;
+      this.passwordSetup = false;
+    } else if (this.passwordSetup) {
+      // Case: Third screen — go back to 'home'
+      this.additional = false;
+      this.home = true;
+      this.passwordSetup = false;
+    }
+  }
+
+
+  handleChangeStep1 = (name: 'phoneNumber' | 'emailAddress' | 'gender', value: any) => {
+    this[name] = value;
+    if (value === '') {
+      this.validators[name] = 'Required*';
+    } else {
+      this.validators[name] = '';
+    }
+    this.checkAllFieldsValid3()
+  };
+
+
 }
+
+

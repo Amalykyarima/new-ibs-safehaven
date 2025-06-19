@@ -59,11 +59,6 @@ export const routes: Routes = [
     ],
 
   },
-  // {
-  //   path: 'setup-account',
-  //   loadComponent: () =>
-  //   import('./pages/secured/dashboard/dashboard.component').then((m) => m.DashboardComponent),
-  // },
   {
     path: 'setup-account-corporate',
     loadComponent: () =>

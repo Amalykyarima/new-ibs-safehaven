@@ -5,6 +5,8 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 import { SetupProfileFormComponent } from '../../components/onboarding/setup-profile-form/setup-profile-form.component';
 import { ButtonFilledComponent } from '../../common/utilities/button-filled/button-filled.component';
 import { SetupProfileCorporateComponent } from "../../common/layout/setup-profile-corporate/setup-profile-corporate.component";
+import { SetupProfileIndividualComponent } from "../../common/layout/setup-profile-individual/setup-profile-individual.component";
+import { SharedDataService } from '../../resources/services/shared-data.service';
 
 @Component({
   selector: 'app-create-account-layout',
@@ -15,7 +17,8 @@ import { SetupProfileCorporateComponent } from "../../common/layout/setup-profil
     RouterOutlet,
     SetupProfileFormComponent,
     ButtonFilledComponent,
-    SetupProfileCorporateComponent
+    SetupProfileCorporateComponent,
+    SetupProfileIndividualComponent
 ],
   templateUrl: './create-account-layout.component.html',
   styleUrl: './create-account-layout.component.scss',
@@ -54,13 +57,20 @@ export class CreateAccountLayoutComponent {
 
   spinner: boolean = false;
   loading: boolean = false;
+  loginData: any;
 
-  constructor(private fb: FormBuilder) {
+
+    constructor(private fb: FormBuilder,
+      private sharedDataService: SharedDataService,) {
     this.form = this.fb.group({
       email: [''],
       gender: [''],
       accountType: [''],
     });
+  }
+
+  ngOnInit(){
+    this.loginData = this.sharedDataService.getLoginData();
   }
 
   // activateStep(index: number): void {

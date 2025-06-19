@@ -1,0 +1,150 @@
+<div class="w-full max-w-[446px] pb-[50px] overflow-y-auto">
+  <ng-container [ngSwitch]="step">
+    <div *ngSwitchCase="0">
+      <div>
+        <div class="flex flex-col gap-2">
+          <h1 class="font-heading-h5-bold-desktop text-[#1E293B] text-[24px] font-[700] leading-8">
+            Additional Information
+          </h1>
+          <p class="font-paragraph-l-medium text-[#64748B] text-[18px] font-[500] leading-7">
+            Please provide just a bit more information to complete your profile setup.
+          </p>
+        </div>
+
+        <form class="flex flex-col gap-6">
+          <div class="flex flex-col gap-0.5">
+            <app-input [value]="email" [placeholder]="'Enter your email address'" [error]="validators.email"
+              (onChange)="handleChangeStep1('emailAddress', $event)"></app-input>
+          </div>
+
+          <app-select [placeholder]="'Gender'" [options]="['Male', 'Female']"
+            (optionSelected)="handleChangeStep1('gender', $event)">
+          </app-select>
+
+          <div class="flex flex-col gap-8 p-5 bg-slate-50 rounded-[10px]">
+            <div class="flex flex-col gap-3.5">
+              <h3 class="font-[14px] font-[600] text-[#64748B] text-slate-500 uppercase">
+                ACCOUNT TYPE
+              </h3>
+
+              <div class="flex flex-col sm:flex-row gap-3.5">
+                <div *ngFor="let account of accountTypes"
+                  class="flex-1 min-w-[200px] flex flex-col gap-3.5 pt-[5px] pb-[18px] px-1.5 bg-white rounded-2xl shadow-[0px_2px_40px_-10px_#00000002]">
+                  <div (click)="next()" class="flex items-start justify-between">
+                    <img [src]="active ? account.active : account.icon" class="w-[50px] h-[50px]"
+                      [alt]="account.type" />
+                    <span
+                      class="sm:min-w-[16px] min-w-[16px] sm:h-[16px] h-[16px] flex items-center justify-center rounded-full cursor-pointer border border-[#CBD5E1] transition-all duration-200 ease-in"
+                      [ngClass]="{
+                        'bg-[#034EA2] border-[#034EA2]': active,
+                        'bg-white border-[#CBD5E1]': !active
+                      }">
+                      <span
+                        class="sm:min-w-[6px] min-w-[10px] sm:h-[6px] h-[10px] rounded-full transition-all ease-in duration-200"
+                        [ngClass]="{
+                          'opacity-100 bg-white': active,
+                          'opacity-0 bg-transparent': !active
+                        }"></span>
+                    </span>
+
+
+                  </div>
+                  <div class="flex h-6 items-center px-2.5">
+                    <label class="font-paragraph-m-medium" [ngClass]="{
+                      'text-[#1E293B] text-[16px] font-medium': active,
+                      'text-slate-500 text-[16px] font-medium': !active
+                    }">
+                      {{ account.type }}
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+          <div class="flex flex-row justify-between">
+            <div (click)="onBack()"
+              class="flex px-0 py-0 justify-center items-center text-[#334155] text-[14px] font-[600]">
+              <img class="back-img" src="../../../../assets/icons/black-back-button.svg" alt="">
+              Back
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+    <div *ngSwitchCase="1">
+      <div>
+        <div class="flex flex-col gap-2">
+          <h1 class="font-heading-h5-bold-desktop text-[#1E293B] text-[24px] font-[700] leading-8">
+            Home Address
+          </h1>
+          <p class="font-paragraph-l-medium text-[#64748B] text-[18px] font-[500] leading-7">
+            Please provide an address where you are currently registered
+          </p>
+        </div>
+
+        <form class="flex flex-col gap-6">
+          <div class="flex flex-col gap-0.5">
+            <app-input [placeholder]="'Address Line 1'" [label]="'Address'" [value]="address"
+              [error]="validators.address" (onChange)="handleChangeStep3('address', $event)"
+              [placeholder]="'Enter your address'" (submit)="handleSubmitStep2()" />
+          </div>
+
+
+          <app-select [placeholder]="'State'" [label]="'State'" [options]="states" [placeholder]="'Select your state'"
+            [selectedOption]="company_state" [error]="validators.state"
+            (optionSelected)="handleChangeStep3('state', $event)" />
+
+          <app-select [placeholder]="'City'" [label]="'City'" [selectedOption]="company_city"
+            [options]="getLGAS(company_state)" [error]="validators.city"
+            (optionSelected)="handleChangeStep3('city', $event)" [placeholder]="'Select your city'" />
+
+
+          <div class="flex flex-row justify-between">
+            <div (click)="onBack()"
+              class="flex px-0 py-0 justify-center items-center text-[#334155] text-[14px] font-[600]">
+              <img class="back-img" src="../../../../assets/icons/black-back-button.svg" alt="">
+              Back
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+    <div *ngSwitchCase="2">
+      <div>
+        <div class="flex flex-col gap-2">
+          <h1 class="font-heading-h5-bold-desktop text-[#1E293B] text-[24px] font-[700] leading-8">
+            Password Setup
+          </h1>
+          <p class="font-paragraph-l-medium text-[#64748B] text-[18px] font-[500] leading-7">
+            Set a strong password to protect your account. This will be used to protect your account
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-[8px]">
+          <app-input [placeholder]="'Password'" [type]="passwordType1" [label]="'Password'"
+            [placeholder]="'Enter your password'" [value]="password" [error]="validators.password"
+            (onChange)="handleChangeStep4('password', $event)" (submit)="handleSubmitStep3()" />
+          <app-input [placeholder]="'Confirm Password'" [type]="'password'" [label]="'Confirm Password'"
+            [placeholder]="'Confirm your password'" [value]="confirmPassword" [error]="validators.confirmPassword"
+            (onChange)="handleChangeStep4('confirmPassword', $event)" (submit)="handleSubmitStep3()" />
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <div class="mt-[32px] flex justify-between">
+
+    <div (click)="back()" class="flex items-center w-fit cursor-pointer">
+      <img src="../../../../assets/icons/left-arrow.svg" alt="">
+      <span class="text-[#334155] font-[600] text-[14px]">Back</span>
+    </div>
+
+    <div class="w-full max-w-[157px]">
+      <app-button-filled [action]="next" [disabled]="!isLoading" [text]="'Continue'" />
+    </div>
+  </div>
+</div>

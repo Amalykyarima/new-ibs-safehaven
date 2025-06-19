@@ -5,6 +5,7 @@ import { NgOtpInputModule } from 'ng-otp-input';
 import { AuthService } from '../../../resources/services/auth.service';
 import { Router } from '@angular/router';
 import { CountdownComponent } from '../../../common/utilities/countdown/countdown.component';
+import { SharedDataService } from '../../../resources/services/shared-data.service';
 
 
 @Component({
@@ -15,7 +16,10 @@ import { CountdownComponent } from '../../../common/utilities/countdown/countdow
   styleUrl: './totp-register.component.scss'
 })
 export class TotpRegisterComponent {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService,
+    private router: Router,
+    private sharedDataService: SharedDataService,
+    ) {}
 
   pinConfig = {
     length: 6,
@@ -76,14 +80,17 @@ export class TotpRegisterComponent {
               const encoded = window.btoa(JSON.stringify(this.loginData));
               //(encoded);
               // this.router.navigate(['/onboarding/profile-setup/' + encoded]);
+
             console.log('logindataaa', this.loginData)
+            this.sharedDataService.setLoginData(this.loginData);
+
               if (this.loginData.accountType === 'Corporate'){
                 setTimeout(() => {
                   this.router.navigate(['/setup-account-corporate']);
                 }, 500);
               } else {
                 setTimeout(() => {
-                  this.router.navigate(['/setup-account-individual']);
+                  this.router.navigate(['/setup-account-corporate']);
                 }, 500);
               }
             } else if (
