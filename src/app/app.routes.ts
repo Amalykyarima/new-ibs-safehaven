@@ -68,7 +68,9 @@ export const routes: Routes = [
     path: 'setup-account-corporate',
     loadComponent: () =>
     import('./pages/public/setup-account/setup-account.component').then((m) => m.SetupAccountComponent),
-
+    providers: [
+      provideState(onboardingFeatureKey, OnboardingReducer)
+    ],
   }
 ];
 

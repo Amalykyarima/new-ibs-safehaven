@@ -14,11 +14,16 @@ import { SettingsService } from './settings.service';
 import { EncryptStorage } from 'encrypt-storage';
 import { environment } from '../../../environments/environment';
 import { firstValueFrom } from 'rxjs';
+// import CryptoJS from 'crypto-js';
 
+
+declare var require: any;
+// const CryptoJS = require("crypto-js");
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class GeneralService {
   selectedOption: any = null;
   environment: typeof environment = environment;
@@ -79,13 +84,19 @@ export class GeneralService {
     );
   }
 
+  // validateEmailAddress(emailString: string) {
+  //   var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   return (
+  //     !!emailString &&
+  //     typeof emailString === 'string' &&
+  //     emailString.match(emailRegex)
+  //   );
+  // }
+
   validateEmailAddress(emailString: string) {
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return (
-      !!emailString &&
-      typeof emailString === 'string' &&
-      emailString.match(emailRegex)
-    );
+    return !!emailString && typeof emailString === 'string'
+      && emailString.match(emailRegex);
   }
 
   changePINInputmode() {
@@ -225,6 +236,31 @@ export class GeneralService {
   getToken(): string {
     return this.encryptStorage.getItem('token')!;
   }
+
+//   encryptText(text: string) {
+//     return CryptoJS.AES.encrypt(text, environment.privateKey).toString();
+// }
+
+  newSetToken1(user: any) {
+    let storageData = {
+        // clientId: user.client._id,
+        jwtToken: user
+    }
+    // sessionStorage.setItem('@SHMFB', this.encryptText(JSON.stringify(storageData)));
+}
+
+  newSaveUser1(user: any) {
+    // console.log('saveUser function', user)
+    if (user.jwtToken) this.newSetToken1(user.jwtToken);
+    try {
+        this.generalStore.dispatch(generalActions.saveCurrentUser({ currentUser: user.jwtToken }));
+        //   this.registerUserForIntercom(user.user);
+        //   this.registerNotifications(user.client);
+    }
+    catch (e) { }
+}
+
+
   // getUser = () => {
   //   return JSON.parse(this.encryptStorage.getItem('user'));
   // };

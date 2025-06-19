@@ -11,4 +11,6 @@ export class ButtonFilledComponent {
 @Input() text: string = '';
 @Input() loading: boolean = false;
 @Input() action: (() => void)  = ()=>{};
+@Input() disabled: boolean = false;
+
 }

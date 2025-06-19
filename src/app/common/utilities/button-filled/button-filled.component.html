@@ -1,5 +1,7 @@
 <div
-  (click)="action()"
+  (click)="!disabled && action()"
+  [class.cursor-not-allowed]="disabled"
+  [class.opacity-50]="disabled"
   class="w-full bg-[#034EA2] cursor-pointer text-[#fff] h-[52px] flex justify-center items-center rounded-[10px]"
 >
   {{ text }}

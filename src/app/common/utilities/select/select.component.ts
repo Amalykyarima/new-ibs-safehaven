@@ -21,6 +21,8 @@ export class SelectComponent {
   @Input() customValue: boolean = false;
   @Input() options: any[] = [];
   @Input() option: any;
+  @Input() selectedOption: string = '';
+
 
 
   @Output() optionSelected = new EventEmitter<string>();
@@ -28,7 +30,7 @@ export class SelectComponent {
   @ContentChild(TemplateRef) customContent!: TemplateRef<any>;
 
   showDropdown: boolean = false;
-  selectedOption: string = '';
+  // selectedOption: string = '';
 
   toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;
