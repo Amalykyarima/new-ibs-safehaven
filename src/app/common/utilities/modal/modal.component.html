@@ -1,12 +1,18 @@
-<div class="modal-overlay" (click)="close()">
-    <div class="modal-container" (click)="$event.stopPropagation()">
-      <div class="modal-header">
-        <!-- <div class="modal-title">Modal - {{ store.modalType() }}</div> -->
-        <span class="modal-close w-full justify-end flex mb-[28px]"><img (click)="close()" src="../../../../assets/icons/close.svg" alt=""></span>
+<div class="modal-overlay" (click)="handleClose()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="font-[700] text-[20px] text-[#1E293B] whitespace-nowrap">
+        {{ store.modalName() }}
       </div>
-      <div class="modal-body">
-        <ng-content></ng-content>
-      </div>
+      <span class="modal-close w-full justify-end flex"
+        ><img
+          (click)="handleClose()"
+          src="../../../../assets/icons/close.svg"
+          alt=""
+      /></span>
+    </div>
+    <div class="modal-body mt-[25px] max-h-[70vh] overflow-y-auto scrollbar-hidden">
+      <ng-content></ng-content>
     </div>
   </div>
-  
+</div>

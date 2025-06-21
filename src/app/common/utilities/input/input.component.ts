@@ -40,7 +40,9 @@ export class InputComponent {
 
   showDropdown = false;
   animate = false;
-
+    constructor(){
+      // console.log(this.value)
+    }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['value']) {
       this.value = changes['value'].currentValue;

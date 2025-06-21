@@ -46,14 +46,14 @@ export class HeaderComponent {
   ) {
   }
 
-  ngOnInit(): void {
-    setTimeout(() => {
-			Headway.init({
-				selector: ".headway-container",
-				account: "7gbVvx"
-			  });
-		}, 1000);
-  }
+  // ngOnInit(): void {
+  //   setTimeout(() => {
+	// 		Headway.init({
+	// 			selector: ".headway-container",
+	// 			account: "7gbVvx"
+	// 		  });
+	// 	}, 1000);
+  // }
 
   toggleSidebar() {
     this.openSideBar = !this.openSideBar;

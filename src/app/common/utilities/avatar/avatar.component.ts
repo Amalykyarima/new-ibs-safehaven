@@ -10,6 +10,10 @@ import { Component, Input } from '@angular/core';
 })
 export class AvatarComponent {
   @Input() name = '';
+  @Input() textStyle = '';
+  @Input() ciruclar: boolean = false;
+  @Input() height: string = '';
+  @Input() width: string = '';
   colors = ['#F1F1E6', '#EDEEFF', '#F4F5F7', '#F9FAFB', '#E5EDFF'];
 
   getAcronym = (name: string) => {
