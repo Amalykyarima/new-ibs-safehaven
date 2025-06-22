@@ -37,13 +37,13 @@ export class SidenavComponent {
         {
           label: 'Buy Airtime',
           icon: 'airtime.svg',
-          iconActive: 'mobile-active.svg',
+          iconActive: 'airtime-active.svg',
           link: 'buy-airtime',
         },
         {
           label: 'Buy Data',
           icon: 'WiFi.svg',
-          iconActive: 'wifi-active.svg',
+          iconActive: 'WiFi-active.svg',
           link: 'buy-data',
         },
         {

@@ -1,7 +1,7 @@
 .switch {
     width: 44px;
     height: 24px;
-    background-color: #d1d5db;
+    background-color: #F1F5F9;
     border-radius: 9999px;
     position: relative;
     cursor: pointer;
@@ -19,10 +19,11 @@
     }
   
     &.checked {
-      background-color: #22c55e;
+      background-color: #EBF5FF;
   
       .ball {
         transform: translateX(20px);
+        background-color: #034EA2;
       }
     }
   }

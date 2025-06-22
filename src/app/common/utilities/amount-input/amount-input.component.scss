@@ -1,0 +1,33 @@
+.wrapper {
+    display: inline-flex;
+    align-items: baseline;
+    font-family: inherit;
+    width: fit-content;
+    border-bottom: 1px dotted black;
+    
+  }
+  
+  .currency-symbol {
+    padding-right: 2px;
+    font-size: inherit;
+    line-height: 1;
+    font-weight: 600;
+    font-size: 20px;
+    color: #1E293B;
+  }
+  
+  .dotted-underline-input {
+    border: none;
+    outline: none;
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: 1;
+    background: transparent;
+    font-size: inherit;
+    width: 53px;
+    height: 28px !important;
+    border-radius: 0px !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    color: #1E293B !important;
+  }
