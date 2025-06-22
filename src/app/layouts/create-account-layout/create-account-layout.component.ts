@@ -7,6 +7,7 @@ import { ButtonFilledComponent } from '../../common/utilities/button-filled/butt
 import { SetupProfileCorporateComponent } from "../../common/layout/setup-profile-corporate/setup-profile-corporate.component";
 import { SetupProfileIndividualComponent } from "../../common/layout/setup-profile-individual/setup-profile-individual.component";
 import { SharedDataService } from '../../resources/services/shared-data.service';
+import { OnboardingLayoutComponent } from "../onboarding-layout/onboarding-layout.component";
 
 @Component({
   selector: 'app-create-account-layout',
@@ -18,7 +19,8 @@ import { SharedDataService } from '../../resources/services/shared-data.service'
     SetupProfileFormComponent,
     ButtonFilledComponent,
     SetupProfileCorporateComponent,
-    SetupProfileIndividualComponent
+    SetupProfileIndividualComponent,
+    OnboardingLayoutComponent
 ],
   templateUrl: './create-account-layout.component.html',
   styleUrl: './create-account-layout.component.scss',
@@ -58,6 +60,7 @@ export class CreateAccountLayoutComponent {
   spinner: boolean = false;
   loading: boolean = false;
   loginData: any;
+accountOpened: boolean = false;
 
 
     constructor(private fb: FormBuilder,
@@ -73,17 +76,7 @@ export class CreateAccountLayoutComponent {
     this.loginData = this.sharedDataService.getLoginData();
   }
 
-  // activateStep(index: number): void {
-  //   this.navigationSteps = this.navigationSteps.map((step, i) => {
-  //     if (i < index) {
-  //       return { ...step, status: 'completed' };
-  //     } else if (i === index) {
-  //       return { ...step, status: 'active' };
-  //     } else {
-  //       return { ...step, status: 'default' };
-  //     }
-  //   });
-  // }
+
   setStep(step: number) {
     this.activeStep = step;
   }
@@ -109,4 +102,13 @@ export class CreateAccountLayoutComponent {
       passwordSetup: index === 2,
     };
   }
+
+  // Add these methods to handle events from child component
+handleSpinnerChange(showSpinner: boolean) {
+  this.spinner = showSpinner;
+}
+
+handleAccountOpenedChange(isOpened: boolean) {
+  this.accountOpened = isOpened;
+}
 }

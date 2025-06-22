@@ -68,7 +68,7 @@ export class SetupProfileIndividualComponent {
   passwordType = 'password';
   showPassword = false;
   email: string = '';
-  gender: string ='';
+  gender: string = '';
 
 
 
@@ -210,8 +210,8 @@ export class SetupProfileIndividualComponent {
     password: '',
     confirmPassword: '',
     emailAddress: '',
-    phoneNumber:'',
-    email:'',
+    phoneNumber: '',
+    email: '',
     gender: ''
   };
 
@@ -504,6 +504,12 @@ export class SetupProfileIndividualComponent {
 
 
   signUp() {
+    // Only continue if process is not loading
+    if (this.processLoading) return;
+
+    this.errorMessage = '';
+    this.processLoading = true;
+
     const data = {
       identityId: this.loginData._id,
       phoneNumber: this.loginData.user,

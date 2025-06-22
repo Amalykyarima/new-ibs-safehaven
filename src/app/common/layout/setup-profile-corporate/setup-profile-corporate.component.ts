@@ -33,6 +33,9 @@ import { SharedDataService } from '../../../resources/services/shared-data.servi
   styleUrl: './setup-profile-corporate.component.scss'
 })
 export class SetupProfileCorporateComponent {
+
+  @Output() spinnerChange = new EventEmitter<boolean>();
+@Output() accountOpenedChange = new EventEmitter<boolean>();
   newUser: CompanySignup;
   date: any = new Date();
 
@@ -231,120 +234,6 @@ export class SetupProfileCorporateComponent {
     this.searchCompany = !this.searchCompany
   }
 
-  // async signUpCorporate() {
-  //   // Only continue if process is not loading
-  //   // if (this.processLoading) return;
-  //   // this.errorMessage = "";
-  //   // this.processLoading = true;
-  //   // this.referralCode = await this.generalService.getReferralId();
-  //   // console.log("getReferralId signUpIndividual", this.referralCode)
-
-  //   if (this.referralCode === null || this.referralCode === '') {
-  //     this.referralCode = this.referralCodeEntered
-  //   }
-  //   // console.log('this.referralCode else', this.referralCode)
-
-  //   let data: CompanySignup = new CompanySignup();
-  //   data = {
-  //     ...data,
-  //     // type: 'EMAIL',
-  //     // identityId: this.identityId,
-  //     // emailAddress: this.userIdentifier.toLowerCase(),
-  //     // accountType: 'Current',
-  //     // title: this.title,
-  //     // gender: this.selectedGender,
-  //     companyName: this.companyName,
-  //     // maritalStatus: this.maritalStatus,
-  //     password: this.password,
-  //     registrationType: this.registrationType,
-  //     registrationNumber: this.registrationNumber,
-  //     // registrationDate: this.dateOfBirth,
-  //     // NatureOfBusiness: this.natureOfBusiness,
-  //     // natureOfBusiness: this.natureOfBusiness,
-  //     natureOfBusiness: this.natureOfBusiness as NatureOfBusiness, // ✅ Fix
-
-
-  //     tin: this.tin,
-  //     // referralCode: this.referralCode,
-  //     address: {
-  //       address: this.address,
-  //       city: this.city,
-  //       state: this.state,
-  //       // country: this.country
-  //     },
-  //     CompanyAddress: {
-  //       address: this.company_address,
-  //       city: this.company_city,
-  //       state: this.company_state,
-  //       // country: this.company_country
-  //     },
-
-  //   }
-  //   // let signInData: Signin = new Signin();
-
-  //   // signInData = {
-  //   //   ...signInData,
-  //   //   password: this.form.value.password,
-  //   //   emailAddress: this.signInType == 'email' ? this.form.value.emailAddress : '',
-  //   //   phoneNumber: this.signInType === 'phoneNumber' ? `+234${this.form.value.phoneNumber}` : '',
-  //   //   // phoneNumber: this.signInType == 'phoneNumber' ? '+234' + this.form.value.phoneNumber : '',
-  //   //   // phoneNumber: this.signInType == 'phoneNumber' ? this.form.value.phoneNumber.internationalNumber : undefined,
-  //   //   type: this.signInType == 'email' ? 'EMAIL' : 'PHONE',
-  //   //   // biometricType: this.form.value.biometricType,
-  //   // }
-
-  //   if ([
-  //     // this.address.street,
-  //   // this.address.country,
-  //   this.state,
-  //   this.city,
-  //   // this.company_street,
-  //   // this.company_country,
-  //   this.company_state,
-  //   this.company_city,
-  //   this.accountType,
-  //   // this.title,
-  //   // this.gender,
-  //   // this.maritalStatus,
-  //   this.companyName,
-  //   this.password].includes("")) {
-  //     // this.generalService.showErrorMessage('All fields are required.');
-  //     // this.currentStep === 2;
-  //     // this.errorMessage = "All fields are required.";
-  //     // this.processLoading = false;
-  //   }
-  //   else {
-  //     // this.identityId = this.identityId;
-  //     // this.dateOfBirth = this.generalService.formatDateISO(this.date);
-  //     this.emailAddress = this.emailAddress.toLowerCase();
-  //     // console.log('data', data)
-  //     this.authService.registerCorporate(data).subscribe(
-  //       (res: any) => {
-  //         if (res.statusCode === 200) {
-  //           // this.store.dispatch(generalActions.setSignInDetails({ signInDetails: signInData }));
-  //           //   console.log('generalService.saveUser(res.data)1', res.data)
-  //           this.generalService.newSaveUser1(res);
-  //           // this.processLoading = false;
-  //           // this.generalService.showSuccessMessage(res.message);
-  //           // setTimeout(() => {
-  //           //   this.currentStep = 6;
-  //           // }, 1000);
-
-  //         }
-  //         else {
-  //           // this.generalService.showErrorMessage(res.message);
-  //           // this.errorMessage = '' + res.message;
-  //           // this.processLoading = false;
-  //         }
-  //       },
-  //       (error: any) => {
-  //         // this.errorMessage = 'An error occured. Please try again later';
-  //         // this.processLoading = false;
-  //       }
-  //     )
-  //   }
-  // }
-
 
 
   searchCompanyToggle() {
@@ -405,12 +294,9 @@ export class SetupProfileCorporateComponent {
           password: this.confirmPassword,
         }
       )
+      this.processLoading = false;
       this.signUp();
     }
-
-    // if (this.step < this.totalSteps - 1) {
-    //   this.stepChange.emit(this.step + 1);
-    // }
   }
 
   back() {
@@ -710,24 +596,6 @@ export class SetupProfileCorporateComponent {
   };
 
 
-  // handleChange2 = (name: 'password' | 'confirmPassword', value: any) => {
-  //   this[name] = value;
-  //   if (value === '') this.validators[name] = 'Required*';
-  //   else if (name === 'password' && !this.passwordIsStrong)
-  //     this.validators[name] = 'Password is weak*';
-  //   else if (name === 'confirmPassword' && this.password !== value)
-  //     this.validators[name] = 'Passwords do not match*';
-  //   else this.validators[name] = '';
-  // };
-
-  // handleChangeStep3 = (
-  //   name: 'address' | 'state' | 'city' | 'phoneNumber',
-  //   value: any
-  // ) => {
-  //   this[name] = value;
-  //   if (value === '') this.validators[name] = 'Required*';
-  //   else this.validators[name] = '';
-  // };
 
   validateFormStep1 = () => {
     const err: any = {};
@@ -808,6 +676,34 @@ export class SetupProfileCorporateComponent {
   // }
 
   signUp() {
+    // if (this.processLoading) return;
+
+    // this.errorMessage = '';
+    // this.processLoading = true;
+
+    // if (
+    //   [
+    //     this.address,
+    //     this.state,
+    //     this.city,
+    //   ].includes('')
+    // ) {
+    //   this.errorMessage = 'All director address fields are required.';
+    //   this.processLoading = false;
+    //   window.scrollTo(0, 0);
+    // } else if (
+    //   [
+    //     this.company_address,
+    //     this.company_state,
+    //     this.company_city,
+    //     this.newUser.accountType,
+    //     this.newUser.password,
+    //   ].includes('')
+    // ) {
+    //   this.errorMessage = 'All fields are required.';
+    //   this.processLoading = false;
+    //   window.scrollTo(0, 0);
+    // } else {
     const data = {
       type: 'CAC-BVN',
       title: 'Mr',
@@ -845,17 +741,35 @@ export class SetupProfileCorporateComponent {
         ? localStorage['referralId']
         : '',
     };
+    console.log('datea', data)
 
-    this.authService.register(data).subscribe({
-      next: (res) => {
-        console.log('Registration successful', res);
-        // e.g., this.router.navigate(['/success']);
-      },
-      error: (err) => {
-        console.error('Registration failed', err);
-        // e.g., this.errorMessage = err.message;
-      }
-    });
+    // setTimeout(() => {
+    //   console.log('counting to 5 4 3 2 1..')
+		// }, 50000);
+    this.updateSpinner(false)
+
+    // this.updateAccountOpened(true);
+
+
+    // this.authService.register(data).subscribe({
+    //   next: (res) => {
+    //     console.log('Registration successful', res);
+    //     // e.g., this.router.navigate(['/success']);
+    //   },
+    //   error: (err) => {
+    //     console.error('Registration failed', err);
+    //     // e.g., this.errorMessage = err.message;
+    //   }
+    // });
+  }
+
+
+  updateSpinner(show: boolean) {
+    this.spinnerChange.emit(show);
+  }
+
+  updateAccountOpened(isOpened: boolean) {
+    this.accountOpenedChange.emit(isOpened);
   }
 
 
