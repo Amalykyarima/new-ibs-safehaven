@@ -19,35 +19,33 @@
             your profile setup.</span>
         </div>
         <div class="flex flex-col gap-[8px]">
-          <app-input [placeholder]="'Company Name'" [value]="companyName" [error]="validators.companyName"
-            (onChange)="handleChangeStep1('companyName', $event)" [placeholder]="'Enter your companyName'"
-            (submit)="handleSubmitStep1()" />
+          <app-input [label]="'Company Name'"  [placeholder]="'Company Name'" [value]="companyName" [error]="validators.companyName"
+            (onChange)="handleChangeStep1('companyName', $event)" (submit)="handleSubmitStep1()" />
+
           <div class="w-full items-center grid grid-cols-2 gap-[10px]">
             <app-input [placeholder]="'RC Number'" [value]="registrationNumber" [error]="validators.registrationNumber"
-              (onChange)="handleChangeStep1('registrationNumber', $event)" [placeholder]="'Enter your RC Number'"
+              (onChange)="handleChangeStep1('registrationNumber', $event)" [placeholder]="'RC Number'"
               (submit)="handleSubmitStep1()" />
-            <!-- <app-datepicker [max]="today" [label]="'Date of Registration'" [selectedDate]="registrationDate"
-              (onChange)="handleChangeStep1('registrationDate', $event)" [error]="validators.registrationDate" /> -->
           </div>
+
           <app-input [placeholder]="'Company Email Address'" [label]="'Email'" [value]="emailAddress"
             [error]="validators.emailAddress" (onChange)="handleChangeStep1('emailAddress', $event)"
             [placeholder]="'Enter your email address'" (submit)="handleSubmitStep1()" />
 
-          <app-select [placeholder]="'Incorporation Type'"
+          <app-select [label]="'Company Name'"  [placeholder]="'Incorporation Type'"
             [options]="['Limited Liability Companies', 'Non-Limited Companies', 'Associations and Cooperatives']"
             [error]="validators.registrationType"
             (optionSelected)="handleChangeStep1('registrationType', $event)"></app-select>
 
-          <!-- <app-select [placeholder]="'Incorporation Type'"
-            [options]="['Private Limited', 'Public Limited', 'Sole Proprietorship', 'Partnership']"
-            [error]="validators.registrationType" (onChange)="handleChangeStep1('registrationType', $event)"/> -->
+
 
           <app-select [placeholder]="'Nature of Business'" [options]="businessTypes"
-            [placeholder]="'Select the nature of your business'" [option]="natureOfBusiness"
+            [placeholder]="'Nature of Business'" [option]="natureOfBusiness"
             [error]="validators.natureOfBusiness" (optionSelected)="handleChangeStep1('natureOfBusiness', $event)" />
 
-          <app-input [placeholder]="'Tax Identification Number'" [label]="'TIN (Optional)'" [value]="tin"
+          <app-input  [placeholder]="'TIN'" [label]="'TIN (Optional)'" [value]="tin"
             [error]="validators.tin" (onChange)="handleChangeStep1('tin', $event)" (submit)="handleSubmitStep1()" />
+
         </div>
       </div>
     </div>
@@ -59,10 +57,10 @@
       </div>
       <div class="flex flex-col gap-[8px] mt-[28px]">
         <app-input [placeholder]="'Address Line 1'" [label]="'Address'" [value]="address" [error]="validators.address"
-          (onChange)="handleChangeStep2('company_address', $event)" [placeholder]="'Enter your address'"
+          (onChange)="handleChangeStep2('company_address', $event)"
           (submit)="handleSubmitStep2()" />
 
-        <app-select [placeholder]="'State'" [label]="'State'" [options]="states" [placeholder]="'Select your state'"
+        <app-select [placeholder]="'State'" [label]="'State'" [options]="states" [placeholder]="'State'"
           [selectedOption]="company_state" [error]="validators.state" (optionSelected)="handleChangeStep2('company_state', $event)"/>
 
         <app-select [placeholder]="'City'" [label]="'City'" [selectedOption]="company_city" [options]="getLGAS(company_state)"
@@ -77,14 +75,14 @@
       </div>
       <div class="flex flex-col gap-[8px] mt-[28px]">
         <app-input [placeholder]="'Address Line 1'" [label]="'Address'" [value]="address" [error]="validators.address"
-          (onChange)="handleChangeStep3('address', $event)" [placeholder]="'Enter your address'"
+          (onChange)="handleChangeStep3('address', $event)" [placeholder]="'Address Line 1'"
           (submit)="handleSubmitStep2()" />
 
-        <app-select [placeholder]="'State'" [label]="'State'" [options]="states" [placeholder]="'Select your state'"
+        <app-select [placeholder]="'State'" [label]="'State'" [options]="states"
           [selectedOption]="state" [error]="validators.state" (optionSelected)="handleChangeStep3('state', $event)" />
 
         <app-select [placeholder]="'City'" [label]="'City'"  [options]="getLGAS(state)" [error]="validators.city"
-          [selectedOption]="city" (optionSelected)="handleChangeStep3('city', $event)" [placeholder]="'Select your city'" />
+          [selectedOption]="city" (optionSelected)="handleChangeStep3('city', $event)" />
 
       </div>
     </div>
@@ -96,10 +94,10 @@
       </div>
       <div class="flex flex-col gap-[8px] mt-[28px]">
         <app-input [placeholder]="'Password'" [type]="passwordType1" [label]="'Password'"
-          [placeholder]="'Enter your password'" [value]="password" [error]="validators.password"
+           [value]="password" [error]="validators.password"
           (onChange)="handleChangeStep4('password', $event)" (submit)="handleSubmitStep3()" />
         <app-input [placeholder]="'Confirm Password'" [type]="'password'" [label]="'Confirm Password'"
-          [placeholder]="'Confirm your password'" [value]="confirmPassword" [error]="validators.confirmPassword"
+           [value]="confirmPassword" [error]="validators.confirmPassword"
           (onChange)="handleChangeStep4('confirmPassword', $event)" (submit)="handleSubmitStep3()" />
       </div>
     </div>

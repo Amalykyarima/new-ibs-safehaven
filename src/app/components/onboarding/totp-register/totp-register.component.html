@@ -21,9 +21,9 @@
   <div class="w-[408px] ">
     <span *ngIf="!showTimer" class="text-[16px] text-[#64748B] font-[500]">
       I didn't receive the OTP, resend by
-      <span onclick="resendOtp('VOICE')" class="text-[16px] text-[#034EA2] font-[600]">
+      <span (click)="resendOtp('VOICE')" class="text-[16px] text-[#034EA2] font-[600]">
         Voice
-      </span> or <span onclick="resendOtp('SMS')" class="text-[16px] text-[#034EA2] font-[600]">
+      </span> or <span (click)="resendOtp('SMS')" class="text-[16px] text-[#034EA2] font-[600]">
         SMS
       </span>
     </span>

@@ -51,6 +51,9 @@ export class SetupProfileCorporateComponent {
   referralCode: string = '';
   referralCodeEntered: string = '';
   loginData: any;
+  userType = 'phone';
+
+
   constructor(
     private identityService: IdentitiesService,
     private generalService: GeneralService,

@@ -11,7 +11,8 @@
           </p>
         </div>
 
-        <form class="flex flex-col gap-6">
+        <div class="flex flex-col gap-[24px]  mt-[28px]">
+
           <div class="flex flex-col gap-0.5">
             <app-input [value]="email" [placeholder]="'Enter your email address'" [error]="validators.email"
               (onChange)="handleChangeStep1('emailAddress', $event)"></app-input>
@@ -30,7 +31,7 @@
               <div class="flex flex-col sm:flex-row gap-3.5">
                 <div *ngFor="let account of accountTypes"
                   class="flex-1 min-w-[200px] flex flex-col gap-3.5 pt-[5px] pb-[18px] px-1.5 bg-white rounded-2xl shadow-[0px_2px_40px_-10px_#00000002]">
-                  <div (click)="next()" class="flex items-start justify-between">
+                  <div (click)="selectAccount(account)" class="flex items-start justify-between">
                     <img [src]="active ? account.active : account.icon" class="w-[50px] h-[50px]"
                       [alt]="account.type" />
                     <span
@@ -64,15 +65,16 @@
             </div>
 
           </div>
-          <div class="flex flex-row justify-between">
+          <!-- <div class="flex flex-row justify-between">
             <div (click)="onBack()"
               class="flex px-0 py-0 justify-center items-center text-[#334155] text-[14px] font-[600]">
               <img class="back-img" src="../../../../assets/icons/black-back-button.svg" alt="">
               Back
             </div>
 
-          </div>
-        </form>
+          </div> -->
+        </div>
+
       </div>
     </div>
     <div *ngSwitchCase="1">

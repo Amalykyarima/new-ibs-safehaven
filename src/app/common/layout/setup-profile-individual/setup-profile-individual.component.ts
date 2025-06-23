@@ -225,11 +225,15 @@ export class SetupProfileIndividualComponent {
   @Input() totalSteps = 0;
   @Output() stepChange = new EventEmitter<number>();
   searchCompany: boolean = true;
+  selectedAccountType: string = ''; // To store the selected type
+activeAccountId: number | null = null; // To track which account is active
+
 
 
 
   ngOnInit(): void {
     this.states = getStates();
+    this.selectAccount(this.accountTypes[0]);
     const todayDate = new Date();
     this.today = todayDate.toISOString().split('T')[0];
     this.loginData = this.sharedDataService.getLoginData();
@@ -259,6 +263,15 @@ export class SetupProfileIndividualComponent {
     }
 
 
+  }
+
+  selectAccount(account: any) {
+    this.activeAccountId = account.id;
+    this.selectedAccountType = account.type;
+    console.log('Selected account type:', this.selectedAccountType);
+
+    // If you need to use this value elsewhere
+    // this.authService.setAccountType(this.selectedAccountType);
   }
 
 
