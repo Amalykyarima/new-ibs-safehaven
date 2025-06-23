@@ -1,28 +1,18 @@
-// shared-data.service.ts
+// registration-state.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
-export class SharedDataService {
-  private loginData: any;
+@Injectable({
+  providedIn: 'root'
+})
+export class RegistrationStateService {
   private formStatus = new BehaviorSubject<boolean>(true);
   private spinner = new BehaviorSubject<boolean>(false);
   private accountOpened = new BehaviorSubject<boolean>(false);
-  private SearchCompany = new BehaviorSubject<boolean>(true);
-
 
   formStatus$ = this.formStatus.asObservable();
   spinner$ = this.spinner.asObservable();
   accountOpened$ = this.accountOpened.asObservable();
-  SearchCompany$ = this.accountOpened.asObservable();
-
-  setLoginData(data: any) {
-    this.loginData = data;
-  }
-
-  getLoginData() {
-    return this.loginData;
-  }
 
   setFormStatus(status: boolean) {
     this.formStatus.next(status);
@@ -35,9 +25,4 @@ export class SharedDataService {
   setAccountOpened(opened: boolean) {
     this.accountOpened.next(opened);
   }
-
-  changeSearchCompany(status: boolean){
-    this.SearchCompany.next(status)
-  }
-
 }

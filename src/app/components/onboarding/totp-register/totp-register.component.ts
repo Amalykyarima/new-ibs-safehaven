@@ -6,16 +6,24 @@ import { AuthService } from '../../../resources/services/auth.service';
 import { Router } from '@angular/router';
 import { CountdownComponent } from '../../../common/utilities/countdown/countdown.component';
 import { SharedDataService } from '../../../resources/services/shared-data.service';
+import { MaskMiddlePipe } from '../../../resources/services/mask.pipe';
 
 
 @Component({
   selector: 'app-totp-register',
   standalone: true,
-  imports: [CommonModule, NgOtpInputModule, CountdownComponent],
+  imports: [CommonModule, NgOtpInputModule, CountdownComponent, MaskMiddlePipe],
   templateUrl: './totp-register.component.html',
   styleUrl: './totp-register.component.scss'
 })
 export class TotpRegisterComponent {
+  userType = 'phone';
+  error: any = { type: '', message: '' };
+  phoneNumber: any = '';
+
+  loading = false;
+  loading_ = false;
+  success: any = {};
   constructor(private authService: AuthService,
     private router: Router,
     private sharedDataService: SharedDataService,
@@ -53,10 +61,8 @@ export class TotpRegisterComponent {
   pin = '';
   resendType = '';
   errorMessage = '';
-  loading = false;
   @Input() showTimer = false;
 
-  @Input() error = '';
   @Input() loginData: any = {};
   @Input() hideBackBtn: boolean = false;
   @Output() validate: EventEmitter<any> = new EventEmitter<any>();

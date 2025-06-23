@@ -8,6 +8,7 @@ import { SetupProfileCorporateComponent } from "../../common/layout/setup-profil
 import { SetupProfileIndividualComponent } from "../../common/layout/setup-profile-individual/setup-profile-individual.component";
 import { SharedDataService } from '../../resources/services/shared-data.service';
 import { OnboardingLayoutComponent } from "../onboarding-layout/onboarding-layout.component";
+// import { RegistrationStateService } from '../../resources/services/registration-state.service';
 
 @Component({
   selector: 'app-create-account-layout',
@@ -21,7 +22,7 @@ import { OnboardingLayoutComponent } from "../onboarding-layout/onboarding-layou
     SetupProfileCorporateComponent,
     SetupProfileIndividualComponent,
     OnboardingLayoutComponent
-],
+  ],
   templateUrl: './create-account-layout.component.html',
   styleUrl: './create-account-layout.component.scss',
 })
@@ -60,11 +61,14 @@ export class CreateAccountLayoutComponent {
   spinner: boolean = false;
   loading: boolean = false;
   loginData: any;
-accountOpened: boolean = false;
+  accountOpened: boolean = false;
+  formStatus: boolean = true;
 
 
-    constructor(private fb: FormBuilder,
-      private sharedDataService: SharedDataService,) {
+  constructor(private fb: FormBuilder,
+    private sharedDataService: SharedDataService,
+    // private registrationState: RegistrationStateService,
+    ) {
     this.form = this.fb.group({
       email: [''],
       gender: [''],
@@ -72,9 +76,25 @@ accountOpened: boolean = false;
     });
   }
 
-  ngOnInit(){
+  ngOnInit() {
+    console.log('checkingggg', this.accountOpened, this.formStatus, this.spinner)
     this.loginData = this.sharedDataService.getLoginData();
+    this.sharedDataService.formStatus$.subscribe(status => {
+      this.formStatus = status;
+      console.log('Form Status Changed:', status);
+    });
+
+    this.sharedDataService.spinner$.subscribe(show => {
+      this.spinner = show;
+      console.log('Spinner Changed:', show);
+    });
+
+    this.sharedDataService.accountOpened$.subscribe(opened => {
+      this.accountOpened = opened;
+      console.log('Account Opened Changed:', opened);
+    });
   }
+
 
 
   setStep(step: number) {
@@ -104,11 +124,15 @@ accountOpened: boolean = false;
   }
 
   // Add these methods to handle events from child component
-handleSpinnerChange(showSpinner: boolean) {
-  this.spinner = showSpinner;
-}
+  handleSpinnerChange(showSpinner: boolean) {
+    this.spinner = showSpinner;
+  }
 
-handleAccountOpenedChange(isOpened: boolean) {
-  this.accountOpened = isOpened;
-}
+  handleAccountOpenedChange(isOpened: boolean) {
+    this.accountOpened = isOpened;
+  }
+
+  handleFormStatusChange(showForm: boolean) {
+    this.formStatus = showForm;
+  }
 }

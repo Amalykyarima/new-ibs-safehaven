@@ -24,6 +24,7 @@ import { CompanySignup } from '../../../resources/models/signup';
 import { Signin } from '../../../resources/models/signin';
 import { AuthService } from '../../../resources/services/auth.service';
 import { SharedDataService } from '../../../resources/services/shared-data.service';
+// import { RegistrationStateService } from '../../../resources/services/registration-state.service';
 
 @Component({
   selector: 'app-setup-profile-corporate',
@@ -35,7 +36,9 @@ import { SharedDataService } from '../../../resources/services/shared-data.servi
 export class SetupProfileCorporateComponent {
 
   @Output() spinnerChange = new EventEmitter<boolean>();
-@Output() accountOpenedChange = new EventEmitter<boolean>();
+  @Output() accountOpenedChange = new EventEmitter<boolean>();
+  @Output() accountFormStatusChange = new EventEmitter<boolean>();
+
   newUser: CompanySignup;
   date: any = new Date();
 
@@ -52,7 +55,8 @@ export class SetupProfileCorporateComponent {
     private identityService: IdentitiesService,
     private generalService: GeneralService,
     private authService: AuthService,
-    private sharedDataService: SharedDataService
+    private sharedDataService: SharedDataService,
+    // private registrationState: RegistrationStateService
   ) {
     this.newUser = new CompanySignup();
   }
@@ -676,6 +680,9 @@ export class SetupProfileCorporateComponent {
   // }
 
   signUp() {
+    this.updateFormStatus(false)
+    this.updateSpinner(true)
+
     // if (this.processLoading) return;
 
     // this.errorMessage = '';
@@ -709,9 +716,9 @@ export class SetupProfileCorporateComponent {
       title: 'Mr',
       gender: 'Male',
       maritalStatus: 'Single',
-      identityId: this.loginData._id,
+      identityId: this.loginData?._id,
       emailAddress: this.emailAddress,
-      identityType: 'International Passport',
+      identityType: 'BVN',
       companyName: this.companyName,
       registrationDate: '01-01-2024',
       registrationNumber: this.registrationNumber,
@@ -728,13 +735,6 @@ export class SetupProfileCorporateComponent {
         state: this.company_state,
         city: this.company_city
       },
-
-      // company_address: this.company_address,
-      // company_state: this.company_state,
-      // company_city: this.company_city,
-      // address: this.address,
-      // state: this.state,
-      // city: this.city,
       accountType: 'Current',
       password: this.confirmPassword,
       referralCode: localStorage['referralId']
@@ -743,123 +743,246 @@ export class SetupProfileCorporateComponent {
     };
     console.log('datea', data)
 
-    // setTimeout(() => {
-    //   console.log('counting to 5 4 3 2 1..')
-		// }, 50000);
-    this.updateSpinner(false)
-
-    // this.updateAccountOpened(true);
-
+    this.authService.register(data).subscribe({
+      next: (res) => this.handleRegistrationResponse(res),
+      error: (err) => this.handleRegistrationError(err)
+    });
 
     // this.authService.register(data).subscribe({
-    //   next: (res) => {
+    //   next: (res: any) => {
     //     console.log('Registration successful', res);
-    //     // e.g., this.router.navigate(['/success']);
+
+    //     // Always hide spinner on response
+    //     this.registrationState.setSpinner(false);
+
+    //     if (res.statusCode === 200) {
+    //       console.log('me');
+    //       // Success case
+    //       this.registrationState.setAccountOpened(true);
+    //       this.registrationState.setFormStatus(false);
+    //     } else {
+    //       console.log('you');
+    //       // API returned business error
+    //       this.registrationState.setFormStatus(true);
+    //       // Optional: Show error message from response
+    //       // this.registrationState.setErrorMessage(res.message);
+    //     }
     //   },
     //   error: (err) => {
     //     console.error('Registration failed', err);
-    //     // e.g., this.errorMessage = err.message;
+
+    //     // Error case
+    //     this.registrationState.setSpinner(false);
+    //     this.registrationState.setAccountOpened(false);
+    //     this.registrationState.setFormStatus(true);
+
+    //     // Optional: Handle different error types
+    //     if (err.status === 0) {
+    //       console.error('Network error');
+    //       // this.registrationState.setErrorMessage('Network connection failed');
+    //     } else {
+    //       console.error('Server error', err.status);
+    //       // this.registrationState.setErrorMessage(err.error?.message || 'Server error');
+    //     }
     //   }
     // });
+
+    // this.authService.register(data).subscribe({
+    //   next: (res: any) => {
+    //     console.log('Registration successful', res);
+
+
+    //     // Check if status code is 200
+    //     if (res.statusCode === 200) {
+    //       console.log('me');
+    //       this.updateSpinner(false);
+    //       this.updateAccountOpened(true);
+
+    //     } else {
+    //       console.log('you');
+    //       this.updateSpinner(false)
+    //       this.updateFormStatus(true);
+    //     }
+    //   },
+    //   error: (err) => {
+    //     console.error('Registration failed', err);
+
+    //     this.updateSpinner(false);
+    //     this.updateAccountOpened(false);
+    //     this.updateFormStatus(true);
+    //   }
+    // });
+
+
+    // this.authService.register(this.newUser).subscribe(
+    //   (res: any) => {
+    //     if (res.statusCode === 200) {
+    //       console.log('200')
+    //       this.updateFormStatus(false)
+    //       this.updateSpinner(false),
+    //       this.updateAccountOpened(true)
+
+
+    //     } else {
+    //       console.log('200 else')
+
+    //       this.updateSpinner(false),
+    //       this.updateAccountOpened(false)
+    //       this.updateFormStatus(true)
+
+    //       this.errorMessage = '' + res.message;
+    //       this.processLoading = false;
+    //     }
+    //   },
+    //   (error: any) => {
+    //     this.errorMessage = 'An error occured. Please try again later';
+    //     this.processLoading = false;
+    //   }
+    // );
   }
 
+  private handleRegistrationResponse(res: any) {
+    this.sharedDataService.setSpinner(false);
+
+    if (res.statusCode === 200) {
+      this.sharedDataService.setAccountOpened(true);
+      // Optional: Navigate to success page
+    } else {
+      this.sharedDataService.setFormStatus(true);
+      // Handle business logic errors
+    }
+  }
+
+  private handleRegistrationError(err: any) {
+    this.sharedDataService.changeSearchCompany(false);
+    this.sharedDataService.setSpinner(false);
+    this.sharedDataService.setAccountOpened(false);
+    this.sharedDataService.setFormStatus(true);
+
+    // Additional error handling
+  }
+
+  updateFormStatus(status: boolean) {
+    this.sharedDataService.setFormStatus(status);
+    console.log('updateFormStatus',status)
+  }
 
   updateSpinner(show: boolean) {
-    this.spinnerChange.emit(show);
+    this.sharedDataService.setSpinner(show);
+    console.log('updateFormStatus', show)
+
   }
 
-  updateAccountOpened(isOpened: boolean) {
-    this.accountOpenedChange.emit(isOpened);
+  updateAccountOpened(opened: boolean) {
+    this.sharedDataService.setAccountOpened(opened);
+    console.log('updateFormStatus',opened)
+
   }
 
+// updateSpinner(show: boolean) {
+//   this.spinnerChange.emit(show);
+//   console.log('updateSpinner', show,)
+// }
+
+// updateAccountOpened(isOpened: boolean) {
+//   this.accountOpenedChange.emit(isOpened);
+//   console.log('updateAccountOpened', isOpened)
+
+// }
+
+// updateFormStatus(change: boolean) {
+//   this.accountFormStatusChange.emit(change);
+//   console.log('updateFormStatus', change)
+// }
 
 
-  selectCompany = (item: any) => {
-    this.registrationNumber = item.rcNumber || '';
-    this.registrationDate = item.registrationDate
-      ? moment(item.registrationDate).format('DD-MM-YYYY')
-      : '';
-    this.companyName = item.approvedName || '';
-  };
 
-  validateFormStep2 = () => {
-    const err: any = {};
-    if (this.address === '') err.address = 'Required*';
-    if (this.state === '') err.state = 'Required*';
-    if (this.city === '') err.city = 'Required*';
+selectCompany = (item: any) => {
+  this.registrationNumber = item.rcNumber || '';
+  this.registrationDate = item.registrationDate
+    ? moment(item.registrationDate).format('DD-MM-YYYY')
+    : '';
+  this.companyName = item.approvedName || '';
+};
 
-    if (Object.keys(err).length === 0) {
-      this.isLoading = true;
-    }
+validateFormStep2 = () => {
+  const err: any = {};
+  if (this.address === '') err.address = 'Required*';
+  if (this.state === '') err.state = 'Required*';
+  if (this.city === '') err.city = 'Required*';
 
-    return err;
-  };
+  if (Object.keys(err).length === 0) {
+    this.isLoading = true;
+  }
 
-  validateFormStep3 = () => {
-    const err: any = {};
-    if (this.password === '') err.password = 'Required*';
-    else if (!this.passwordIsStrong) err.password = 'Password is weak*';
-    if (this.confirmPassword === '') err.confirmPassword = 'Required*';
-    else if (this.confirmPassword !== this.password)
-      err.confirmPassword = 'Passwords do not match*';
+  return err;
+};
 
-    if (Object.keys(err).length === 0) {
-      this.isLoading = true;
-    }
-    return err;
-  };
+validateFormStep3 = () => {
+  const err: any = {};
+  if (this.password === '') err.password = 'Required*';
+  else if (!this.passwordIsStrong) err.password = 'Password is weak*';
+  if (this.confirmPassword === '') err.confirmPassword = 'Required*';
+  else if (this.confirmPassword !== this.password)
+    err.confirmPassword = 'Passwords do not match*';
+
+  if (Object.keys(err).length === 0) {
+    this.isLoading = true;
+  }
+  return err;
+};
 
 
-  handleSubmitStep1 = () => {
-    // //(this.validateForm());
-    if (Object.keys(this.validateFormStep1()).length > 0) {
-      this.validators = { ...this.validators, ...this.validateFormStep1() };
-    } else {
-      this.submit.emit({
-        stage: 'Company Details',
-        data: {
-          companyName: this.companyName,
-          registrationNumber: this.registrationNumber,
-          // registrationDate: moment(this.registrationDate).format('DD-MM-YYYY'),
-          natureOfBusiness: this.natureOfBusiness,
-          registrationType: this.registrationType,
-          tin: this.tin,
-          accountType: this.accountType,
-        },
-      });
-    }
+handleSubmitStep1 = () => {
+  // //(this.validateForm());
+  if (Object.keys(this.validateFormStep1()).length > 0) {
+    this.validators = { ...this.validators, ...this.validateFormStep1() };
+  } else {
+    this.submit.emit({
+      stage: 'Company Details',
+      data: {
+        companyName: this.companyName,
+        registrationNumber: this.registrationNumber,
+        // registrationDate: moment(this.registrationDate).format('DD-MM-YYYY'),
+        natureOfBusiness: this.natureOfBusiness,
+        registrationType: this.registrationType,
+        tin: this.tin,
+        accountType: this.accountType,
+      },
+    });
+  }
 
-  };
+};
 
-  handleSubmitStep2 = () => {
-    if (Object.keys(this.validateFormStep2()).length > 0) {
-      console.log(this.validateFormStep2());
-      this.validators = { ...this.validators, ...this.validateFormStep2() };
-    } else {
-      this.submit.emit({
-        stage: 2,
-        data: {
-          address: this.company_address,
-          state: this.company_state,
-          city: this.company_city,
-        },
-      });
-    }
+handleSubmitStep2 = () => {
+  if (Object.keys(this.validateFormStep2()).length > 0) {
+    console.log(this.validateFormStep2());
+    this.validators = { ...this.validators, ...this.validateFormStep2() };
+  } else {
+    this.submit.emit({
+      stage: 2,
+      data: {
+        address: this.company_address,
+        state: this.company_state,
+        city: this.company_city,
+      },
+    });
+  }
 
-  };
+};
 
-  handleSubmitStep3 = () => {
-    if (Object.keys(this.validateFormStep3()).length > 0) {
-      this.validators = { ...this.validators, ...this.validateFormStep3() };
-    } else {
-      this.submit.emit({
-        stage: 3,
-        data: {
-          password: this.password,
-          confirmPassword: this.confirmPassword,
-        },
-      });
-    }
+handleSubmitStep3 = () => {
+  if (Object.keys(this.validateFormStep3()).length > 0) {
+    this.validators = { ...this.validators, ...this.validateFormStep3() };
+  } else {
+    this.submit.emit({
+      stage: 3,
+      data: {
+        password: this.password,
+        confirmPassword: this.confirmPassword,
+      },
+    });
+  }
 
-  };
+};
 }

@@ -58,10 +58,10 @@
 
 
   <div *ngIf="!phone" class="flex flex-col justify-center rounded-[10px] bg-[#F1F5F9] h-[60px]">
-    <label *ngIf="value !== ''" for="floatingInput" class="text-gray-500 ms-[16px] text-[#94A3B8] font-[500] text-[12px] transition-all duration-200 {{
+    <label *ngIf="value && value !== ''" for="floatingInput" class="text-gray-500 ms-[16px] text-[#94A3B8] font-[500] text-[12px] transition-all duration-200 {{
         animate ? 'opacity-[1]' : 'opacity-0'
       }}">
-      {{placeholder}}
+      {{label ? label : placeholder}}
     </label>
     <input type="text" [(ngModel)]="value" (ngModelChange)="handleInputChange($event)" (keydown.enter)="onEnterKey()"
       (keyup)="handleChange($event)" (keyup.enter)="submit_()" (keypress)="handleChange($event)"

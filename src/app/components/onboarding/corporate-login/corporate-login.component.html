@@ -37,8 +37,9 @@
     </div>
   </div>
 
-  <app-input [type]="'text'" [value]="email" [placeholder]="'Enter your email address'" [error]="validators.email"
+  <app-input [type]="'text'" [label]="'Email Address'" [value]="email" [placeholder]="'Enter your email address'" [error]="validators.email"
     (onChange)="handleChange('email', $event)" (submit)="!showPassword ? verifyEmail() : login()"></app-input>
+
   <div *ngIf="showPassword && path === 'login'" class="flex flex-col gap-[8px] w-full">
     <app-input [type]="passwordType" [placeholder]="'Enter your password'" [value]="password"
       [error]="validators.password" (onChange)="handleChange('password', $event)" (submit)="login()">
