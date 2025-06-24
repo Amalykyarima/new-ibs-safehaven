@@ -77,7 +77,7 @@
       </div>
     </div>
   </div> -->
-  <aside  class="w-full flex flex-col gap-[152px] md:ms-[13px]">
+  <aside *ngIf="this.loginData.accountType === 'Corporate'"  class="w-full flex flex-col gap-[152px] md:ms-[13px]">
     <img class="w-[121px]" src="../../../assets/images/logo1.svg" alt="">
     <div>
       <h2 class="font-paragraph-l-semibold text-[#1E293B] font-[600] text-[18px] mb-10">
@@ -85,6 +85,34 @@
       </h2>
       <nav class="flex flex-row md:flex-col w-full md:w-[184px] gap-6">
         <div (click)="setStep(i)" *ngFor="let step of corporateSteps; let i = index"
+          class="flex items-center gap-[8px]">
+          <img *ngIf="i <= activeStep" [src]="
+          'assets/icons/' +
+          (activeStep === i
+            ? 'rounded-right-arrow'
+            : 'blue-completed-check') +
+          '.svg'
+        " alt="step icon" /><span [ngClass]="{
+          'ps-[24px]': activeStep < i,
+          'cursor-pointer': true,
+          'text-[#1E293B]': activeStep === i,
+          'text-[#034EA2]': activeStep > i,
+          'text-[#64748B]': activeStep !== i && activeStep < i
+        }">
+            {{ step }}
+          </span>
+        </div>
+      </nav>
+    </div>
+  </aside>
+  <aside *ngIf="this.loginData.accountType === 'Individual'"  class="w-full flex flex-col gap-[152px] md:ms-[13px]">
+    <img class="w-[121px]" src="../../../assets/images/logo1.svg" alt="">
+    <div>
+      <h2 class="font-paragraph-l-semibold text-[#1E293B] font-[600] text-[18px] mb-10">
+        SET UP YOUR PROFILE
+      </h2>
+      <nav class="flex flex-row md:flex-col w-full md:w-[200px] gap-6">
+        <div (click)="setStep(i)" *ngFor="let step of individualSteps; let i = index"
           class="flex items-center gap-[8px]">
           <img *ngIf="i <= activeStep" [src]="
           'assets/icons/' +

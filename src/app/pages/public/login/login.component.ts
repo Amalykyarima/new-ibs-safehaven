@@ -6,11 +6,12 @@ import { AuthService } from '../../../resources/services/auth.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CorporateLoginComponent } from "../../../components/onboarding/corporate-login/corporate-login.component";
 import { IndividualLoginComponent } from "../../../components/onboarding/individual-login/individual-login.component";
+import { OtpComponent } from "../../../common/utilities/otp/otp.component";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, OnboardingLayoutComponent, TabComponent, CorporateLoginComponent, IndividualLoginComponent, RouterModule],
+  imports: [CommonModule, OnboardingLayoutComponent, TabComponent, CorporateLoginComponent, IndividualLoginComponent, RouterModule, OtpComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

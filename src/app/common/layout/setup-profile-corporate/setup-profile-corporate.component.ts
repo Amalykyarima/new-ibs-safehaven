@@ -139,9 +139,7 @@ export class SetupProfileCorporateComponent {
   registrationNumber = '';
   registrationDate = '';
   registrationType = '';
-  // registrationType: 'Limited Liability Companies' | 'Non-Limited Companies' | 'Associations and Cooperatives' = 'Limited Liability Companies';
 
-  // natureOfBusiness = '';
   natureOfBusiness: string = '';
 
   tin = '';
@@ -218,9 +216,7 @@ export class SetupProfileCorporateComponent {
 
   }
 
-  // activeButton() {
-  //   this.isLoading = true;
-  // }
+
 
   activeButton = () => {
     console.log('activeButton')
@@ -551,6 +547,7 @@ export class SetupProfileCorporateComponent {
   };
 
   checkAllFieldsValid3 = () => {
+    console.log('checking all fields')
     const fields = [
       this.address,
       this.state,
@@ -562,8 +559,11 @@ export class SetupProfileCorporateComponent {
     const allFilled = fields.every(field => field && field !== '');
 
     if (allFilled && !hasError) {
+
       this.activeButton();
     } else {
+    console.log(' eslse allFilled && !hasError')
+
       this.inactiveButton?.(); // Optional fallback
     }
   };
@@ -617,70 +617,6 @@ export class SetupProfileCorporateComponent {
 
   };
 
-  // signUp() {
-  //   // Only continue if process is not loading
-  //   // if (this.processLoading) return;
-  //   console.log('newUser',
-  //     this.newUser.CompanyAddress.address,
-  //       this.newUser.CompanyAddress.state,
-  //       this.newUser.CompanyAddress.city,
-  //   )
-  //   this.errorMessage = '';
-  //   this.processLoading = true;
-  //   if (
-  //     [
-  //       this.newUser.CompanyAddress.address,
-  //       this.newUser.CompanyAddress.state,
-  //       this.newUser.CompanyAddress.city,
-  //     ].includes('')
-  //   ) {
-  //     this.errorMessage = 'All director address fields are required.';
-  //     this.processLoading = false;
-  //     window.scrollTo(0, 0);
-  //   } else if (
-  //     [
-  //       this.newUser.address.state,
-  //       this.newUser.address.city,
-  //       this.newUser.password,
-  //     ].includes('')
-  //   ) {
-  //     this.errorMessage = 'All fields are required.';
-  //     this.processLoading = false;
-  //     window.scrollTo(0, 0);
-  //   } else {
-  //     // this.newUser.identityId = this.validationID;
-  //     // this.newUser.registrationDate = this.generalService.formatDateISO(
-  //     //   this.date
-  //     // );
-  //     this.newUser.registrationNumber = '' + this.newUser.registrationNumber;
-  //     this.newUser.emailAddress = this.newUser.emailAddress.toLowerCase();
-  //     this.newUser.tin = '' + this.newUser.tin;
-  //     // this.newUser.type = 'CAC-BVN';
-  //     this.authService.register(this.newUser).subscribe(
-  //       (res: any) => {
-  //         if (res.statusCode === 200) {
-  //           this.processLoading = false;
-  //           this.signUpSuccess = true;
-  //           // this.notification.success(
-  //           //   'Account signup successful.',
-  //           //   '' + res.message,
-  //           //   { nzClass: 'notification1' }
-  //           // );
-  //           localStorage.removeItem('reg_type');
-  //         } else {
-  //           this.errorMessage = '' + res.message;
-  //           this.processLoading = false;
-  //           window.scrollTo(0, 0);
-  //         }
-  //       },
-  //       (error: any) => {
-  //         this.errorMessage = 'An error occured. Please try again later';
-  //         this.processLoading = false;
-  //         window.scrollTo(0, 0);
-  //       }
-  //     );
-  //   }
-  // }
 
   signUp() {
     this.updateFormStatus(false)
@@ -750,98 +686,6 @@ export class SetupProfileCorporateComponent {
       next: (res) => this.handleRegistrationResponse(res),
       error: (err) => this.handleRegistrationError(err)
     });
-
-    // this.authService.register(data).subscribe({
-    //   next: (res: any) => {
-    //     console.log('Registration successful', res);
-
-    //     // Always hide spinner on response
-    //     this.registrationState.setSpinner(false);
-
-    //     if (res.statusCode === 200) {
-    //       console.log('me');
-    //       // Success case
-    //       this.registrationState.setAccountOpened(true);
-    //       this.registrationState.setFormStatus(false);
-    //     } else {
-    //       console.log('you');
-    //       // API returned business error
-    //       this.registrationState.setFormStatus(true);
-    //       // Optional: Show error message from response
-    //       // this.registrationState.setErrorMessage(res.message);
-    //     }
-    //   },
-    //   error: (err) => {
-    //     console.error('Registration failed', err);
-
-    //     // Error case
-    //     this.registrationState.setSpinner(false);
-    //     this.registrationState.setAccountOpened(false);
-    //     this.registrationState.setFormStatus(true);
-
-    //     // Optional: Handle different error types
-    //     if (err.status === 0) {
-    //       console.error('Network error');
-    //       // this.registrationState.setErrorMessage('Network connection failed');
-    //     } else {
-    //       console.error('Server error', err.status);
-    //       // this.registrationState.setErrorMessage(err.error?.message || 'Server error');
-    //     }
-    //   }
-    // });
-
-    // this.authService.register(data).subscribe({
-    //   next: (res: any) => {
-    //     console.log('Registration successful', res);
-
-
-    //     // Check if status code is 200
-    //     if (res.statusCode === 200) {
-    //       console.log('me');
-    //       this.updateSpinner(false);
-    //       this.updateAccountOpened(true);
-
-    //     } else {
-    //       console.log('you');
-    //       this.updateSpinner(false)
-    //       this.updateFormStatus(true);
-    //     }
-    //   },
-    //   error: (err) => {
-    //     console.error('Registration failed', err);
-
-    //     this.updateSpinner(false);
-    //     this.updateAccountOpened(false);
-    //     this.updateFormStatus(true);
-    //   }
-    // });
-
-
-    // this.authService.register(this.newUser).subscribe(
-    //   (res: any) => {
-    //     if (res.statusCode === 200) {
-    //       console.log('200')
-    //       this.updateFormStatus(false)
-    //       this.updateSpinner(false),
-    //       this.updateAccountOpened(true)
-
-
-    //     } else {
-    //       console.log('200 else')
-
-    //       this.updateSpinner(false),
-    //       this.updateAccountOpened(false)
-    //       this.updateFormStatus(true)
-
-    //       this.errorMessage = '' + res.message;
-    //       this.processLoading = false;
-    //     }
-    //   },
-    //   (error: any) => {
-    //     this.errorMessage = 'An error occured. Please try again later';
-    //     this.processLoading = false;
-    //   }
-    // );
   }
 
   private handleRegistrationResponse(res: any) {
@@ -867,7 +711,7 @@ export class SetupProfileCorporateComponent {
 
   updateFormStatus(status: boolean) {
     this.sharedDataService.setFormStatus(status);
-    console.log('updateFormStatus',status)
+    console.log('updateFormStatus', status)
   }
 
   updateSpinner(show: boolean) {
@@ -878,114 +722,114 @@ export class SetupProfileCorporateComponent {
 
   updateAccountOpened(opened: boolean) {
     this.sharedDataService.setAccountOpened(opened);
-    console.log('updateFormStatus',opened)
+    console.log('updateFormStatus', opened)
 
   }
 
-// updateSpinner(show: boolean) {
-//   this.spinnerChange.emit(show);
-//   console.log('updateSpinner', show,)
-// }
+  // updateSpinner(show: boolean) {
+  //   this.spinnerChange.emit(show);
+  //   console.log('updateSpinner', show,)
+  // }
 
-// updateAccountOpened(isOpened: boolean) {
-//   this.accountOpenedChange.emit(isOpened);
-//   console.log('updateAccountOpened', isOpened)
+  // updateAccountOpened(isOpened: boolean) {
+  //   this.accountOpenedChange.emit(isOpened);
+  //   console.log('updateAccountOpened', isOpened)
 
-// }
+  // }
 
-// updateFormStatus(change: boolean) {
-//   this.accountFormStatusChange.emit(change);
-//   console.log('updateFormStatus', change)
-// }
-
-
-
-selectCompany = (item: any) => {
-  this.registrationNumber = item.rcNumber || '';
-  this.registrationDate = item.registrationDate
-    ? moment(item.registrationDate).format('DD-MM-YYYY')
-    : '';
-  this.companyName = item.approvedName || '';
-};
-
-validateFormStep2 = () => {
-  const err: any = {};
-  if (this.address === '') err.address = 'Required*';
-  if (this.state === '') err.state = 'Required*';
-  if (this.city === '') err.city = 'Required*';
-
-  if (Object.keys(err).length === 0) {
-    this.isLoading = true;
-  }
-
-  return err;
-};
-
-validateFormStep3 = () => {
-  const err: any = {};
-  if (this.password === '') err.password = 'Required*';
-  else if (!this.passwordIsStrong) err.password = 'Password is weak*';
-  if (this.confirmPassword === '') err.confirmPassword = 'Required*';
-  else if (this.confirmPassword !== this.password)
-    err.confirmPassword = 'Passwords do not match*';
-
-  if (Object.keys(err).length === 0) {
-    this.isLoading = true;
-  }
-  return err;
-};
+  // updateFormStatus(change: boolean) {
+  //   this.accountFormStatusChange.emit(change);
+  //   console.log('updateFormStatus', change)
+  // }
 
 
-handleSubmitStep1 = () => {
-  // //(this.validateForm());
-  if (Object.keys(this.validateFormStep1()).length > 0) {
-    this.validators = { ...this.validators, ...this.validateFormStep1() };
-  } else {
-    this.submit.emit({
-      stage: 'Company Details',
-      data: {
-        companyName: this.companyName,
-        registrationNumber: this.registrationNumber,
-        // registrationDate: moment(this.registrationDate).format('DD-MM-YYYY'),
-        natureOfBusiness: this.natureOfBusiness,
-        registrationType: this.registrationType,
-        tin: this.tin,
-        accountType: this.accountType,
-      },
-    });
-  }
 
-};
+  selectCompany = (item: any) => {
+    this.registrationNumber = item.rcNumber || '';
+    this.registrationDate = item.registrationDate
+      ? moment(item.registrationDate).format('DD-MM-YYYY')
+      : '';
+    this.companyName = item.approvedName || '';
+  };
 
-handleSubmitStep2 = () => {
-  if (Object.keys(this.validateFormStep2()).length > 0) {
-    console.log(this.validateFormStep2());
-    this.validators = { ...this.validators, ...this.validateFormStep2() };
-  } else {
-    this.submit.emit({
-      stage: 2,
-      data: {
-        address: this.company_address,
-        state: this.company_state,
-        city: this.company_city,
-      },
-    });
-  }
+  validateFormStep2 = () => {
+    const err: any = {};
+    if (this.address === '') err.address = 'Required*';
+    if (this.state === '') err.state = 'Required*';
+    if (this.city === '') err.city = 'Required*';
 
-};
+    if (Object.keys(err).length === 0) {
+      this.isLoading = true;
+    }
 
-handleSubmitStep3 = () => {
-  if (Object.keys(this.validateFormStep3()).length > 0) {
-    this.validators = { ...this.validators, ...this.validateFormStep3() };
-  } else {
-    this.submit.emit({
-      stage: 3,
-      data: {
-        password: this.password,
-        confirmPassword: this.confirmPassword,
-      },
-    });
-  }
+    return err;
+  };
 
-};
+  validateFormStep3 = () => {
+    const err: any = {};
+    if (this.password === '') err.password = 'Required*';
+    else if (!this.passwordIsStrong) err.password = 'Password is weak*';
+    if (this.confirmPassword === '') err.confirmPassword = 'Required*';
+    else if (this.confirmPassword !== this.password)
+      err.confirmPassword = 'Passwords do not match*';
+
+    if (Object.keys(err).length === 0) {
+      this.isLoading = true;
+    }
+    return err;
+  };
+
+
+  handleSubmitStep1 = () => {
+    // //(this.validateForm());
+    if (Object.keys(this.validateFormStep1()).length > 0) {
+      this.validators = { ...this.validators, ...this.validateFormStep1() };
+    } else {
+      this.submit.emit({
+        stage: 'Company Details',
+        data: {
+          companyName: this.companyName,
+          registrationNumber: this.registrationNumber,
+          // registrationDate: moment(this.registrationDate).format('DD-MM-YYYY'),
+          natureOfBusiness: this.natureOfBusiness,
+          registrationType: this.registrationType,
+          tin: this.tin,
+          accountType: this.accountType,
+        },
+      });
+    }
+
+  };
+
+  handleSubmitStep2 = () => {
+    if (Object.keys(this.validateFormStep2()).length > 0) {
+      console.log(this.validateFormStep2());
+      this.validators = { ...this.validators, ...this.validateFormStep2() };
+    } else {
+      this.submit.emit({
+        stage: 2,
+        data: {
+          address: this.company_address,
+          state: this.company_state,
+          city: this.company_city,
+        },
+      });
+    }
+
+  };
+
+  handleSubmitStep3 = () => {
+    if (Object.keys(this.validateFormStep3()).length > 0) {
+      this.validators = { ...this.validators, ...this.validateFormStep3() };
+    } else {
+      this.submit.emit({
+        stage: 3,
+        data: {
+          password: this.password,
+          confirmPassword: this.confirmPassword,
+        },
+      });
+    }
+
+  };
 }

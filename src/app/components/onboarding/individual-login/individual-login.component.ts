@@ -287,6 +287,7 @@ export class IndividualLoginComponent {
   };
 
   sendOtp = async () => {
+    console.log('sendOtp', this.userType)
     this.loading = true;
     this.error = { type: '', message: '' };
     this.userType === 'email'
@@ -303,7 +304,11 @@ export class IndividualLoginComponent {
           })
           .subscribe({
             next: (res: any) => {
+              this.router.navigate(['/'])
               //(res);
+              // setTimeout(() => {
+              //   this.router.navigate(['/two-factor-authentication']);
+              // }, 500);
               this.loading_ = false;
               this.success = { message: res.message };
               this.validateUser.emit({

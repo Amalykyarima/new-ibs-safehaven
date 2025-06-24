@@ -81,13 +81,15 @@ export class SetupProfileIndividualComponent {
   accountTypes = [
     {
       id: 1,
-      type: 'Savings Account',
+      name: 'Savings Account',
+      type: 'Savings',
       icon: '../../../../assets/icons/savings.svg',
       active: '../../../../assets/icons/savings-active.svg',
     },
     {
       id: 2,
-      type: 'Current Account',
+      name: 'Current Account',
+      type: 'Current',
       icon: '../../../../assets/icons/current.svg',
       active: '../../../../assets/icons/current-active.svg'
 
@@ -120,9 +122,6 @@ export class SetupProfileIndividualComponent {
   emailAddress = '';
 
 
-  // validators = {
-
-  // };
 
   get charactersLengthCheck() {
     return this.password.length >= 8;
@@ -153,37 +152,14 @@ export class SetupProfileIndividualComponent {
       this.specialCharacterCheck
     );
   }
-  // validators = {
 
-  // };
-  businessTypes = [
-    'Agric Business',
-    'Contracting',
-    'Financial Institutions',
-    'Health Care',
-    'Hospitality',
-    'Lottery and Games',
-    'Manufacturing',
-    'NGOs',
-    'Associations and Clubs',
-    'Professional Practice Firms',
-    'Religious Bodies',
-    'Retail Trade',
-    'Schools',
-    'Supply',
-    'Wholesale Trade',
-    'Technology',
-    'Creative and Art Industry',
-    'Others',
-  ];
+
   today: any = '';
   companyName = '';
   registrationNumber = '';
   registrationDate = '';
   registrationType = '';
-  // registrationType: 'Limited Liability Companies' | 'Non-Limited Companies' | 'Associations and Cooperatives' = 'Limited Liability Companies';
 
-  // natureOfBusiness = '';
   natureOfBusiness: string = '';
 
   tin = '';
@@ -194,16 +170,7 @@ export class SetupProfileIndividualComponent {
   searching = false;
 
   validators = {
-    companyName: '',
-    registrationNumber: '',
-    registrationDate: '',
-    registrationType: '',
-    natureOfBusiness: '',
-    tin: '',
     accountType: '',
-    company_address: '',
-    company_state: '',
-    company_city: '',
     address: '',
     state: '',
     city: '',
@@ -211,7 +178,6 @@ export class SetupProfileIndividualComponent {
     confirmPassword: '',
     emailAddress: '',
     phoneNumber: '',
-    email: '',
     gender: ''
   };
 
@@ -238,20 +204,11 @@ activeAccountId: number | null = null; // To track which account is active
     this.today = todayDate.toISOString().split('T')[0];
     this.loginData = this.sharedDataService.getLoginData();
 
-    if (this.loginData?.user) {
-      this.emailAddress = this.loginData.user; // or this.loginData.user.email if nested
-    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['form'] && changes['form'].currentValue.companyName) {
       //(changes['form'].currentValue);
-      this.companyName = changes['form'].currentValue.companyName;
-      this.registrationNumber = changes['form'].currentValue.registrationNumber;
-      this.registrationDate = changes['form'].currentValue.registrationDate;
-      this.registrationType = changes['form'].currentValue.registrationType;
-      this.natureOfBusiness = changes['form'].currentValue.natureOfBusiness;
-      this.tin = changes['form'].currentValue.tin;
       this.accountType = changes['form'].currentValue.accountType;
       this.showForm = true;
     }
@@ -268,10 +225,10 @@ activeAccountId: number | null = null; // To track which account is active
   selectAccount(account: any) {
     this.activeAccountId = account.id;
     this.selectedAccountType = account.type;
-    console.log('Selected account type:', this.selectedAccountType);
+    this.accountType = this.selectedAccountType;
+    console.log('Selected account type:', this.accountType, this.emailAddress, this.gender);
+    // this.handleChangeStep1('emailAddress', account)
 
-    // If you need to use this value elsewhere
-    // this.authService.setAccountType(this.selectedAccountType);
   }
 
 
@@ -291,25 +248,6 @@ activeAccountId: number | null = null; // To track which account is active
     return state === '' ? [] : getLgas(state);
   };
 
-  nextt() {
-    this.searchCompany = !this.searchCompany
-  }
-
-  searchCompanyToggle() {
-    this.searching = true;
-    this.showSearch = false;
-    this.identityService.searchCompany({ filter: this.search }).subscribe({
-      next: (res: any) => {
-        //(res);
-        this.searching = false;
-        this.searchResults = res.data;
-        this.showSearch = true;
-      },
-      error: (err) => {
-        this.searching = false;
-      },
-    });
-  }
 
   next = () => {
     console.log(this.step, this.isLoading, 'step')
@@ -327,25 +265,13 @@ activeAccountId: number | null = null; // To track which account is active
       this.handleSubmitStep2()
       this.stepChange.emit(this.step + 1);
     } else if (this.step === 2 && this.isLoading === true) {
-      console.log('step3')
-      this.inactiveButton();
-
-      this.handleSubmitStep3()
-      this.stepChange.emit(this.step + 1);
-
-
-    } else if (this.step === 3 && this.isLoading === true) {
 
       console.log(
         {
-          companyName: this.companyName,
-          registrationNumber: this.registrationNumber,
-          natureOfBusiness: this.natureOfBusiness,
-          registrationType: this.registrationType,
-          tin: this.tin,
-          company_address: this.company_address,
-          company_state: this.company_state,
-          company_city: this.company_city,
+          phoneNumber: this.loginData?.user,
+          emailAddress:this.emailAddress,
+          accountType: this.accountType,
+          gender: this.gender,
           address: this.address,
           state: this.state,
           city: this.city,
@@ -356,6 +282,52 @@ activeAccountId: number | null = null; // To track which account is active
       this.signUp();
     }
 
+
+  }
+
+  private handleRegistrationResponse(res: any) {
+    console.log('handleRegistrationResponse')
+    this.sharedDataService.setSpinner(false);
+
+    if (res.statusCode === 200) {
+    console.log('handleRegistrationResponse')
+
+      this.sharedDataService.setAccountOpened(true);
+    } else {
+      this.sharedDataService.setFormStatus(true);
+    }
+  }
+
+  private handleRegistrationError(err: any) {
+    console.log('handleRegistrationResponse')
+
+    this.sharedDataService.changeSearchCompany(false);
+    this.sharedDataService.setSpinner(false);
+    this.sharedDataService.setAccountOpened(false);
+    this.sharedDataService.setFormStatus(true);
+
+  }
+
+  updateFormStatus(status: boolean) {
+    console.log('updateFormStatus')
+
+    this.sharedDataService.setFormStatus(status);
+    console.log('updateFormStatus',status)
+  }
+
+  updateSpinner(show: boolean) {
+    console.log('updateSpinner')
+
+    this.sharedDataService.setSpinner(show);
+    console.log('updateFormStatus', show)
+
+  }
+
+  updateAccountOpened(opened: boolean) {
+    console.log('updateAccountOpened')
+
+    this.sharedDataService.setAccountOpened(opened);
+    console.log('updateFormStatus',opened)
 
   }
 
@@ -373,44 +345,17 @@ activeAccountId: number | null = null; // To track which account is active
       );
   };
 
-  checkAllFieldsValid = () => {
-    const fields = [
-      this.companyName,
-      this.registrationNumber,
-      this.natureOfBusiness,
-      this.registrationType,
-      this.tin,
-      this.emailAddress,
-    ];
 
-    const hasError = Object.values(this.validators).some(v => v !== '');
-
-    const allFilled = fields.every(field => field && field !== '');
-
-    if (allFilled && !hasError) {
-      this.activeButton();
-    } else {
-      this.inactiveButton?.(); // Optional fallback
-    }
-  };
-
-
-
-
-  handleChangeStep2 = (name: 'company_address' | 'company_state' | 'company_city', value: any) => {
+  handleChangeStep2 = (name: 'address' | 'state' | 'city', value: any) => {
     console.log({
-      address: this.company_address, state: this.company_state, city: this.company_city,
+      address: this.address, state: this.state, city: this.city,
     });
 
     this[name] = value;
-    // if (value === '') this.validators[name] = 'Required*' ;
-    // else this.validators[name] = '';
     if (value === '') {
       this.validators[name] = 'Required*';
-      // this.inactiveButton(); // 👈 Call inactive when value is empty
     } else {
       this.validators[name] = '';
-      // this.activeButton();
     }
     this.checkAllFieldsValid2()
 
@@ -418,9 +363,41 @@ activeAccountId: number | null = null; // To track which account is active
 
   checkAllFieldsValid2 = () => {
     const fields = [
-      this.company_address,
-      this.company_state,
-      this.company_city,
+      this.address,
+      this.state,
+      this.city,
+    ];
+
+    // const hasError = Object.values(this.validators).some(v => v !== '');
+
+    const allFilled = fields.every(field => field && field !== '');
+
+    if (allFilled) {
+    console.log('allFilled && !hasError')
+
+      this.activeButton();
+    } else {
+    console.log('eslse allFilled && !hasError')
+
+      this.inactiveButton?.(); // Optional fallback
+    }
+  };
+
+  handleChangeStep3 = (name: 'address' | 'state' | 'city', value: any) => {
+    this[name] = value;
+    if (value === '') {
+      this.validators[name] = 'Required*';
+    } else {
+      this.validators[name] = '';
+    }
+    this.checkAllFieldsValid3()
+  };
+
+  checkAllFieldsValid3 = () => {
+    const fields = [
+      this.address,
+      this.state,
+      this.city,
     ];
 
     const hasError = Object.values(this.validators).some(v => v !== '');
@@ -434,26 +411,11 @@ activeAccountId: number | null = null; // To track which account is active
     }
   };
 
-  handleChangeStep3 = (name: 'address' | 'state' | 'city', value: any) => {
-    // console.log(name, value);
-    this[name] = value;
-    // if (value === '') this.validators[name] = 'Required*';
-    // else this.validators[name] = '';
-    if (value === '') {
-      this.validators[name] = 'Required*';
-      // this.inactiveButton();
-    } else {
-      this.validators[name] = '';
-      // this.activeButton();
-    }
-    this.checkAllFieldsValid3()
-  };
-
-  checkAllFieldsValid3 = () => {
+  checkAllFieldsValid = () => {
     const fields = [
-      this.phoneNumber,
+      this.accountType,
       this.gender,
-      this.city,
+      this.emailAddress,
     ];
 
     const hasError = Object.values(this.validators).some(v => v !== '');
@@ -472,14 +434,12 @@ activeAccountId: number | null = null; // To track which account is active
 
     if (value === '') {
       this.validators[name] = 'Required*';
-      // this.inactiveButton();
     } else if (name === 'password' && !this.passwordIsStrong) {
       this.validators[name] = 'Password is weak*';
     } else if (name === 'confirmPassword' && this.password !== value) {
       this.validators[name] = 'Passwords do not match*';
     } else {
       this.validators[name] = '';
-      // this.activeButton();
     }
     this.checkAllFieldsValid4()
   };
@@ -505,10 +465,6 @@ activeAccountId: number | null = null; // To track which account is active
   validateFormStep1 = () => {
     const err: any = {};
 
-    if (this.companyName === '') err.companyName = 'Required*';
-    if (this.registrationNumber === '') err.registrationNumber = 'Required*';
-    if (this.natureOfBusiness === '') err.natureOfBusiness = 'Required*';
-    if (this.registrationType === '') err.registrationType = 'Required*';
     if (this.accountType === '') err.accountType = 'Required*';
     return err;
 
@@ -517,14 +473,11 @@ activeAccountId: number | null = null; // To track which account is active
 
 
   signUp() {
-    // Only continue if process is not loading
-    if (this.processLoading) return;
-
-    this.errorMessage = '';
-    this.processLoading = true;
+    this.updateFormStatus(false)
+    this.updateSpinner(true)
 
     const data = {
-      identityId: this.loginData._id,
+      identityId: this.loginData?._id,
       phoneNumber: this.loginData.user,
       type: 'PHONE',
       title: 'Mr',
@@ -532,9 +485,7 @@ activeAccountId: number | null = null; // To track which account is active
       maritalStatus: 'Single',
       emailAddress: this.emailAddress,
       identityType: 'International Passport',
-      companyName: this.companyName,
       registrationDate: '01-01-2024',
-      tin: this.tin,
       address: {
         address: this.address,
         state: this.state,
@@ -548,26 +499,13 @@ activeAccountId: number | null = null; // To track which account is active
     };
 
     this.authService.register(data).subscribe({
-      next: (res) => {
-        console.log('Registration successful', res);
-        // e.g., this.router.navigate(['/success']);
-      },
-      error: (err) => {
-        console.error('Registration failed', err);
-        // e.g., this.errorMessage = err.message;
-      }
+      next: (res) => this.handleRegistrationResponse(res),
+      error: (err) => this.handleRegistrationError(err)
     });
+
   }
 
 
-
-  selectCompany = (item: any) => {
-    this.registrationNumber = item.rcNumber || '';
-    this.registrationDate = item.registrationDate
-      ? moment(item.registrationDate).format('DD-MM-YYYY')
-      : '';
-    this.companyName = item.approvedName || '';
-  };
 
   validateFormStep2 = () => {
     const err: any = {};
@@ -603,14 +541,10 @@ activeAccountId: number | null = null; // To track which account is active
       this.validators = { ...this.validators, ...this.validateFormStep1() };
     } else {
       this.submit.emit({
-        stage: 'Company Details',
+        stage: 'Additional Information',
         data: {
-          companyName: this.companyName,
-          registrationNumber: this.registrationNumber,
-          // registrationDate: moment(this.registrationDate).format('DD-MM-YYYY'),
-          natureOfBusiness: this.natureOfBusiness,
-          registrationType: this.registrationType,
-          tin: this.tin,
+          emailAddress: this.emailAddress,
+          gender: this.gender,
           accountType: this.accountType,
         },
       });
@@ -626,9 +560,9 @@ activeAccountId: number | null = null; // To track which account is active
       this.submit.emit({
         stage: 2,
         data: {
-          address: this.company_address,
-          state: this.company_state,
-          city: this.company_city,
+          address: this.address,
+          state: this.state,
+          city: this.city,
         },
       });
     }
@@ -652,15 +586,12 @@ activeAccountId: number | null = null; // To track which account is active
 
   onBack(): void {
     if (this.additional) {
-      // Case: First screen — go to home page
       this.router.navigate(['/home']); // adjust this path as needed
     } else if (this.home) {
-      // Case: Second screen — go back to 'additional'
       this.additional = true;
       this.home = false;
       this.passwordSetup = false;
     } else if (this.passwordSetup) {
-      // Case: Third screen — go back to 'home'
       this.additional = false;
       this.home = true;
       this.passwordSetup = false;
@@ -668,15 +599,38 @@ activeAccountId: number | null = null; // To track which account is active
   }
 
 
-  handleChangeStep1 = (name: 'phoneNumber' | 'emailAddress' | 'gender', value: any) => {
-    this[name] = value;
+  handleChangeStep1 = (name: 'accountType' | 'emailAddress' | 'gender', value: any) => {
+    console.log({
+      accountType: this.accountType,
+      email: this.emailAddress,
+      gender: this.gender,
+    });
+
+      if (name === 'emailAddress') {
+        const isValidEmail = this.generalService.validateEmailAddress(value);
+
+        if (!value || !isValidEmail) {
+          this.validators[name] = 'Invalid Email Address*';
+        } else {
+          this.validators[name] = '';
+          this.activeButton
+        }
+
+        this[name] = value;
+        this.checkAllFieldsValid();
+        return;
+      }
+
+      this[name] = value;
+
     if (value === '') {
       this.validators[name] = 'Required*';
     } else {
       this.validators[name] = '';
     }
-    this.checkAllFieldsValid3()
+    this.checkAllFieldsValid()
   };
+
 
 
 }
