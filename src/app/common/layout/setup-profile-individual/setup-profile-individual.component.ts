@@ -477,28 +477,28 @@ activeAccountId: number | null = null; // To track which account is active
     this.updateSpinner(true)
 
     const data = {
-      identityId: this.loginData?._id,
-      phoneNumber: this.loginData.user,
       type: 'PHONE',
+      identityId: this.loginData?._id,
+      emailAddress: this.emailAddress,
+      accountType: this.accountType,
       title: 'Mr',
       gender: 'Male',
+      phoneNumber: this.loginData.user,
       maritalStatus: 'Single',
-      emailAddress: this.emailAddress,
       identityType: 'International Passport',
-      registrationDate: '01-01-2024',
+      dateOfBirth: '01-01-1994',
       address: {
         address: this.address,
         state: this.state,
         city: this.city
       },
-      accountType: this.accountType,
       password: this.confirmPassword,
       referralCode: localStorage['referralId']
         ? localStorage['referralId']
         : '',
     };
 
-    this.authService.register(data).subscribe({
+    this.authService.newRegister(data).subscribe({
       next: (res) => this.handleRegistrationResponse(res),
       error: (err) => this.handleRegistrationError(err)
     });

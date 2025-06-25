@@ -66,7 +66,7 @@ export const routes: Routes = [
     providers: [
       provideState(onboardingFeatureKey, OnboardingReducer)
     ],
-  }
+  },
 ];
 
 @NgModule({

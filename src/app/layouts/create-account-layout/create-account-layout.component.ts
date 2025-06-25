@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { SetupProfileFormComponent } from '../../components/onboarding/setup-profile-form/setup-profile-form.component';
 import { ButtonFilledComponent } from '../../common/utilities/button-filled/button-filled.component';
 import { SetupProfileCorporateComponent } from "../../common/layout/setup-profile-corporate/setup-profile-corporate.component";
@@ -67,7 +67,8 @@ export class CreateAccountLayoutComponent {
 
   constructor(private fb: FormBuilder,
     private sharedDataService: SharedDataService,
-    // private registrationState: RegistrationStateService,
+    private router: Router,
+
     ) {
     this.form = this.fb.group({
       email: [''],
@@ -99,6 +100,12 @@ export class CreateAccountLayoutComponent {
 
   setStep(step: number) {
     this.activeStep = step;
+  }
+
+  next(){
+    setTimeout(() => {
+      this.router.navigate(['/identity']);
+  }, 1000);
   }
 
   updateStep(step: number) {

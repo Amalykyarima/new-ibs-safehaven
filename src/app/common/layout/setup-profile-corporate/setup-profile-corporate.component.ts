@@ -651,19 +651,21 @@ export class SetupProfileCorporateComponent {
     //   window.scrollTo(0, 0);
     // } else {
     const data = {
-      type: 'CAC-BVN',
+      type: 'EMAIL',
+      identityId: this.loginData?._id,
+      emailAddress: this.emailAddress,
+      accountType: 'Current',
       title: 'Mr',
       gender: 'Male',
       maritalStatus: 'Single',
-      identityId: this.loginData?._id,
-      emailAddress: this.emailAddress,
       identityType: 'BVN',
-      companyName: this.companyName,
-      registrationDate: '01-01-2024',
-      registrationNumber: this.registrationNumber,
-      natureOfBusiness: this.natureOfBusiness,
       registrationType: this.registrationType,
+      registrationNumber: this.registrationNumber,
+      registrationDate: '01-01-2024',
+      natureOfBusiness: this.natureOfBusiness,
+      companyName: this.companyName,
       tin: this.tin,
+      password: this.confirmPassword,
       directorAddress: {
         address: this.address,
         state: this.state,
@@ -674,15 +676,13 @@ export class SetupProfileCorporateComponent {
         state: this.company_state,
         city: this.company_city
       },
-      accountType: 'Current',
-      password: this.confirmPassword,
       referralCode: localStorage['referralId']
         ? localStorage['referralId']
         : '',
     };
     console.log('datea', data)
 
-    this.authService.register(data).subscribe({
+    this.authService.newRegister(data).subscribe({
       next: (res) => this.handleRegistrationResponse(res),
       error: (err) => this.handleRegistrationError(err)
     });
@@ -692,6 +692,7 @@ export class SetupProfileCorporateComponent {
     this.sharedDataService.setSpinner(false);
 
     if (res.statusCode === 200) {
+      console.log("re-newRegister",res)
       this.sharedDataService.setAccountOpened(true);
       // Optional: Navigate to success page
     } else {
