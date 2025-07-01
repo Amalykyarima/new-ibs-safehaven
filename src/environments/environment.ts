@@ -12,6 +12,8 @@ export const environment = {
     'bdcUzrwmP2WLxvUU5gepAFeGyh9APwkGcGMJfj64SDmhQrW8WjESj2jG9VLLAxE5',
   complianceUrl: 'https://paygate-compliance-sandbox.herokuapp.com',
   identityLivenessUrl: 'https://faceRek-test-sandbox.sudoafrica.site',
+  jwtTokenEncryptionKey: "FwqQrrPPxDe3apSQ8tvA5wZsYfQHUz8RKsgUnt6s3P9ZY3eqQrHnRqsxZfTmHjtP",
+
 };
 
 // export const environment = {
@@ -21,6 +23,8 @@ export const environment = {
 //   privateKey: 'bdcUzrwmP2WLxvUU5gepAFeGyh9APwkGcGMJfj64SDmhQrW8WjESj2jG9VLLAxE5',
 //   complianceUrl: 'https://compliance.sudo.africa',
 //   identityLivenessUrl: 'https://faceRek-test-sandbox.sudoafrica.site',
+// jwtTokenEncryptionKey: "FwqQrrPPxDe3apSQ8tvA5wZsYfQHUz8RKsgUnt6s3P9ZY3eqQrHnRqsxZfTmHjtP",
+
 // };
 
 /*

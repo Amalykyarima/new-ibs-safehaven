@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
   HostListener,
   Input,
   NgZone,
+  OnChanges,
   Output,
   SimpleChanges,
   ViewChild,
@@ -21,7 +23,7 @@ import { GeneralService } from '../../../resources/services/general.service';
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss',
 })
-export class InputComponent {
+export class InputComponent implements OnChanges, AfterViewInit {
   constructor(
     private generalService: GeneralService,
     private elementRef: ElementRef,
@@ -65,23 +67,23 @@ export class InputComponent {
   }
 
   ngAfterViewInit() {
-    const observer = new MutationObserver(() => {
-      const autofilledValue = this.inputElement?.nativeElement?.value;
-      if (autofilledValue) {
-        this.ngZone.run(() => {
-          // console.log('Autofilled value detected:', autofilledValue);
-          // this.value = autofilledValue; // Update model manually
-          this.handleChange({ target: { value: this.value } });
-        });
-      }
-    });
+    // const observer = new MutationObserver(() => {
+    //   const autofilledValue = this.inputElement?.nativeElement?.value;
+    //   if (autofilledValue) {
+    //     this.ngZone.run(() => {
+    //       // console.log('Autofilled value detected:', autofilledValue);
+    //       // this.value = autofilledValue; // Update model manually
+    //       this.handleChange({ target: { value: this.value } });
+    //     });
+    //   }
+    // });
 
-    // Observe changes to attributes and child elements of the input element
-    observer.observe(this.inputElement.nativeElement, {
-      attributes: true,
-      childList: true,
-      subtree: true,
-    });
+    // // Observe changes to attributes and child elements of the input element
+    // observer.observe(this.inputElement.nativeElement, {
+    //   attributes: true,
+    //   childList: true,
+    //   subtree: true,
+    // });
   }
 
   // ngOnChanges(changes: SimpleChanges): void {

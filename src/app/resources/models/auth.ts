@@ -44,10 +44,15 @@ export class Register {
     dateOfBirth: string = '';
     password: string = '';
     address: {
-        street: string;
-        city: string;
-        state: string;
-        country: string;
+      street: string;
+      city: string;
+      state: string;
+      country: string;
+    } = {
+      street: '',
+      city: '',
+      state: '',
+      country: ''
     };
     referralCode: string = '';
 }
@@ -67,17 +72,28 @@ export class RegisterCorporate {
     natureOfBusiness: string = '';
     tin: string = '';
     address: {
-        street: string;
-        city: string;
-        state: string;
-        country: string;
+      street: string;
+      city: string;
+      state: string;
+      country: string;
+    } = {
+      street: '',
+      city: '',
+      state: '',
+      country: ''
     };
+
     directorAddress: {
-        street: string;
-        city: string;
-        state: string;
-        country: string;
-    }
+      street: string;
+      city: string;
+      state: string;
+      country: string;
+    } = {
+      street: '',
+      city: '',
+      state: '',
+      country: ''
+    };
 }
 
 export class CompanySignup {
@@ -96,16 +112,26 @@ export class CompanySignup {
     natureOfBusiness: NatureOfBusiness = '';
     tin: string = '';
     address: {
-        street: string;
-        city: string;
-        state: string;
-        country: string;
+      street: string;
+      city: string;
+      state: string;
+      country: string;
+    } = {
+      street: '',
+      city: '',
+      state: '',
+      country: ''
     };
     directorAddress: {
-        street: string;
-        city: string;
-        state: string;
-        country: string;
+      street: string;
+      city: string;
+      state: string;
+      country: string;
+    } = {
+      street: '',
+      city: '',
+      state: '',
+      country: ''
     };
 }
 

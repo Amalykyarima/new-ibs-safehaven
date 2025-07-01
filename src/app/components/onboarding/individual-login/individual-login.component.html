@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-[1px] relative p-[24px] sm:px-[24px] px-0 shadow_ sm:bg-[#fff] rounded-[10px]">
+<div class="flex flex-col gap-[24px] relative p-[24px] sm:px-[24px] px-0 shadow_ sm:bg-[#fff] rounded-[10px]">
   <!-- Error message -->
   <div *ngIf="error.message !== ''" class="w-full flex items-center gap-[8px]">
     <span class="min-w-[30px] h-[30px] flex items-center justify-center rounded-[5px]">
@@ -38,15 +38,14 @@
   </div>
 
   <app-input *ngIf="userType === 'phone'" [type]="'number'" [value]="phoneNumber" [phone]="true"
-    [placeholder]="'Enter your phone number'" [error]="validators.phoneNumber"
-    (onChange)="handleChange('phoneNumber', $event)" (getCountryCode)="getCountryCode($event)"
-    (submit)="!showPassword ? verifyPhoneNumber() : login()"></app-input>
-  <app-input *ngIf="userType === 'email'" [label]="'Email Address'" [value]="email" [placeholder]="'Enter your email address'"
-    [error]="validators.email" (onChange)="handleChange('email', $event)"
+    [placeholder]="'Phone Number'" [error]="validators.phoneNumber" (onChange)="handleChange('phoneNumber', $event)"
+    (getCountryCode)="getCountryCode($event)" (submit)="!showPassword ? verifyPhoneNumber() : login()"></app-input>
+  <app-input *ngIf="userType === 'email'" [label]="'Email Address'" [value]="email"
+    [placeholder]="'Enter your email address'" [error]="validators.email" (onChange)="handleChange('email', $event)"
     (submit)="!showPassword ? verifyEmail() : login()"></app-input>
   <!--  -->
-  <div *ngIf="showPassword && path === 'login'" class="flex flex-col gap-[8px] w-full">
-    <app-input [type]="passwordType" [placeholder]="'Enter your password'" [value]="password"
+  <div *ngIf="showPassword && path === 'login'" class="flex flex-col w-full">
+    <app-input [type]="passwordType" [label]="'Password'" [placeholder]="'Password'" [value]="password"
       [error]="validators.password" (onChange)="handleChange('password', $event)" (submit)="login()"
       [autoFocus]="showPassword">
       <img *ngIf="passwordType === 'password'" (click)="passwordType = 'text'" class="w-[14px] cursor-pointer"
@@ -55,7 +54,12 @@
         src="../../../../assets/icons/eye-off.svg" alt="" />
     </app-input>
     <span [routerLink]="['/forgot-password']"
-      class="text-end cursor-pointer text-[14px] font-[800] text-[#6B7280]">forgot password?</span>
+      class="text-end cursor-pointer text-[14px] font-[500] text-[#94A3B8] underline"
+      style="text-decoration-style: dotted;">
+      Forgot Password?
+    </span>
+
+
   </div>
   <div *ngIf="loading" class="absolute top-0 left-0 bottom-0 right-0 bg-[#ffffff54]"></div>
 
@@ -80,7 +84,7 @@
     <span *ngIf="!showPassword && path === 'login'" class="text-[14px] font-[400] text-[#9FA6B2]">Having Issues?
       <span (click)="
           userType === 'email' ? (userType = 'phone') : (userType = 'email')
-        " class="text-[#034EA2] cursor-pointer font-[700]">Sign in with your
+        " class="text-[#034EA2] cursor-pointer font-[700]">Use
         {{ userType === "email" ? "Phone Number" : "Email" }}
       </span>
     </span>

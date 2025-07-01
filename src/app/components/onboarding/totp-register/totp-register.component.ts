@@ -19,6 +19,16 @@ import { MaskMiddlePipe } from '../../../resources/services/mask.pipe';
 export class TotpRegisterComponent {
   userType = 'phone';
   error: any = { type: '', message: '' };
+  pin = '';
+  resendType = '';
+  errorMessage = '';
+  @Input() showTimer = false;
+
+  @Input() loginData: any = {};
+  @Input() hideBackBtn: boolean = false;
+  @Output() validate: EventEmitter<any> = new EventEmitter<any>();
+  @Output() close: EventEmitter<any> = new EventEmitter<any>();
+  @Output() resend: EventEmitter<any> = new EventEmitter<any>();
   phoneNumber: any = '';
 
   loading = false;
@@ -58,16 +68,7 @@ export class TotpRegisterComponent {
     console.log(this.loginData);
   }
 
-  pin = '';
-  resendType = '';
-  errorMessage = '';
-  @Input() showTimer = false;
 
-  @Input() loginData: any = {};
-  @Input() hideBackBtn: boolean = false;
-  @Output() validate: EventEmitter<any> = new EventEmitter<any>();
-  @Output() close: EventEmitter<any> = new EventEmitter<any>();
-  @Output() resend: EventEmitter<any> = new EventEmitter<any>();
 
   verifyOtp = () => {
     // this.error = 'Invalid otp';

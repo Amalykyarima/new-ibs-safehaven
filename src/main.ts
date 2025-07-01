@@ -9,6 +9,8 @@ import { GeneralReducer } from '../src/app/resources/store/general/general.reduc
 import { provideStore } from '@ngrx/store';
 import { OnboardingReducer } from './app/resources/store/onboarding/onboarding.reducer'; // adjust this path
 import { authInterceptor } from './app/resources/interceptors/auth.interceptor';
+import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
+import { provideNzI18n } from 'ng-zorro-antd/i18n';
 
 
 bootstrapApplication(AppComponent, appConfig)
@@ -16,6 +18,7 @@ bootstrapApplication(AppComponent, appConfig)
 
   bootstrapApplication(AppComponent, {
     providers: [
+      provideNzI18n(en_US),
       provideHttpClient(
         withInterceptors([authInterceptor])
       ),

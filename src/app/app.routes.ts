@@ -27,7 +27,9 @@ export const routes: Routes = [
     path: 'identity',
     loadComponent: () =>
       import('./layouts/identity-verification-layout/identity-verification-layout.component').then((m) => m.IdentityVerificationLayoutComponent),
-
+      providers: [
+        provideState(onboardingFeatureKey, OnboardingReducer)
+      ],
   },
   {
     path: 'create-account',
