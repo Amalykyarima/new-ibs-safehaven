@@ -39,11 +39,13 @@ export class InputComponent implements OnChanges, AfterViewInit {
   @Input() phone: boolean = false;
   @Input() countryCode: string = '234';
   @Input() flag: string = '🇳🇬';
-  @Input() countries: any[] = [
-    { name: 'Nigeria', callingCodes: ['234'], flag: '🇳🇬' },
-    { name: 'Ghana', callingCodes: ['233'], flag: '🇬🇭' },
-    { name: 'Kenya', callingCodes: ['254'], flag: '🇰🇪' },
-  ];
+  // @Input() countries: any[] = [
+  //   { name: 'Nigeria', callingCodes: ['234'], flag: '🇳🇬' },
+  //   { name: 'Ghana', callingCodes: ['233'], flag: '🇬🇭' },
+  //   { name: 'Kenya', callingCodes: ['254'], flag: '🇰🇪' },
+  // ];
+  countries: any = [];
+
 
   @Input() autoFocus: boolean = false;
   @Output() onChange = new EventEmitter<string>();

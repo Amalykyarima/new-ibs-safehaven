@@ -41,7 +41,9 @@ export const routes: Routes = [
     path: 'forgot-password',
     loadComponent: () =>
       import('./pages/public/forgot-password/forgot-password.component').then((m) => m.ForgotPasswordComponent),
-
+      providers: [
+        provideState(onboardingFeatureKey, OnboardingReducer)
+      ],
   },
   {
     path: 'two-factor-authentication',

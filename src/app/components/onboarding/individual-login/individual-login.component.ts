@@ -8,6 +8,8 @@ import * as onboardingActions from '../../../resources/store/onboarding/onboardi
 import { Store, StoreModule } from '@ngrx/store';
 import { State } from '../../../resources/store/onboarding/onboarding.reducer';
 import { GeneralService } from '../../../resources/services/general.service';
+import { SharedDataService } from '../../../resources/services/shared-data.service';
+
 // import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 
@@ -26,9 +28,7 @@ export class IndividualLoginComponent {
     private store: Store<State>,
     // private notification: NzNotificationService,
     private generalService: GeneralService,
-
-
-
+    private sharedDataService: SharedDataService,
   ) {
     this.user = new Signin();
 
@@ -40,6 +40,8 @@ export class IndividualLoginComponent {
 
   @Output() validateUser: EventEmitter<any> = new EventEmitter<any>();
   @Output() getUser: EventEmitter<any> = new EventEmitter<any>();
+  @Input() verifiedData: any = {};
+
 
   user: Signin;
   userType = 'phone';
@@ -78,20 +80,25 @@ export class IndividualLoginComponent {
       this.loading = true;
       this.error = { type: '', message: '' };
       // this.showPassword = true
+      this.verifiedData = {
+        type: 'PHONE',
+        userIdentifier:
+          this.countryCode === '+234' && this.phoneNumber.length > 10
+            ? '+234' + this.phoneNumber.trim().slice(1)
+            : this.countryCode + this.phoneNumber.trim(),
+        sendOtp: this.path === 'create-account',
+        accountType: 'Individual',
+      }
       this.authService
-        .verifyUser({
-          type: 'PHONE',
-          userIdentifier:
-            this.countryCode === '+234' && this.phoneNumber.length > 10
-              ? '+234' + this.phoneNumber.trim().slice(1)
-              : this.countryCode + this.phoneNumber.trim(),
-          sendOtp: this.path === 'create-account',
-          accountType: 'Individual',
-        })
+        .verifyUser(
+          this.verifiedData
+        )
         .subscribe({
           next: (res: any) => {
             //(res);
             this.loading = false;
+            this.sharedDataService.setLoginData(this.verifiedData);
+
             if (res.message === 'User found') {
               this.path === 'create-account'
                 ? (this.error = {
@@ -241,7 +248,7 @@ export class IndividualLoginComponent {
             } else {
               this.success = { message: res.message };
             }
-          } else if (res.statusCode == 400){
+          } else if (res.statusCode == 400) {
             console.log('res.statusCode == 400')
             this.error = {
               type: 'reset-password',
@@ -357,15 +364,18 @@ export class IndividualLoginComponent {
       this.loading = true;
       this.error = { type: '', message: '' };
       // this.showPassword = true
+      this.verifiedData = {
+        type: 'EMAIL',
+        userIdentifier: this.email?.toLowerCase().trim(),
+        sendOtp: false,
+        accountType: 'Individual',
+      }
       this.authService
-        .verifyUser({
-          type: 'EMAIL',
-          userIdentifier: this.email?.toLowerCase().trim(),
-          sendOtp: false,
-          accountType: 'Individual',
-        })
+        .verifyUser(this.verifiedData)
         .subscribe({
           next: (res: any) => {
+            this.sharedDataService.setLoginData(this.verifiedData);
+
             this.loading = false;
             if (res.message === 'User found') {
               this.showPassword = true;
