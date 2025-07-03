@@ -36,6 +36,7 @@ export class OtpComponent {
   @Output() validate: EventEmitter<any> = new EventEmitter<any>();
   @Output() close: EventEmitter<any> = new EventEmitter<any>();
   @Output() resend: EventEmitter<any> = new EventEmitter<any>();
+  @Output() otpCompleted = new EventEmitter<string>();
 
   verifyOtp = () => {
     // this.error = 'Invalid otp';
@@ -95,7 +96,8 @@ export class OtpComponent {
     this.errorMessage = '';
     if (this.pin.length === 6) {
       this.validate.emit('this.pin');
-      this.verifyOtp();
+      this.otpCompleted.emit(this.pin);
+      // this.verifyOtp();
     }
   };
   resendOtp = (type: 'SMS' | 'VOICE' = 'SMS') => {

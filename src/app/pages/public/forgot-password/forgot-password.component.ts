@@ -20,7 +20,7 @@ import { OtpInputComponent } from "../../../common/utilities/otp-input/otp-input
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [CommonModule, InputComponent, OnboardingLayoutComponent, ButtonFilledComponent,  OtpInputComponent],
+  imports: [CommonModule, InputComponent, OnboardingLayoutComponent, ButtonFilledComponent, OtpInputComponent, OtpComponent],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss'
 })
@@ -38,13 +38,17 @@ export class ForgotPasswordComponent implements OnInit {
   resetDetails: any;
   environment: typeof environment = environment;
 
-  countryCode: string = '234';
+  countryCode: string = '+234';
   flag: string = '';
   showDropdown = false;
   countries: any = [];
   verifiedData: any;
   userType: any;
   loginData: any;
+  show: boolean = true;
+  pin: any = '';
+  changePassword: boolean = false;
+  showOtp: boolean = false;
 
 
   constructor(
@@ -91,6 +95,127 @@ export class ForgotPasswordComponent implements OnInit {
     }
   }
 
+  onPinChange(value: string) {
+    this.pin = value;
+    this.error = '';
+    this.errorMessage = '';
+  }
+
+  handleOtp(value: string) {
+    console.log('handleOtp', value)
+    // ✅ Called only when 6-digit OTP is complete
+    this.pin = value;
+    this.error = '';
+    this.errorMessage = '';
+    // this.verifyOtp();
+    this.changeToPasswordForm();
+  }
+
+  changeToPasswordForm() {
+
+    setTimeout(() => {
+      this.show = false;
+      this.showOtp = false
+    }, 200);
+    this.changePassword = true;
+
+  }
+
+  changeToOtpForm() {
+    this.show = false;
+    this.showOtp = true
+  }
+
+  verifyOtp = () => {
+    // this.error = 'Invalid otp';
+    //('click', this.loginData);
+    this.error = '';
+    this.errorMessage = '';
+    if (this.pin.length !== 6) this.error = 'Required*';
+    else {
+      // this.loading = true;
+      this.authService
+        .validateNewUserOtp(this.loginData._id, {
+          otp: this.pin,
+        })
+        .subscribe({
+          next: (res: any) => {
+            // this.loading = false;
+            if (res.statusCode === 200) {
+
+              console.log('logindataaa', this.loginData)
+              this.sharedDataService.setLoginData(this.loginData);
+
+              if (this.loginData.accountType === 'Corporate') {
+                setTimeout(() => {
+                  this.router.navigate(['/setup-account-corporate']);
+                }, 500);
+              } else {
+                setTimeout(() => {
+                  this.router.navigate(['/setup-account-corporate']);
+                }, 500);
+              }
+            } else if (
+              res.statusCode === 400 &&
+              res.message === 'Incorrect OTP.'
+            ) {
+              this.errorMessage = res.message;
+              this.error = res.message;
+            } else {
+              this.errorMessage = 'Something went wrong, please try again';
+              this.error = 'Something went wrong, please try again';
+            }
+          },
+          error: (err) => {
+            // this.loading = false;
+            this.errorMessage = 'Something went wrong, please try again';
+            this.error = 'Something went wrong, please try again';
+          },
+        });
+    }
+    // this.validate.emit('this.pin');
+  };
+
+  resetPassword() {
+    // Only continue if process is not loading
+    if (this.processLoading) return;
+
+    this.resetDetails.password = this.password;
+    this.resetDetails.otp = this.pin;
+    delete this.resetDetails.method;
+    if (
+      this.password.length > 4 &&
+      this.pin.length === 6 &&
+      this.password === this.confirmPassword
+    ) {
+      this.processLoading = true;
+      this.authService.resetPasswordWithPhone(this.resetDetails).subscribe(
+        (res: any) => {
+          if (res.statusCode === 200) {
+            this.processLoading = false;
+            // this.notification.success(
+            //   'Password reset successful.',
+            //   '' + res.message,
+            //   { nzClass: 'notification1' }
+            // );
+            setTimeout(() => {
+              this.router.navigate(['/signin']);
+            }, 1000);
+          } else {
+            this.errorMessage = '' + res.message;
+            this.processLoading = false;
+          }
+        },
+        (error: any) => {
+          this.errorMessage = 'An error occured. Please try again later';
+          this.processLoading = false;
+        }
+      );
+    } else {
+      // this.validateForm();
+    }
+  }
+
   // ngOnInit(): void {
   //   this.loginData = this.sharedDataService.getLoginData();
 
@@ -128,11 +253,10 @@ export class ForgotPasswordComponent implements OnInit {
 
   close_() {
     this.router.navigate(['/signin'])
-
   }
 
   forgotPassword() {
-    console.log('forgotPassword-----', this.userType)
+    console.log('forgotPassword-----', this.userType, this.pin, this.phoneNumber)
 
     // if (this.processLoading) return;
 
@@ -146,19 +270,20 @@ export class ForgotPasswordComponent implements OnInit {
     //     return;
     // }
 
+    this.errorMessage = '';
+
     let data: ForgotPassword = {
       userAgent: navigator.userAgent
     }
     // this.processLoading = true;
     if (this.loginData?.accountType === 'Individual') {
-
-      data.phoneNumber = this.countryCode +
-      (this.countryCode === '+234' && this.phoneNumber.length > 10
-        ? this.phoneNumber.slice(1)
-        : this.phoneNumber)
+      data.phoneNumber = this.countryCode + this.phoneNumber;
+      // data.phoneNumber = this.countryCode +
+      // (this.countryCode === '+234' && this.phoneNumber.length > 10
+      //   ? this.phoneNumber.slice(1)
+      //   : this.phoneNumber)
       this.resetWithPhone(data);
-    }
-    else {
+    } else {
       data.emailAddress = this.email;
       this.resetWithEmail(data);
     }
@@ -176,6 +301,8 @@ export class ForgotPasswordComponent implements OnInit {
           // this.generalService.showErrorMessage(res.message);
           return;
         }
+
+        this.showOtp = true;
         this.generalService.showSuccessMessage(res.message);
         // this.form.reset();
       },
@@ -197,10 +324,12 @@ export class ForgotPasswordComponent implements OnInit {
           return;
         }
 
+        this.changeToOtpForm()
         let resetData: ResetPassword = new ResetPassword();
         resetData.phoneNumber = data.phoneNumber!;
         resetData.otpId = res.data.otpId;
         this.resetDetails = resetData;
+        console.log('this.resetDetails', this.resetDetails)
 
         // this.showResetPasswordModal = true;
       },
@@ -215,5 +344,22 @@ export class ForgotPasswordComponent implements OnInit {
   passwordResetSuccessful() {
     // this.showResetPasswordModal = false;
     // this.router.navigate(['/signin'])
+  }
+
+  resendOTP(method: 'SMS' | 'VOICE') {
+    this.errorMessage = '';
+    this.resetDetails.method = method;
+    this.authService.resendResetOtp(this.resetDetails).subscribe({
+      next: (res: any) => {
+        if (!/^20.*/.test(res.statusCode)) {
+          this.errorMessage = res.message;
+          return;
+        }
+        this.generalService.showSuccessMessage('OTP resent successfully.');
+      },
+      error: (error: any) => {
+        this.errorMessage = 'An error occured. Please try again later';
+      }
+    })
   }
 }
