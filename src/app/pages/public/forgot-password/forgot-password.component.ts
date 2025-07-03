@@ -5,7 +5,7 @@ import { OnboardingLayoutComponent } from "../../../layouts/onboarding-layout/on
 import { ButtonFilledComponent } from "../../../common/utilities/button-filled/button-filled.component";
 import { FormBuilder } from '@angular/forms';
 import { Store, State } from '@ngrx/store';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ForgotPassword } from '../../../resources/models/auth';
 import { ResetPassword } from '../../../resources/models/signin';
 import { ApiService } from '../../../resources/services/api.service';
@@ -20,7 +20,7 @@ import { OtpInputComponent } from "../../../common/utilities/otp-input/otp-input
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [CommonModule, InputComponent, OnboardingLayoutComponent, ButtonFilledComponent, OtpInputComponent, OtpComponent],
+  imports: [CommonModule, InputComponent, RouterModule, OnboardingLayoutComponent, ButtonFilledComponent, OtpInputComponent, OtpComponent],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss'
 })
@@ -49,7 +49,10 @@ export class ForgotPasswordComponent implements OnInit {
   pin: any = '';
   changePassword: boolean = false;
   showOtp: boolean = false;
-
+  passwordsMatch: boolean = false;
+  showPasswordMatch: boolean = false;
+loading: boolean = false;
+successPage: boolean = false;
 
   constructor(
     private apiService: ApiService,
@@ -112,18 +115,22 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   changeToPasswordForm() {
-
-    setTimeout(() => {
-      this.show = false;
-      this.showOtp = false
-    }, 200);
+    this.show = false;
+    this.showOtp = false
     this.changePassword = true;
-
   }
 
   changeToOtpForm() {
     this.show = false;
     this.showOtp = true
+  }
+
+
+  passwordResetSuccessful() {
+    this.show = false;
+    this.showOtp = false
+    this.changePassword = false;
+    this.successPage = true
   }
 
   verifyOtp = () => {
@@ -178,7 +185,8 @@ export class ForgotPasswordComponent implements OnInit {
 
   resetPassword() {
     // Only continue if process is not loading
-    if (this.processLoading) return;
+    // if (this.processLoading) return;
+    this.processLoading = true;
 
     this.resetDetails.password = this.password;
     this.resetDetails.otp = this.pin;
@@ -198,9 +206,10 @@ export class ForgotPasswordComponent implements OnInit {
             //   '' + res.message,
             //   { nzClass: 'notification1' }
             // );
-            setTimeout(() => {
-              this.router.navigate(['/signin']);
-            }, 1000);
+            this.passwordResetSuccessful()
+            // setTimeout(() => {
+            //   this.router.navigate(['/signin']);
+            // }, 1000);
           } else {
             this.errorMessage = '' + res.message;
             this.processLoading = false;
@@ -214,6 +223,12 @@ export class ForgotPasswordComponent implements OnInit {
     } else {
       // this.validateForm();
     }
+  }
+
+  goToSigning(){
+    setTimeout(() => {
+              this.router.navigate(['/signin']);
+            }, 1000);
   }
 
   // ngOnInit(): void {
@@ -257,7 +272,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   forgotPassword() {
     console.log('forgotPassword-----', this.userType, this.pin, this.phoneNumber)
-
+    this.processLoading = true;
     // if (this.processLoading) return;
 
     // this.errorMessage = '';
@@ -341,11 +356,6 @@ export class ForgotPasswordComponent implements OnInit {
     })
   }
 
-  passwordResetSuccessful() {
-    // this.showResetPasswordModal = false;
-    // this.router.navigate(['/signin'])
-  }
-
   resendOTP(method: 'SMS' | 'VOICE') {
     this.errorMessage = '';
     this.resetDetails.method = method;
@@ -362,4 +372,49 @@ export class ForgotPasswordComponent implements OnInit {
       }
     })
   }
+
+passwordChecks = {
+  hasLowercase: false,
+  hasUppercase: false,
+  hasNumber: false,
+  hasSpecialChar: false,
+  isLongEnough: false
+};
+
+handleChangePassword(field: string, value: string) {
+  if (field === 'password') {
+    this.password = value;
+    this.validatePassword(value);
+    this.comparePasswords(); // also recheck match
+  } else if (field === 'confirmPassword') {
+    this.confirmPassword = value;
+    this.comparePasswords();
+  }
+}
+
+validatePassword(password: string) {
+  this.passwordChecks = {
+    hasLowercase: /[a-z]/.test(password),
+    hasUppercase: /[A-Z]/.test(password),
+    hasNumber: /\d/.test(password),
+    hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+    isLongEnough: password.length > 11
+  };
+}
+
+get isPasswordValid(): boolean {
+  return Object.values(this.passwordChecks).every(Boolean);
+}
+
+comparePasswords() {
+  this.showPasswordMatch = this.confirmPassword.length > 0;
+  this.passwordsMatch = this.password === this.confirmPassword;
+}
+
+get canSubmit(): boolean {
+  const checks = Object.values(this.passwordChecks).every(Boolean);
+  return checks && this.passwordsMatch;
+}
+
+
 }

@@ -30,7 +30,7 @@ export class OtpComponent {
   loading = false;
   @Input() showTimer = false;
 
-  @Input() error = '';
+  @Input() error: any = { type: '', message: '' };
   @Input() loginData: any = {};
   @Input() hideBackBtn: boolean = false;
   @Output() validate: EventEmitter<any> = new EventEmitter<any>();

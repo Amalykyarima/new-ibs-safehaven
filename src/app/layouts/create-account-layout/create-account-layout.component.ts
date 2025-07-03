@@ -16,12 +16,9 @@ import { OnboardingLayoutComponent } from "../onboarding-layout/onboarding-layou
   imports: [
     CommonModule,
     RouterModule,
-    RouterOutlet,
-    SetupProfileFormComponent,
     ButtonFilledComponent,
     SetupProfileCorporateComponent,
     SetupProfileIndividualComponent,
-    OnboardingLayoutComponent
   ],
   templateUrl: './create-account-layout.component.html',
   styleUrl: './create-account-layout.component.scss',

@@ -20,7 +20,7 @@ import moment from 'moment';
 @Component({
   selector: 'app-bvn-verification',
   standalone: true,
-  imports: [CommonModule, SelectBoxComponent, InputComponent, ButtonFilledComponent, OtpInputComponent, CommonModule, CalendarComponent],
+  imports: [CommonModule, SelectBoxComponent, InputComponent, ButtonFilledComponent, OtpInputComponent, CommonModule, ],
   templateUrl: './bvn-verification.component.html',
   styleUrl: './bvn-verification.component.scss',
 })

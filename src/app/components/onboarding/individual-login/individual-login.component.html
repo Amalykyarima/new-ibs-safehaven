@@ -76,7 +76,8 @@
         showPassword || path === 'create-account'
           ? 'w-full'
           : 'sm:w-[157px] w-full'
-      }} h-[53px] transition-all ease-in duration-100 capitalize flex items-center justify-center bg-[#034EA2] text-[#fff] rounded-[5px] cursor-pointer text-[16px] font-[800]"><span
+      }} h-[53px] transition-all ease-in duration-100 capitalize flex items-center justify-center bg-[#034EA2] text-[#fff] rounded-[5px] cursor-pointer text-[16px] font-[800]">
+      <span
         *ngIf="loading"
         class="min-w-[27px] h-[27px] rounded-full capitalize border border-l-[#034EA2] animate-spin"></span>
       {{ loading ? "" : showPassword ? path.replace("-", " ") : "Continue" }}
