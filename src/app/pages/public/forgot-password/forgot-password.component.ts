@@ -51,8 +51,8 @@ export class ForgotPasswordComponent implements OnInit {
   showOtp: boolean = false;
   passwordsMatch: boolean = false;
   showPasswordMatch: boolean = false;
-loading: boolean = false;
-successPage: boolean = false;
+  loading: boolean = false;
+  successPage: boolean = false;
   // emailSuccess: boolean = false;
   emailSentPage: boolean = false;
 
@@ -127,6 +127,13 @@ successPage: boolean = false;
     this.showOtp = true
   }
 
+  gotoOTPform() {
+    this.show = false;
+    this.showOtp = true;
+    this.changePassword = false;
+    this.successPage = false;
+  }
+
 
   passwordResetSuccessful() {
     this.show = false;
@@ -135,7 +142,7 @@ successPage: boolean = false;
     this.successPage = true
   }
 
-  emailSentSuccessful(){
+  emailSentSuccessful() {
     this.show = false;
     this.showOtp = false
     this.changePassword = false;
@@ -197,6 +204,7 @@ successPage: boolean = false;
     // Only continue if process is not loading
     // if (this.processLoading) return;
     this.processLoading = true;
+    this.error = { type: '', message: '' };
 
     this.resetDetails.password = this.password;
     this.resetDetails.otp = this.pin;
@@ -211,6 +219,7 @@ successPage: boolean = false;
         (res: any) => {
           if (res.statusCode === 200) {
             this.processLoading = false;
+
             // this.notification.success(
             //   'Password reset successful.',
             //   '' + res.message,
@@ -220,7 +229,19 @@ successPage: boolean = false;
             // setTimeout(() => {
             //   this.router.navigate(['/signin']);
             // }, 1000);
-          } else {
+          } else if (res.statusCode === 400) {
+            if (res.message === 'Incorrect OTP.') {
+              this.error =
+
+                res.message,
+
+              this.gotoOTPform()
+            } else {
+              this.errorMessage = '' + res.message;
+              this.processLoading = false;
+            }
+          }
+          else {
             this.errorMessage = '' + res.message;
             this.processLoading = false;
           }
@@ -235,10 +256,10 @@ successPage: boolean = false;
     }
   }
 
-  goToSigning(){
+  goToSigning() {
     setTimeout(() => {
-              this.router.navigate(['/signin']);
-            }, 1000);
+      this.router.navigate(['/signin']);
+    }, 1000);
   }
 
   // ngOnInit(): void {
@@ -411,48 +432,48 @@ successPage: boolean = false;
     })
   }
 
-passwordChecks = {
-  hasLowercase: false,
-  hasUppercase: false,
-  hasNumber: false,
-  hasSpecialChar: false,
-  isLongEnough: false
-};
-
-handleChangePassword(field: string, value: string) {
-  if (field === 'password') {
-    this.password = value;
-    this.validatePassword(value);
-    this.comparePasswords(); // also recheck match
-  } else if (field === 'confirmPassword') {
-    this.confirmPassword = value;
-    this.comparePasswords();
-  }
-}
-
-validatePassword(password: string) {
-  this.passwordChecks = {
-    hasLowercase: /[a-z]/.test(password),
-    hasUppercase: /[A-Z]/.test(password),
-    hasNumber: /\d/.test(password),
-    hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
-    isLongEnough: password.length > 11
+  passwordChecks = {
+    hasLowercase: false,
+    hasUppercase: false,
+    hasNumber: false,
+    hasSpecialChar: false,
+    isLongEnough: false
   };
-}
 
-get isPasswordValid(): boolean {
-  return Object.values(this.passwordChecks).every(Boolean);
-}
+  handleChangePassword(field: string, value: string) {
+    if (field === 'password') {
+      this.password = value;
+      this.validatePassword(value);
+      this.comparePasswords(); // also recheck match
+    } else if (field === 'confirmPassword') {
+      this.confirmPassword = value;
+      this.comparePasswords();
+    }
+  }
 
-comparePasswords() {
-  this.showPasswordMatch = this.confirmPassword.length > 0;
-  this.passwordsMatch = this.password === this.confirmPassword;
-}
+  validatePassword(password: string) {
+    this.passwordChecks = {
+      hasLowercase: /[a-z]/.test(password),
+      hasUppercase: /[A-Z]/.test(password),
+      hasNumber: /\d/.test(password),
+      hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+      isLongEnough: password.length > 11
+    };
+  }
 
-get canSubmit(): boolean {
-  const checks = Object.values(this.passwordChecks).every(Boolean);
-  return checks && this.passwordsMatch;
-}
+  get isPasswordValid(): boolean {
+    return Object.values(this.passwordChecks).every(Boolean);
+  }
+
+  comparePasswords() {
+    this.showPasswordMatch = this.confirmPassword.length > 0;
+    this.passwordsMatch = this.password === this.confirmPassword;
+  }
+
+  get canSubmit(): boolean {
+    const checks = Object.values(this.passwordChecks).every(Boolean);
+    return checks && this.passwordsMatch;
+  }
 
 
 }
