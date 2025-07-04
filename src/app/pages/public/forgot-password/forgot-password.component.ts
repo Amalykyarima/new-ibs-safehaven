@@ -53,6 +53,8 @@ export class ForgotPasswordComponent implements OnInit {
   showPasswordMatch: boolean = false;
 loading: boolean = false;
 successPage: boolean = false;
+  // emailSuccess: boolean = false;
+  emailSentPage: boolean = false;
 
   constructor(
     private apiService: ApiService,
@@ -131,6 +133,14 @@ successPage: boolean = false;
     this.showOtp = false
     this.changePassword = false;
     this.successPage = true
+  }
+
+  emailSentSuccessful(){
+    this.show = false;
+    this.showOtp = false
+    this.changePassword = false;
+    this.successPage = false;
+    this.emailSentPage = true;
   }
 
   verifyOtp = () => {
@@ -304,28 +314,56 @@ successPage: boolean = false;
     }
   }
 
-  resetWithEmail(data: ForgotPassword) {
+  // resetWithEmail(data: ForgotPassword) {
+  //   console.log('resetWithEmail', data)
+
+  //   this.authService.resetPassword(data).subscribe({
+  //     next: (res: any) => {
+  //       console.log('resetPassword', res)
+  //       this.processLoading = false;
+  //       if (!/^20.*/.test(res.statusCode)) {
+  //         this.errorMessage = res.message;
+  //         // this.generalService.showErrorMessage(res.message);
+  //         return;
+  //       }
+  //       this.changeToOtpForm()
+  //       let resetData: ResetPassword = new ResetPassword();
+  //       resetData.phoneNumber = data.phoneNumber!;
+  //       resetData.otpId = res.data.otpId;
+  //       this.resetDetails = resetData;
+  //       console.log('this.resetDetails', this.resetDetails)
+
+  //       this.generalService.showSuccessMessage(res.message);
+  //       // this.form.reset();
+  //     },
+  //     error: (error: any) => {
+  //       // this.generalService.showErrorMessage('An error occured. Please try again later');
+  //       this.processLoading = false;
+  //     }
+  //   })
+  // }
+
+  resetWithEmail(data: any) {
     console.log('resetWithEmail', data)
 
-    this.authService.resetPassword(data).subscribe({
-      next: (res: any) => {
-        console.log('resetPassword', res)
+    this.processLoading = true;
+    this.authService.resetPassword(data).subscribe(
+      (res: any) => {
         this.processLoading = false;
-        if (!/^20.*/.test(res.statusCode)) {
-          this.errorMessage = res.message;
-          // this.generalService.showErrorMessage(res.message);
-          return;
-        }
 
-        this.showOtp = true;
-        this.generalService.showSuccessMessage(res.message);
-        // this.form.reset();
+        if (res.statusCode === 200) {
+          // this.emailSuccess = true;
+          this.emailSentSuccessful();
+        } else {
+          this.errorMessage = '' + res.message;
+          this.processLoading = false;
+        }
       },
-      error: (error: any) => {
-        // this.generalService.showErrorMessage('An error occured. Please try again later');
+      (error: any) => {
+        this.errorMessage = 'An error occured. Please try again later';
         this.processLoading = false;
       }
-    })
+    );
   }
 
   resetWithPhone(data: ForgotPassword) {
