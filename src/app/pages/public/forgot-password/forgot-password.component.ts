@@ -64,7 +64,6 @@ export class ForgotPasswordComponent implements OnInit {
     private router: Router,
     private sharedDataService: SharedDataService,
 
-    // private store: Store<State>,
   ) { }
 
   error: any = { type: '', message: '' };
@@ -130,6 +129,13 @@ export class ForgotPasswordComponent implements OnInit {
   gotoOTPform() {
     this.show = false;
     this.showOtp = true;
+    this.changePassword = false;
+    this.successPage = false;
+  }
+
+  gotoResetForm() {
+    this.show = true;
+    this.showOtp = false;
     this.changePassword = false;
     this.successPage = false;
   }
