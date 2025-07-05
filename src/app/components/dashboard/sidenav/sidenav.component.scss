@@ -1,0 +1,57 @@
+/* side-modal.component.css */
+.side-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 262px;
+    height: 100vh;
+    background-color: white;
+    z-index: 50;
+    border-radius: 0 20px 20px 0;
+    overflow-y: auto;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+  }
+  
+  @keyframes slideInLeft {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0%);
+    }
+  }
+  
+  @keyframes slideOutLeft {
+    from {
+      transform: translateX(0%);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+  
+  .slide-in {
+    animation-name: slideInLeft;
+  }
+  
+  .slide-out {
+    animation-name: slideOutLeft;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+  }
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 40;
+  }
+  

@@ -1,0 +1,13 @@
+<div class="w-full flex flex-col">
+    <div class="w-full grid grid-cols-[12%_27%_25%_9%_16%_15%]">
+        <div *ngFor="let header of headerData" class="w-full py-[14px] bg-[#F8FAFC]"><span class="font-[500] ps-[16px] text-[14px] text-[#64748B]">{{header}}</span></div>
+    </div>
+    <div (click)="rowClick()" class="w-full flex-1 grid grid-cols-[12%_27%_25%_9%_16%_15%] items-center py-[29px] cursor-pointer">
+       <span class="ps-[16px] font-[500] text-[14px] text-[#64748B]">12 Feb, 2025</span>
+       <span class="ps-[16px] font-[500] text-[14px] text-[#64748B]">090286250419134921893417771858</span>
+       <span class="ps-[16px] font-[500] text-[14px] text-[#64748B]">Balling and flexing today</span>
+       <div class="ps-[16px]"><div class="pt-[2px] pb-[4px] px-[6px] w-fit rounded-[4px] bg-[#EBF5FF]"><span class="font-[500] text-[14px] text-[#034EA2]">Credit</span></div></div>
+       <span class="ps-[16px] font-[600] text-[14px] text-[#1E293B]">₦12,000.00</span>
+       <span class="ps-[16px] font-[600] text-[14px] text-[#1E293B]">₦421,4563.00</span>
+    </div>
+</div>

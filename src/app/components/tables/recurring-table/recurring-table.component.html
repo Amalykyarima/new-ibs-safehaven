@@ -1,0 +1,17 @@
+<div class="w-full flex flex-col">
+    <div class="w-full grid grid-cols-[44%_21%_15%_20%]">
+        <div *ngFor="let header of headerData" class="w-full py-[14px] bg-[#F8FAFC]"><span class="font-[500] ps-[16px] text-[14px] text-[#64748B]">{{header}}</span></div>
+    </div>
+    <div (click)="rowClick()" class="w-full flex-1 grid grid-cols-[44%_21%_15%_20%] items-center py-[15px] cursor-pointer">
+        <div class="flex items-center gap-[14px] ms-[16px]">
+            <app-avatar-icon [height]="'50'" [width]="'50'" />
+            <div class="flex flex-col gap-[4px]">
+                <span class="font-[600] text-[16px] text-[#1E293B]">Abasifreke Emmanuel</span>
+                <span class="font-[600] text-[12px] text-[#64748B]">2122895783 - United Bank for Africa</span>
+            </div>
+        </div>
+        <div class="flex ms-[16px] w-fit items-center gap-[6px] px-[6px] h-[24px] rounded-[4px] bg-[#F1F5F9]"><div class="w-[6px] h-[6px] rounded-full bg-[#64748B]"></div><span class="font-[500] text-[14px] text-[#64748B]">DAILY</span></div>
+        <span class="font-[500] ms-[16px] text-[14px] text-[#64748B]">10 May, 2025</span>
+        <div><span class="font-[600] ms-[16px] text-[14px] text-[#1E293B]">₦2,000.00</span></div>
+    </div>
+</div>

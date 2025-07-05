@@ -1,6 +1,20 @@
-<div
+<!-- <div
   class="uppercase h-[{{height}}px] w-[{{width}}px] {{ciruclar ? 'rounded-full' : null}} flex items-center justify-center {{textStyle}}"
   [ngStyle]="{ background: getColor() }"
 >
   {{ name && name.length > 0 ? getAcronym(name) : "" }}
+</div> -->
+<div
+  class="uppercase flex items-center justify-center"
+  [ngClass]="[
+    ciruclar ? 'rounded-full' : '',
+    textStyle
+  ]"
+  [ngStyle]="{
+    background: getColor(),
+    height: height + 'px',
+    width: width + 'px'
+  }"
+>
+  {{ name.length ? getAcronym(name) : '' }}
 </div>

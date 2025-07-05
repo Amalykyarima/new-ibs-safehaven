@@ -1,0 +1,19 @@
+<div class="w-full flex flex-col gap-[14px]">
+    <div
+  *ngFor="let item of items"
+  (click)="selectItem(item)"
+  class="flex items-center gap-[8px] cursor-pointer"
+>
+  <div
+    class="w-[16px] h-[16px] rounded-[4px] flex items-center justify-center"
+    [ngClass]="selected === item ? '' : 'border border-[#CBD5E1]'"
+  >
+    <img
+      *ngIf="selected === item"
+      src="../../../../assets/images/check-box.svg"
+      alt="checked"
+    />
+  </div>
+  <span class="font-[500] text-[14px] text-[#1E293B]">{{ item }}</span>
+</div>
+</div>

@@ -1,0 +1,17 @@
+<div class="w-full bg-[#fff] rounded-[20px] p-[20px] flex flex-col gap-[32px]">
+  <div (click)="setNetwork(network)"
+    *ngFor="let network of networks"
+    class="w-full p-[10px] flex justify-between cursor-pointer items-center"
+  >
+    <div class="flex items-center gap-[8px]">
+      <img src="{{ network.icon }}" alt="" />
+      <span class="font-[600] text-[16px] text-[#1E293B]">{{ network.name }}</span>
+    </div>
+    <div
+    class="w-[20px] h-[20px] rounded-full"
+    [ngClass]="selectedNetwork === network.name 
+      ? 'border-[6px] border-[#034EA2]' 
+      : 'border-[1px] border-[#CBD5E1]'">
+  </div>
+  </div>
+</div>

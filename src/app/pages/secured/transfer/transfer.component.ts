@@ -63,8 +63,8 @@ export class TransferComponent {
     this.receivingSelected = !this.receivingSelected;
   };
   activeModal = computed(() => {
-    const modals = this.store.modals(); // Get all modal states
-    return Object.keys(modals).find((key) => modals[key]); // Return first active modal
+    const modals = this.store.modals();
+    return Object.keys(modals).find((key) => modals[key]);
   });
 
 }
