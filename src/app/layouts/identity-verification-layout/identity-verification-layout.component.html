@@ -37,7 +37,7 @@
 </div>
 <!-- <button (click)="openModal()">Open Modal</button> -->
 
-<app-modal *ngIf="store.modalView()">
+<!-- <app-modal *ngIf="store.modalView()">
   <div class="w-full flex flex-col gap-[24px] px-[8px]">
     <div>
       <div class="bg-gradient-to-b from-[#EBF5FF] to-white w-full rounded-[10px] py-[20px] flex justify-center">
@@ -71,4 +71,7 @@
     </div>
     <div class="w-full flex justify-end"><app-button-filled class="max-w-[183px] w-full" [text]="'Start Check'" /></div>
   </div>
+</app-modal> -->
+<app-modal *ngIf="activeModal() as view">
+  <app-face-verification />
 </app-modal>
