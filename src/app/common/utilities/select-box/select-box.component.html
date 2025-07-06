@@ -1,35 +1,22 @@
 <div class="w-full grid grid-cols-{{ options.length }} gap-[8px]">
-  <div
-    *ngFor="let option of options"
-    (click)="selectOption(option.name)"
-    class="w-full max-h-[97px] h-full col-span-1 bg-[#fff] cursor-pointer rounded-[16px] flex flex-col gap-[8px] py-[5px] px-[6px]"
-  >
+  <div *ngFor="let option of options" (click)="selectOption(option.name)"
+    class="w-full max-h-[97px] h-full col-span-1 bg-[#fff] cursor-pointer rounded-[16px] flex flex-col gap-[8px] py-[5px] px-[6px]">
     <div class="w-full flex justify-between">
-      <div
-        class="w-[50px] h-[50px] rounded-[16px] {{
+      <div class="w-[50px] h-[50px] rounded-[16px] {{
           option.name === selectedItem ? 'bg-[#EBF5FF]' : 'bg-[#F8FAFC]'
-        }} flex justify-center items-center"
-      >
-        <img
-          src="../../../../assets/icons/{{
+        }} flex justify-center items-center">
+        <img src="../../../../assets/icons/{{
             option.name === selectedItem ? option?.activeIcon : option?.icon
-          }}"
-          alt=""
-        />
+          }}" alt="" />
       </div>
-      <div
-        class="w-[16px] h-[16px] rounded-full {{
+      <div class="w-[16px] h-[16px] rounded-full {{
           option.name === selectedItem
             ? 'border-[5px] border-[#034EA2]'
             : 'border-[1px] border-[#CBD5E1]'
-        }}"
-      ></div>
+        }}"></div>
     </div>
-    <span
-      class="font-[500] text-[16px] {{
+    <span class="font-[500] text-[16px] {{
         option.name === selectedItem ? 'text-[#1E293B]' : 'text-[#64748B]'
-      }}"
-      >{{ option?.name }}</span
-    >
+      }}">{{ option?.name }}</span>
   </div>
 </div>

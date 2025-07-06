@@ -1,44 +1,38 @@
 <div class="w-full flex flex-col">
   <div class="w-full flex flex-col gap-[24px]">
-    <div
-      class="w-full flex flex-col gap-[8px] bg-[#F8FAFC] rounded-[10px] p-[16px]"
-    >
+    <div class="w-full flex flex-col gap-[8px] bg-[#F8FAFC] rounded-[10px] p-[16px]">
       <span class="font-[600] text-[14px] text-[#64748B]">VERIFY BY</span>
-      <app-select-box
-        [options]="verificationMethods"
-        (selectedValue)="setVerificationMethod($event)"
-        [activeTab]="verificationMethods[0].name"
-      />
+      <app-select-box [options]="verificationMethods" (selectedValue)="setVerificationMethod($event)"
+        [activeTab]="verificationMethods[0].name" />
     </div>
     <div *ngIf="activeMethod !== ''" class="w-full flex flex-col gap-[24px]">
-      <app-input [placeholder]="'BVN'" />
-      <app-input [placeholder]="'Date of Birth'" />
+      <app-input [type]="'number'" [label]="'BVN'" [value]="bvn" [placeholder]="'Enter your BVN'"
+        [error]="validators.bvn" (onChange)="handleChange('bvn', $event)" (submit)="handleSubmitStep2()" />
+
+      <!-- <app-input [placeholder]="'Address Line 1'" [label]="'Address'" [value]="address" [error]="validators.address"
+        (onChange)="handleChangeStep3('address', $event)" [placeholder]="'Address Line 1'"
+        (submit)="handleSubmitStep2()" /> -->
+
+      <app-input [type]="'date'" [placeholder]="'Date of Birth'" [label]="'Date of Birth'" [value]="this.dateOfBirth" />
+
+      <!-- <app-calendar [max]="today" [label]="'Date of birth'" [date]="date"
+      (selectDate)="onDateChange($event)"
+        [error]="validators.dateOfBirth"></app-calendar> -->
     </div>
-    <div
-      *ngIf="activeMethod === 'USSD'"
-      class="w-full flex flex-col gap-[24px]"
-    >
-      <span class="text-[18px] font-[500] tet-[#6B7280]"
-        >Dial
+    <div *ngIf="activeMethod === 'USSD'" class="w-full flex flex-col gap-[24px]">
+      <span class="text-[18px] font-[500] tet-[#6B7280]">Dial
         <span class="text-[18px] font-[600] tet-[#252F3F]">*345*900#</span> on
         mobile phone (Could be any number linked to your BVN), An 8 digit code
-        will be sent to that number. Enter it below.</span
-      >
+        will be sent to that number. Enter it below.</span>
       <app-otp-input [length]="8"></app-otp-input>
-      <span class="text-[16px] font-[500] text-[#64748B]"
-        >I didn’t receive the OTP,
-        <span class="text-[16px] font-[600] text-[#034EA2]">Resend</span></span
-      >
+      <span class="text-[16px] font-[500] text-[#64748B]">I didn’t receive the OTP,
+        <span class="text-[16px] font-[600] text-[#034EA2]">Resend</span></span>
     </div>
     <div *ngIf="activeMethod !== ''" class="w-full flex justify-end">
       <div class="max-w-[144px] w-full">
-        <app-button-filled
-          [text]="'Verify BVN'"
-          [action]="verifyBVN"
-          [loading]="loading"
-        />
+        <app-button-filled (click)="activeMethod === 'Face' ? sendBvnFace() : sendBvnOTP()"
+          [text]="'Verify BVN'" [loading]="loading" />
       </div>
     </div>
   </div>
 </div>
-

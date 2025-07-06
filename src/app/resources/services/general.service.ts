@@ -14,12 +14,22 @@ import { SettingsService } from './settings.service';
 import { EncryptStorage } from 'encrypt-storage';
 import { environment } from '../../../environments/environment';
 import { firstValueFrom } from 'rxjs';
+// import CryptoJS from 'crypto-js';
 
+
+declare var require: any;
+// const CryptoJS = require("crypto-js");
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class GeneralService {
+  public userBackgroundChecker: any;
+
+  showSuccessMessage(message: any) {
+    throw new Error('Method not implemented.');
+  }
   selectedOption: any = null;
   environment: typeof environment = environment;
 
@@ -50,6 +60,16 @@ export class GeneralService {
     localStorage.removeItem('actionType');
   }
 
+  async startUserBackgroundChecker() {
+    this.userBackgroundChecker = setInterval(() => {
+      this.authService.authorize().subscribe((res: any) => { }, (err) => { });
+    }, 300000);
+  }
+
+  goToDashboard() {
+    this.startUserBackgroundChecker();
+    this.router.navigate(['/dashboard']);
+  }
   formatDateISO(date: any): string {
     var d = new Date(date);
     return d.toISOString().split('T')[0];
@@ -79,13 +99,21 @@ export class GeneralService {
     );
   }
 
+
+
+  // validateEmailAddress(emailString: string) {
+  //   var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   return (
+  //     !!emailString &&
+  //     typeof emailString === 'string' &&
+  //     emailString.match(emailRegex)
+  //   );
+  // }
+
   validateEmailAddress(emailString: string) {
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return (
-      !!emailString &&
-      typeof emailString === 'string' &&
-      emailString.match(emailRegex)
-    );
+    return !!emailString && typeof emailString === 'string'
+      && emailString.match(emailRegex);
   }
 
   changePINInputmode() {
@@ -160,7 +188,7 @@ export class GeneralService {
         clientId: user.client._id,
         jwtToken: user.jwtToken,
       };
-    console.log('storageData:', storageData);
+      console.log('storageData:', storageData);
 
 
       if (user.client.type === 'Individual')
@@ -180,6 +208,47 @@ export class GeneralService {
         localStorage.setItem('@shmfb?chat', window.btoa(user.client.fullName));
       this.setStorageData(storageData);
     }
+  }
+
+  newSaveUser1(user: any) {
+    console.log('Dispatching newSaveUser1 with:', user);
+
+    try {
+      this.generalStore.dispatch(
+        generalActions.saveCurrentUser({ currentUser: user })
+      );
+      let storageData = {
+        // clientId: user.client._id,
+        jwtToken: user.jwtToken,
+      };
+      console.log('storageData:', storageData);
+      this.setStorageData(storageData);
+      // if (user.client.type === 'Individual')
+      //   localStorage.setItem('@shmfb?chat', window.btoa(user.client.firstName));
+      // else
+      //   localStorage.setItem('@shmfb?chat', window.btoa(user.client.fullName));
+      // this.setStorageData(storageData);
+    } catch (e) {
+      let storageData = {
+        // clientId: user.client._id,
+        jwtToken: user.jwtToken,
+      };
+
+      // if (user.client.type === 'Individual')
+      //   localStorage.setItem('@shmfb?chat', window.btoa(user.client.firstName));
+      // else
+      //   localStorage.setItem('@shmfb?chat', window.btoa(user.client.fullName));
+      // this.setStorageData(storageData);
+    }
+
+    // console.log('NewsaveUser function', user)
+    // if (user.jwtToken) this.newSetToken1(user.jwtToken);
+    // try {
+    //     this.generalStore.dispatch(generalActions.saveCurrentUser({ currentUser: user.jwtToken }));
+    //       this.registerUserForIntercom(user.user);
+    //       this.registerNotifications(user.client);
+    // }
+    // catch (e) { }
   }
 
 
@@ -225,6 +294,22 @@ export class GeneralService {
   getToken(): string {
     return this.encryptStorage.getItem('token')!;
   }
+
+  //   encryptText(text: string) {
+  //     return CryptoJS.AES.encrypt(text, environment.privateKey).toString();
+  // }
+
+  newSetToken1(user: any) {
+    let storageData = {
+      // clientId: user.client._id,
+      jwtToken: user
+    }
+    // sessionStorage.setItem('@SHMFB', this.encryptText(JSON.stringify(storageData)));
+  }
+
+
+
+
   // getUser = () => {
   //   return JSON.parse(this.encryptStorage.getItem('user'));
   // };

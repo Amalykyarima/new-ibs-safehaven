@@ -105,16 +105,16 @@ export class CompanySignup {
   maritalStatus: 'Single' | 'Married' | 'Divorced' | 'Widowed' | 'Separated' =
     'Single';
   address: {
-    street: string;
+    address: string;
     city: string;
     state: string;
-    country: string;
+    // country: string;
   };
-  directorAddress: {
-    street: string;
+  CompanyAddress: {
+    address: string;
     city: string;
     state: string;
-    country: string;
+    // country: string;
   };
   registrationType: RegistrationType = '';
   registrationNumber: string = '';
@@ -123,16 +123,16 @@ export class CompanySignup {
   tin?: string = '';
   constructor() {
     this.address = {
-      street: '',
+      address: '',
       city: '',
       state: '',
-      country: 'Nigeria',
+      // country: 'Nigeria',
     };
-    this.directorAddress = {
-      street: '',
+    this.CompanyAddress = {
+      address: '',
       city: '',
       state: '',
-      country: 'Nigeria',
+      // country: 'Nigeria',
     };
   }
 }

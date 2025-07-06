@@ -1,11 +1,73 @@
-<div class="w-full h-[100vh] grid grid-cols-[45%_55%] bg-[#F8FAFC] p-[27px]">
-  <div class="spinner" *ngIf="spinner">
+<!-- <div *ngIf="!spinner" class="w-full h-[100vh] grid grid-cols-[45%_55%] bg-[#F8FAFC] p-[27px]">
+  <div>
+    <aside class="w-full flex flex-col gap-[179px] md:ms-[13px]">
+      <img class="w-[121px]" src="../../../assets/images/logo1.svg" alt="">
+      <div>
+        <h2 class="font-paragraph-l-semibold text-[#1E293B] font-[600] text-[18px] mb-10">
+          SET UP YOUR PROFILE
+        </h2>
+        <nav *ngIf="this.loginData.accountType === 'Corporate'"
+          class="flex flex-row md:flex-col w-full md:w-[184px] gap-6">
+          <div (click)="setStep(i)" *ngFor="let step of corporateSteps; let i = index"
+            class="flex items-center gap-[8px]">
+            <img *ngIf="i <= activeStep" [src]="
+            'assets/icons/' +
+            (activeStep === i
+              ? 'rounded-right-arrow'
+              : 'blue-completed-check') +
+            '.svg'
+          " alt="step icon" /><span [ngClass]="{
+            'ps-[24px]': activeStep < i,
+            'cursor-pointer': true,
+            'text-[#1E293B]': activeStep === i,
+            'text-[#034EA2]': activeStep > i,
+            'text-[#64748B]': activeStep !== i && activeStep < i
+          }">
+              {{ step }}
+            </span>
+          </div>
+        </nav>
+        <nav *ngIf="this.loginData.accountType === 'Individual'"
+          class="flex flex-row md:flex-col w-full md:w-[184px] gap-6">
+          <div (click)="setStep(i)" *ngFor="let step of individualSteps; let i = index"
+            class="flex items-center gap-[8px]">
+            <img *ngIf="i <= activeStep" [src]="
+            'assets/icons/' +
+            (activeStep === i
+              ? 'rounded-right-arrow'
+              : 'blue-completed-check') +
+            '.svg'
+          " alt="step icon" /><span [ngClass]="{
+            'ps-[24px]': activeStep < i,
+            'cursor-pointer': true,
+            'text-[#1E293B]': activeStep === i,
+            'text-[#034EA2]': activeStep > i,
+            'text-[#64748B]': activeStep !== i && activeStep < i
+          }">
+              {{ step }}
+            </span>
+          </div>
+        </nav>
+      </div>
+    </aside>
+    <main class="bg-[#fff] overflow-y-auto w-full flex rounded-[20px] pt-[126px] justify-center">
+      <div class="w-full max-w-[446px]">
+        <app-setup-profile-corporate *ngIf="this.loginData.accountType === 'Corporate'" [step]="activeStep"
+          [totalSteps]="corporateSteps.length" (stepChange)="updateStep($event)"
+          (spinnerChange)="handleSpinnerChange($event)" (accountOpenedChange)="handleAccountOpenedChange($event)" />
+        <app-setup-profile-individual *ngIf="this.loginData.accountType === 'Individual'" [step]="activeStep"
+          [totalSteps]="corporateSteps.length" (stepChange)="updateStep($event)" />
+      </div>
+    </main>
+  </div>
+</div> -->
+<div *ngIf="formStatus" class="w-full h-[100vh] grid grid-cols-[45%_55%] bg-[#F8FAFC] p-[27px]">
+  <!-- <div class="spinner" *ngIf="spinner">
     <div class="inside">
       <span>
         <div class="w-full h-full flex justify-center items-center">
           <span
-            class="w-[61px] h-[61px] border-[6px] border-l-[#E2E8F0] rounded-full animate-spin border-[#034EA2]"
-          ></span>
+            class="w-[61px] h-[61px] border-[6px] border-l-[#E2E8F0] rounded-full animate-spin border-[#034EA2]"></span>
         </div>
       </span>
       <div>
@@ -14,64 +76,77 @@
         </p>
       </div>
     </div>
-  </div>
-    <aside *ngIf="!spinner"
-    class="w-full flex flex-col gap-[179px] md:ms-[13px]"
-  >
-  <img class="w-[121px]" src="../../../assets/images/logo1.svg" alt="" >
-   <div>
-    <h2
-    class="font-paragraph-l-semibold text-[#1E293B] font-[600] text-[18px] mb-10"
-  >
-    SET UP YOUR PROFILE
-  </h2>
-  <nav class="flex flex-row md:flex-col w-full md:w-[184px] gap-6">
-    <div
-      (click)="setStep(i)"
-      *ngFor="let step of corporateSteps; let i = index"
-      class="flex items-center gap-[8px]"
-    >
-      <img
-        *ngIf="i <= activeStep"
-        [src]="
+  </div> -->
+  <aside *ngIf="this.loginData.accountType === 'Corporate'"  class="w-full flex flex-col gap-[152px] md:ms-[13px]">
+    <img class="w-[121px]" src="../../../assets/images/logo1.svg" alt="">
+    <div>
+      <h2 class="font-paragraph-l-semibold text-[#1E293B] font-[600] text-[18px] mb-10">
+        SET UP YOUR PROFILE
+      </h2>
+      <nav class="flex flex-row md:flex-col w-full md:w-[184px] gap-6">
+        <div (click)="setStep(i)" *ngFor="let step of corporateSteps; let i = index"
+          class="flex items-center gap-[8px]">
+          <img *ngIf="i <= activeStep" [src]="
           'assets/icons/' +
           (activeStep === i
             ? 'rounded-right-arrow'
             : 'blue-completed-check') +
           '.svg'
-        "
-        alt="step icon"
-      /><span
-        [ngClass]="{
+        " alt="step icon" /><span [ngClass]="{
           'ps-[24px]': activeStep < i,
           'cursor-pointer': true,
           'text-[#1E293B]': activeStep === i,
           'text-[#034EA2]': activeStep > i,
           'text-[#64748B]': activeStep !== i && activeStep < i
-        }"
-      >
-        {{ step }}
-      </span>
+        }">
+            {{ step }}
+          </span>
+        </div>
+      </nav>
     </div>
-  </nav>
-   </div>
   </aside>
-  <main *ngIf="!spinner" class="bg-[#fff] overflow-y-auto w-full flex rounded-[20px] pt-[126px] justify-center">
-      <div class="w-full max-w-[446px]">
-        <app-setup-profile-corporate
-        [step]="activeStep"
-        [totalSteps]="corporateSteps.length"
-        (stepChange)="updateStep($event)"
-      />
-      </div>
+  <aside *ngIf="this.loginData.accountType === 'Individual'"  class="w-full flex flex-col gap-[152px] md:ms-[13px]">
+    <img class="w-[121px]" src="../../../assets/images/logo1.svg" alt="">
+    <div>
+      <h2 class="font-paragraph-l-semibold text-[#1E293B] font-[600] text-[18px] mb-10">
+        SET UP YOUR PROFILE
+      </h2>
+      <nav class="flex flex-row md:flex-col w-full md:w-[200px] gap-6">
+        <div (click)="setStep(i)" *ngFor="let step of individualSteps; let i = index"
+          class="flex items-center gap-[8px]">
+          <img *ngIf="i <= activeStep" [src]="
+          'assets/icons/' +
+          (activeStep === i
+            ? 'rounded-right-arrow'
+            : 'blue-completed-check') +
+          '.svg'
+        " alt="step icon" /><span [ngClass]="{
+          'ps-[24px]': activeStep < i,
+          'cursor-pointer': true,
+          'text-[#1E293B]': activeStep === i,
+          'text-[#034EA2]': activeStep > i,
+          'text-[#64748B]': activeStep !== i && activeStep < i
+        }">
+            {{ step }}
+          </span>
+        </div>
+      </nav>
+    </div>
+  </aside>
+  <main class="bg-[#fff] overflow-y-auto w-full flex rounded-[20px] pt-[126px] justify-center">
+    <div class="w-full max-w-[446px]">
+      <app-setup-profile-corporate *ngIf="this.loginData.accountType === 'Corporate'" [step]="activeStep"
+      [totalSteps]="corporateSteps.length" (stepChange)="updateStep($event)"
+      (spinnerChange)="handleSpinnerChange($event)" (accountOpenedChange)="handleAccountOpenedChange($event)" (accountFormStatusChange)="handleFormStatusChange($event)" />
+    <app-setup-profile-individual *ngIf="this.loginData.accountType === 'Individual'" [step]="activeStep"
+      [totalSteps]="corporateSteps.length" (stepChange)="updateStep($event)" />
+    </div>
   </main>
-  <div *ngIf="spinner" class="m-0 flex items-center justify-center">
+  <!-- <div *ngIf="spinner" class="m-0 flex items-center justify-center">
     <div style="width: 461px; height: 474px">
       <img src="../../../assets/images/creation-sucessful.svg" alt="" />
-      <span
-        style="width: 441px"
-        class="absolute top-[440px] left-1/2 -translate-x-1/2 -translate-y-1/2 text-center px-4"
-      >
+      <span style="width: 441px"
+        class="absolute top-[440px] left-1/2 -translate-x-1/2 -translate-y-1/2 text-center px-4">
         <p class="text-[#1E293B] font-[700] text-[24px]">
           Account Created Successfully
         </p>
@@ -79,21 +154,16 @@
           Your Safehaven MFB account has been created. Verify your account
           to start transacting.
         </p>
-        <app-button-filled
-          class="m-[32px]"
-          [text]="'Continue'"
-          [loading]="loading"
-        ></app-button-filled>
+        <app-button-filled class="m-[32px]" [text]="'Continue'" [loading]="loading"></app-button-filled>
       </span>
     </div>
-  </div>
-  <div class="spinner" *ngIf="spinner">
+  </div> -->
+  <!-- <div class="spinner" *ngIf="spinner">
     <div class="inside">
       <span>
         <div class="w-full h-full flex justify-center items-center">
           <span
-            class="w-[61px] h-[61px] border-[6px] border-l-[#E2E8F0] rounded-full animate-spin border-[#034EA2]"
-          ></span>
+            class="w-[61px] h-[61px] border-[6px] border-l-[#E2E8F0] rounded-full animate-spin border-[#034EA2]"></span>
         </div>
       </span>
       <div>
@@ -102,7 +172,7 @@
         </p>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
 
 
@@ -141,3 +211,53 @@ class="flex items-center gap-2 flex-1 md:flex-none cursor-pointer"
   </span>
 </div>
 </div> -->
+
+<div *ngIf="spinner" class="w-full h-[100vh] bg-[#F8FAFC] p-[27px]">
+  <div class="h-[95vh] bg-[#FFF]">
+    <span class=" w-full flex pt-[27px] pb-[27px] pl-[40px] pr-0">
+      <img class="w-[121px]" src="../../../assets/images/logo1.svg" alt="">
+    </span>
+
+    <div class="spinner">
+      <div class="inside">
+        <span>
+          <div class="w-full h-full flex justify-center items-center">
+            <span
+              class="w-[61px] h-[61px] border-[6px] border-l-[#E2E8F0] rounded-full animate-spin border-[#034EA2]"></span>
+          </div>
+        </span>
+        <div>
+          <p class="text-[#6B7280] text-[16px] font-[500]">
+            Setting up your SafeHaven Profile...
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="accountOpened" class="w-full h-[100vh] bg-[#F8FAFC] p-[27px]">
+  <div class="h-[95vh] bg-[#FFF]">
+    <span class=" w-full flex pt-[27px] pb-[27px] pl-[40px] pr-0">
+      <img class="w-[121px]" src="../../../assets/images/logo1.svg" alt="">
+    </span>
+    <!-- <img class="w-[121px]" src="../../../assets/images/logo1.svg" alt=""> -->
+    <div class="m-0 flex items-center justify-center">
+
+      <div style="width: 461px; height: 474px">
+        <img src="../../../assets/images/creation-sucessful.svg" alt="" />
+        <span style="width: 441px"
+          class="absolute top-[440px] left-1/2 -translate-x-1/2 -translate-y-1/2 text-center px-4">
+          <p class="text-[#1E293B] font-[700] text-[24px]">
+            Account Created Successfully
+          </p>
+          <p class="text-[#64748B] text-[18px] font-[500]">
+            Your Safehaven MFB account has been created. Verify your account
+            to start transacting.
+          </p>
+          <app-button-filled class="m-[32px]" [action]="next" [text]="'Continue'" [loading]="loading"></app-button-filled>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

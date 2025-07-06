@@ -1,90 +1,117 @@
 <div class="w-full max-w-[446px] pb-[50px] overflow-y-auto">
-    <ng-container [ngSwitch]="step">
-      <div *ngSwitchCase="0">
-        <div *ngIf="searchCompany" class="w-full flex flex-col max-w-[466px] gap-[28px]">
-           <div class="w-full flex flex-col gap-[8px]">
-            <span class="font-[700] text-[24px] text-[#1E293B]">Let’s find your company</span>
-            <span class="font-[500] text-[18px] text-[#64748B]">Search for your company to continue</span>
-           </div>
-           <div class="w-full flex flex-col gap-[32px]">
-           <app-search />
-            <span class="font-[500] text-[14px] text-[#64748B]">I didn’t find my company name, <span (click)="searchCompanyToggle()" class="font-[600] cursor-pointer text-[#034EA2] text-[14px]">Click Here</span></span>
-           </div>
+  <ng-container [ngSwitch]="step">
+    <div *ngSwitchCase="0">
+      <div *ngIf="searchCompany" class="w-full flex flex-col max-w-[466px] gap-[28px]">
+        <div class="w-full flex flex-col gap-[8px]">
+          <span class="font-[700] text-[24px] text-[#1E293B]">Let’s find your company</span>
+          <span class="font-[500] text-[18px] text-[#64748B]">Search for your company to continue</span>
         </div>
-        <div *ngIf="!searchCompany" class="w-full flex flex-col gap-[28px]">
-            <div class="w-full flex flex-col gap-[8px]">
-                <span class="font-[700] text-[24px] text-[#1E293B]">Company Details</span>
-                <span class="font-[500] text-[18px] text-[#64748B]">Please provide just a bit more information to complete your profile setup.</span>
-            </div>
-            <div class="flex flex-col gap-[8px]">
-                <app-input [placeholder]="'Company Name'" />
-                <div class="w-full items-center grid grid-cols-2 gap-[10px]">
-                    <app-input [placeholder]="'RC Number'" />
-                    <app-datepicker />
-                </div>
-                <app-input [placeholder]="'Company Email Address'" />
-                <app-select [placeholder]="'Incorporation Type'" [options]="['Private Limited', 'Public Limited', 'Sole Proprietorship', 'Partnership']" />
-                <app-select [placeholder]="'Nature of Business'" [options]="['Agriculture', 'Manufacturing', 'Services', 'Other']" />
-                <app-input [placeholder]="'Tax Identification Number'" />
-            </div>
+        <div class="w-full flex flex-col gap-[32px]">
+          <app-search />
+          <span class="font-[500] text-[14px] text-[#64748B]">I didn’t find my company name, <span (click)="nextt()"
+              class="font-[600] cursor-pointer text-[#034EA2] text-[14px]">Click Here</span></span>
         </div>
       </div>
-      <div *ngSwitchCase="1" class="w-full flex flex-col gap-[28px]">
+      <div *ngIf="!searchCompany" class="w-full flex flex-col gap-[28px]">
         <div class="w-full flex flex-col gap-[8px]">
-            <span class="font-[700] text-[24px] text-[#1E293B]">Company Address</span>
-            <span class="font-[500] text-[18px] text-[#64748B]">Please provide an address where you are currently registered</span>
+          <span class="font-[700] text-[24px] text-[#1E293B]">Company Details</span>
+          <span class="font-[500] text-[18px] text-[#64748B]">Please provide just a bit more information to complete
+            your profile setup.</span>
         </div>
         <div class="flex flex-col gap-[8px]">
-            <app-input [placeholder]="'Address Line 1'" />
-            <app-select [placeholder]="'State'" [options]="['Abia', 'Adamawa', 'Yola', 'Oyo']" />
-            <app-select [placeholder]="'City'" [options]="['Aba', 'Abakaliki']" />
+          <app-input [label]="'Company Name'"  [placeholder]="'Company Name'" [value]="companyName" [error]="validators.companyName"
+            (onChange)="handleChangeStep1('companyName', $event)" (submit)="handleSubmitStep1()" />
+
+          <div class="w-full items-center grid grid-cols-2 gap-[10px]">
+            <app-input [placeholder]="'RC Number'" [value]="registrationNumber" [error]="validators.registrationNumber"
+              (onChange)="handleChangeStep1('registrationNumber', $event)" [placeholder]="'RC Number'"
+              (submit)="handleSubmitStep1()" />
+          </div>
+
+          <app-input [placeholder]="'Company Email Address'" [label]="'Email'" [value]="emailAddress"
+            [error]="validators.emailAddress" (onChange)="handleChangeStep1('emailAddress', $event)"
+            [placeholder]="'Enter your email address'" (submit)="handleSubmitStep1()" />
+
+          <app-select [label]="'Company Name'"  [placeholder]="'Incorporation Type'"
+            [options]="['Limited Liability Companies', 'Non-Limited Companies', 'Associations and Cooperatives']"
+            [error]="validators.registrationType"
+            (optionSelected)="handleChangeStep1('registrationType', $event)"></app-select>
+
+
+
+          <app-select [placeholder]="'Nature of Business'" [options]="businessTypes"
+            [placeholder]="'Nature of Business'" [option]="natureOfBusiness"
+            [error]="validators.natureOfBusiness" (optionSelected)="handleChangeStep1('natureOfBusiness', $event)" />
+
+          <app-input  [placeholder]="'TIN'" [label]="'TIN (Optional)'" [value]="tin"
+            [error]="validators.tin" (onChange)="handleChangeStep1('tin', $event)" (submit)="handleSubmitStep1()" />
+
         </div>
       </div>
-      <div *ngSwitchCase="2" class="w-full flex flex-col gap-[28px]">
-        <div class="w-full flex flex-col gap-[8px]">
-            <span class="font-[700] text-[24px] text-[#1E293B]">Director's Address</span>
-            <span class="font-[500] text-[18px] text-[#64748B]">Please provide an address where you are currently registered</span>
-        </div>
-        <div class="flex flex-col gap-[8px]">
-            <app-input [placeholder]="'Address Line 1'" />
-            <app-select [placeholder]="'State'" [options]="['Abia', 'Adamawa', 'Yola', 'Oyo']" />
-            <app-select [placeholder]="'City'" [options]="['Aba', 'Abakaliki']" />
-        </div>
+    </div>
+    <div *ngSwitchCase="1">
+      <div class="w-full flex flex-col gap-[8px]">
+        <span class="font-[700] text-[24px] text-[#1E293B]">Company Address</span>
+        <span class="font-[500] text-[18px] text-[#64748B]">Please provide an address where you are currently
+          registered</span>
       </div>
-      <div *ngSwitchCase="3" class="w-full flex flex-col gap-[28px]">
-        <div class="w-full flex flex-col gap-[8px]">
-            <span class="font-[700] text-[24px] text-[#1E293B]">Password Setup</span>
-            <span class="font-[500] text-[18px] text-[#64748B]">Set a strong password to protect your account. This will be used to protect your account</span>
-        </div>
-        <div class="flex flex-col gap-[8px]">
-            <app-input [placeholder]="'Password'" />
-            <app-input [placeholder]="'Confirm Password'" />
-        </div>
+      <div class="flex flex-col gap-[8px] mt-[28px]">
+        <app-input [placeholder]="'Address Line 1'" [label]="'Address'" [value]="address" [error]="validators.address"
+          (onChange)="handleChangeStep2('company_address', $event)"
+          (submit)="handleSubmitStep2()" />
+
+        <app-select [placeholder]="'State'" [label]="'State'" [options]="states" [placeholder]="'State'"
+          [selectedOption]="company_state" [error]="validators.state" (optionSelected)="handleChangeStep2('company_state', $event)"/>
+
+        <app-select [placeholder]="'City'" [label]="'City'" [selectedOption]="company_city" [options]="getLGAS(company_state)"
+          [error]="validators.city" (optionSelected)="handleChangeStep2('company_city', $event)" [placeholder]="'Select your city'" />
       </div>
-    </ng-container>
-    <div *ngIf="!searchCompany" class="mt-[32px] flex justify-between">
-        <!-- <button
-          class="bg-gray-200 px-4 py-2 rounded"
-          (click)="back()"
-          [disabled]="step === 0">
-          Back
-        </button> -->
-        <div (click)="back()" class="flex items-center w-fit cursor-pointer">
-            <img src="../../../../assets/icons/left-arrow.svg" alt="">
-            <span class="text-[#334155] font-[600] text-[14px]">Back</span>
-        </div>
-      
-        <!-- <button
-          class="bg-blue-600 text-white px-4 py-2 rounded"
-          (click)="next()"
-          [disabled]="step === totalSteps - 1">
-          Next
-        </button> -->
-        <div class="w-full max-w-[157px]"> 
-            <app-button-filled [action]="next" [text]="'Continue'" />
-        </div>
+    </div>
+    <div *ngSwitchCase="2">
+      <div class="w-full flex flex-col gap-[8px]">
+        <span class="font-[700] text-[24px] text-[#1E293B]">Director's Address</span>
+        <span class="font-[500] text-[18px] text-[#64748B]">Please provide an address where you are currently
+          registered</span>
       </div>
+      <div class="flex flex-col gap-[8px] mt-[28px]">
+        <app-input [placeholder]="'Address Line 1'" [label]="'Address'" [value]="address" [error]="validators.address"
+          (onChange)="handleChangeStep3('address', $event)" [placeholder]="'Address Line 1'"
+          (submit)="handleSubmitStep2()" />
+
+        <app-select [placeholder]="'State'" [label]="'State'" [options]="states"
+          [selectedOption]="state" [error]="validators.state" (optionSelected)="handleChangeStep3('state', $event)" />
+
+        <app-select [placeholder]="'City'" [label]="'City'"  [options]="getLGAS(state)" [error]="validators.city"
+          [selectedOption]="city" (optionSelected)="handleChangeStep3('city', $event)" />
+
+      </div>
+    </div>
+    <div *ngSwitchCase="3">
+      <div class="w-full flex flex-col gap-[8px] mt-[20px]">
+        <span class="font-[700] text-[24px] text-[#1E293B]">Password Setup</span>
+        <span class="font-[500] text-[18px] text-[#64748B]">Set a strong password to protect your account. This will be
+          used to protect your account</span>
+      </div>
+      <div class="flex flex-col gap-[8px] mt-[28px]">
+        <app-input [placeholder]="'Password'" [type]="passwordType1" [label]="'Password'"
+           [value]="password" [error]="validators.password"
+          (onChange)="handleChangeStep4('password', $event)" (submit)="handleSubmitStep3()" />
+        <app-input [placeholder]="'Confirm Password'" [type]="'password'" [label]="'Confirm Password'"
+           [value]="confirmPassword" [error]="validators.confirmPassword"
+          (onChange)="handleChangeStep4('confirmPassword', $event)" (submit)="handleSubmitStep3()" />
+      </div>
+    </div>
+  </ng-container>
+  <div *ngIf="!searchCompany" class="mt-[32px] flex justify-between">
+
+    <div (click)="back()" class="flex items-center w-fit cursor-pointer">
+      <img src="../../../../assets/icons/left-arrow.svg" alt="">
+      <span class="text-[#334155] font-[600] text-[14px]">Back</span>
+    </div>
+
+
+    <div class="w-full max-w-[157px]">
+      <app-button-filled [action]="next" [disabled]="!isLoading" [text]="'Continue'" />
+    </div>
   </div>
-  
-  
-  
+</div>

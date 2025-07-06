@@ -15,4 +15,7 @@ export class ButtonFilledComponent {
 @Input() textColor: string = '';
 @Input() loading: boolean = false;
 @Input() action: (() => void)  = ()=>{};
+@Input() disabled: boolean = false;
+@Input() processLoading: boolean = false;
+
 }

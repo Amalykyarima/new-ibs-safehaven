@@ -1,10 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { SetupProfileFormComponent } from '../../components/onboarding/setup-profile-form/setup-profile-form.component';
 import { ButtonFilledComponent } from '../../common/utilities/button-filled/button-filled.component';
 import { SetupProfileCorporateComponent } from "../../common/layout/setup-profile-corporate/setup-profile-corporate.component";
+import { SetupProfileIndividualComponent } from "../../common/layout/setup-profile-individual/setup-profile-individual.component";
+import { SharedDataService } from '../../resources/services/shared-data.service';
+import { OnboardingLayoutComponent } from "../onboarding-layout/onboarding-layout.component";
+// import { RegistrationStateService } from '../../resources/services/registration-state.service';
 
 @Component({
   selector: 'app-create-account-layout',
@@ -12,11 +16,10 @@ import { SetupProfileCorporateComponent } from "../../common/layout/setup-profil
   imports: [
     CommonModule,
     RouterModule,
-    RouterOutlet,
-    SetupProfileFormComponent,
     ButtonFilledComponent,
-    SetupProfileCorporateComponent
-],
+    SetupProfileCorporateComponent,
+    SetupProfileIndividualComponent,
+  ],
   templateUrl: './create-account-layout.component.html',
   styleUrl: './create-account-layout.component.scss',
 })
@@ -52,15 +55,18 @@ export class CreateAccountLayoutComponent {
     passwordSetup: false,
   };
 
-  // navigationSteps = [
-  //   { id: 1, label: 'Additional Information', active: true },
-  //   { id: 2, label: 'Home Address', active: false },
-  //   { id: 3, label: 'Password Setup', active: false }
-  // ];
   spinner: boolean = false;
   loading: boolean = false;
+  loginData: any;
+  accountOpened: boolean = false;
+  formStatus: boolean = true;
 
-  constructor(private fb: FormBuilder) {
+
+  constructor(private fb: FormBuilder,
+    private sharedDataService: SharedDataService,
+    private router: Router,
+
+    ) {
     this.form = this.fb.group({
       email: [''],
       gender: [''],
@@ -68,19 +74,35 @@ export class CreateAccountLayoutComponent {
     });
   }
 
-  // activateStep(index: number): void {
-  //   this.navigationSteps = this.navigationSteps.map((step, i) => {
-  //     if (i < index) {
-  //       return { ...step, status: 'completed' };
-  //     } else if (i === index) {
-  //       return { ...step, status: 'active' };
-  //     } else {
-  //       return { ...step, status: 'default' };
-  //     }
-  //   });
-  // }
+  ngOnInit() {
+    console.log('checkingggg', this.accountOpened, this.formStatus, this.spinner)
+    this.loginData = this.sharedDataService.getLoginData();
+    this.sharedDataService.formStatus$.subscribe(status => {
+      this.formStatus = status;
+      console.log('Form Status Changed:', status);
+    });
+
+    this.sharedDataService.spinner$.subscribe(show => {
+      this.spinner = show;
+      console.log('Spinner Changed:', show);
+    });
+
+    this.sharedDataService.accountOpened$.subscribe(opened => {
+      this.accountOpened = opened;
+      console.log('Account Opened Changed:', opened);
+    });
+  }
+
+
+
   setStep(step: number) {
     this.activeStep = step;
+  }
+
+  next(){
+    setTimeout(() => {
+      this.router.navigate(['/identity']);
+  }, 1000);
   }
 
   updateStep(step: number) {
@@ -103,5 +125,18 @@ export class CreateAccountLayoutComponent {
       home: index === 1,
       passwordSetup: index === 2,
     };
+  }
+
+  // Add these methods to handle events from child component
+  handleSpinnerChange(showSpinner: boolean) {
+    this.spinner = showSpinner;
+  }
+
+  handleAccountOpenedChange(isOpened: boolean) {
+    this.accountOpened = isOpened;
+  }
+
+  handleFormStatusChange(showForm: boolean) {
+    this.formStatus = showForm;
   }
 }

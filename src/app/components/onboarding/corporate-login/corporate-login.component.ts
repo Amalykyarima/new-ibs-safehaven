@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { InputComponent } from '../../../common/utilities/input/input.component';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../resources/services/auth.service';
@@ -10,6 +10,7 @@ import * as onboardingActions from '../../../resources/store/onboarding/onboardi
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Store, StoreModule } from '@ngrx/store';
 import { State } from '../../../resources/store/onboarding/onboarding.reducer';
+import { SharedDataService } from '../../../resources/services/shared-data.service';
 
 
 
@@ -28,13 +29,17 @@ export class CorporateLoginComponent {
     private router: Router,
     private notification: NzNotificationService,
     private store: Store<State>,
-    private routes: ActivatedRoute
+    private routes: ActivatedRoute,
+    private sharedDataService: SharedDataService,
+
 
 
 
   ) {
     this.user = new Signin();
   }
+  @Input() verifiedData: any = {};
+
   userType = 'phone';
   error: any = { type: '', message: '' };
   phoneNumber: any = '';
@@ -114,17 +119,20 @@ export class CorporateLoginComponent {
       this.loading = true;
       this.error = { type: '', message: '' };
       // this.showPassword = true
+      this.verifiedData = {
+        type: 'EMAIL',
+        userIdentifier: this.email.toLowerCase().trim(),
+        sendOtp: this.path === 'create-account',
+        accountType: 'Corporate',
+      }
       this.authService
-        .verifyUser({
-          type: 'EMAIL',
-          userIdentifier: this.email.toLowerCase().trim(),
-          sendOtp: this.path === 'create-account',
-          accountType: 'Corporate',
-        })
+        .verifyUser(this.verifiedData)
         .subscribe({
           next: (res: any) => {
             //(res);
             this.loading = false;
+            this.sharedDataService.setLoginData(this.verifiedData);
+
             if (res.message === 'User found') {
               this.path === 'create-account'
                 ? (this.error = {

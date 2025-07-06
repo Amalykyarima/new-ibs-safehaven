@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CountdownComponent } from "../countdown/countdown.component";
 import { OtpInputComponent } from "../otp-input/otp-input.component";
+import { SharedDataService } from '../../../resources/services/shared-data.service';
 
 @Component({
   selector: 'app-otp',
@@ -14,7 +15,10 @@ import { OtpInputComponent } from "../otp-input/otp-input.component";
   styleUrl: './otp.component.scss'
 })
 export class OtpComponent {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService,
+    private router: Router,
+    private sharedDataService: SharedDataService,
+  ) { }
 
   ngOnInit(): void {
     console.log(this.loginData);
@@ -26,12 +30,13 @@ export class OtpComponent {
   loading = false;
   @Input() showTimer = false;
 
-  @Input() error = '';
+  @Input() error: any = { type: '', message: '' };
   @Input() loginData: any = {};
   @Input() hideBackBtn: boolean = false;
   @Output() validate: EventEmitter<any> = new EventEmitter<any>();
   @Output() close: EventEmitter<any> = new EventEmitter<any>();
   @Output() resend: EventEmitter<any> = new EventEmitter<any>();
+  @Output() otpCompleted = new EventEmitter<string>();
 
   verifyOtp = () => {
     // this.error = 'Invalid otp';
@@ -48,8 +53,21 @@ export class OtpComponent {
             this.loading = false;
             if (res.statusCode === 200) {
               const encoded = window.btoa(JSON.stringify(this.loginData));
-              //(encoded);
+              // (encoded);
               // this.router.navigate(['/onboarding/profile-setup/' + encoded]);
+              // this.router.navigate(['/setup-account-corporate']);
+              console.log('logindataaa', this.loginData)
+              this.sharedDataService.setLoginData(this.loginData);
+
+              if (this.loginData.accountType === 'Corporate') {
+                setTimeout(() => {
+                  this.router.navigate(['/setup-account-corporate']);
+                }, 500);
+              } else {
+                setTimeout(() => {
+                  this.router.navigate(['/setup-account-corporate']);
+                }, 500);
+              }
             } else if (
               res.statusCode === 400 &&
               res.message === 'Incorrect OTP.'
@@ -78,19 +96,20 @@ export class OtpComponent {
     this.errorMessage = '';
     if (this.pin.length === 6) {
       this.validate.emit('this.pin');
-      this.verifyOtp();
+      this.otpCompleted.emit(this.pin);
+      // this.verifyOtp();
     }
   };
   resendOtp = (type: 'SMS' | 'VOICE' = 'SMS') => {
     this.resend.emit(type);
-    this.resendType ='SMS'
+    this.resendType = 'SMS'
     this.showTimer = true;
   };
 
   close_ = () => this.close.emit();
 
-  clearCountDown = ()=>{
+  clearCountDown = () => {
     this.showTimer = false
-    this.resendType =''
+    this.resendType = ''
   }
 }

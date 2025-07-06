@@ -12,6 +12,7 @@ import {
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgOtpInputModule } from 'ng-otp-input';
+import { OtpFieldComponent } from "../otp-field/otp-field.component";
 
 
 @Component({
@@ -80,6 +81,7 @@ export class OtpInputComponent implements OnInit, OnChanges {
     }
   };
 
+
   handlePaste(event: any) {
     const clipboardData = event?.clipboardData;
     const pastedData = clipboardData?.getData('text');
@@ -100,7 +102,7 @@ export class OtpInputComponent implements OnInit, OnChanges {
 //   @Input() length: number = 6;
 //   @Input() error = '';
 //   @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
-  
+
 //   constructor() {
 //     this.pinConfig = {
 //       length: this.length,

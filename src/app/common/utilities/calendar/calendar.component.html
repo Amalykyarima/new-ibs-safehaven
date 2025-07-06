@@ -1,0 +1,24 @@
+<div class="flex flex-col gap-[6px]">
+  <span class="text-[#6B7280] text-[14px] font-[800]">{{ label }}</span>
+  <div
+    class="w-full h-[52px] cursor-pointer rounded-[10px] overflow-hidden relative flex items-center justify-between p-[13px] bg-[#F4F5F7]"
+  >
+    <span
+      class="{{
+        selectedDate ? 'text-[#374151]' : 'text-[#37415197]'
+      }} relative text-[14px] max-w-[80%]"
+      >{{ formattedDate ? formattedDate : "YYYY-MM-DD " }}
+    </span>
+    <img class="w-[18px]" src="../../../../assets/icons/calendar_.svg" alt="" />
+
+    <nz-date-picker
+      [nzInputReadOnly]="true"
+      [nzFormat]="'DD/MM/YYYY'"
+      [nzPlaceHolder]="'Select date'"
+      (ngModelChange)="handleChange($event)"
+      #datePicker
+      class="w-full h-full absolute cursor-pointer opacity-0 top-0 left-0 right-0 bottom-0"
+    ></nz-date-picker>
+  </div>
+  <span class="text-[12px] text-red-600 min-h-[14px]">{{ error }}</span>
+</div>

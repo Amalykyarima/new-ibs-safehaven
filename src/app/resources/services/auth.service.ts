@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Enrol2FA, NewSignin, ResetPassword, Signin } from '../models/signin';
 import { ApiService } from './api.service';
+import { CompanySignup } from '../models/signup';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,10 @@ export class AuthService {
   newRegister(data: any) {
     return this.apiService.post(`customer/register`, data);
   }
+
+  registerCorporate(data : CompanySignup) {
+    return this.apiService.post(`customer/register`, data);
+}
 
   login(data: Signin) {
     return this.apiService.post(`login`, data);

@@ -8,6 +8,8 @@ import * as onboardingActions from '../../../resources/store/onboarding/onboardi
 import { Store, StoreModule } from '@ngrx/store';
 import { State } from '../../../resources/store/onboarding/onboarding.reducer';
 import { GeneralService } from '../../../resources/services/general.service';
+import { SharedDataService } from '../../../resources/services/shared-data.service';
+
 // import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 
@@ -26,9 +28,7 @@ export class IndividualLoginComponent {
     private store: Store<State>,
     // private notification: NzNotificationService,
     private generalService: GeneralService,
-
-
-
+    private sharedDataService: SharedDataService,
   ) {
     this.user = new Signin();
 
@@ -40,6 +40,8 @@ export class IndividualLoginComponent {
 
   @Output() validateUser: EventEmitter<any> = new EventEmitter<any>();
   @Output() getUser: EventEmitter<any> = new EventEmitter<any>();
+  @Input() verifiedData: any = {};
+
 
   user: Signin;
   userType = 'phone';
@@ -78,20 +80,25 @@ export class IndividualLoginComponent {
       this.loading = true;
       this.error = { type: '', message: '' };
       // this.showPassword = true
+      this.verifiedData = {
+        type: 'PHONE',
+        userIdentifier:
+          this.countryCode === '+234' && this.phoneNumber.length > 10
+            ? '+234' + this.phoneNumber.trim().slice(1)
+            : this.countryCode + this.phoneNumber.trim(),
+        sendOtp: this.path === 'create-account',
+        accountType: 'Individual',
+      }
       this.authService
-        .verifyUser({
-          type: 'PHONE',
-          userIdentifier:
-            this.countryCode === '+234' && this.phoneNumber.length > 10
-              ? '+234' + this.phoneNumber.trim().slice(1)
-              : this.countryCode + this.phoneNumber.trim(),
-          sendOtp: this.path === 'create-account',
-          accountType: 'Individual',
-        })
+        .verifyUser(
+          this.verifiedData
+        )
         .subscribe({
           next: (res: any) => {
             //(res);
             this.loading = false;
+            this.sharedDataService.setLoginData(this.verifiedData);
+
             if (res.message === 'User found') {
               this.path === 'create-account'
                 ? (this.error = {
@@ -161,7 +168,18 @@ export class IndividualLoginComponent {
       })
       .subscribe({
         next: (res: any) => {
-          if (res.statusCode == 202 || res.statusCode == 201) {
+          this.loading = false;
+          console.log('login res.data', res.data)
+
+
+          if (res.data?.requiredVerification) {
+            console.log('res.data.requiredVerification')
+            this.generalService.newSaveUser1(res.data);
+
+            setTimeout(() => {
+              this.router.navigate(['/identity']);
+            }, 300);
+          } else if (res.statusCode == 202 || res.statusCode == 201) {
             this.store.dispatch(
               onboardingActions.setSignInDetails({
                 signInDetails: {
@@ -203,6 +221,8 @@ export class IndividualLoginComponent {
               this.router.navigate(['/two-factor-authentication']);
             }, 500);
           } else if (res.statusCode == 200) {
+            this.generalService.saveUser(res.data);
+
             if (res.data?.otpId) {
               let data: ResetPassword = new ResetPassword();
               data = {
@@ -225,14 +245,15 @@ export class IndividualLoginComponent {
               setTimeout(() => {
                 this.router.navigate(['/reset-password-with-otp']);
               }, 500);
-            } else if (res.data.requiredVerification) {
-              const encoded = window.btoa(JSON.stringify(res.data));
-              setTimeout(() => {
-                this.router.navigate(['/identity/' + encoded]);
-              }, 300);
             } else {
               this.success = { message: res.message };
             }
+          } else if (res.statusCode == 400) {
+            console.log('res.statusCode == 400')
+            this.error = {
+              type: 'reset-password',
+              message: '' + res.message,
+            };
           } else {
             if (res.message.includes('Your account has been blocked'))
               this.error = {
@@ -287,39 +308,44 @@ export class IndividualLoginComponent {
   };
 
   sendOtp = async () => {
+    console.log('sendOtp', this.userType)
     this.loading = true;
     this.error = { type: '', message: '' };
     this.userType === 'email'
       ? this.router.navigate(['/create-account'])
       : this.authService
-          .verifyUser({
-            type: this.userType.toUpperCase(),
-            userIdentifier:
-              this.countryCode === '+234' && this.phoneNumber.length > 10
-                ? '+234' + this.phoneNumber.trim().slice(1)
-                : this.countryCode + this.phoneNumber.trim(),
-            sendOtp: true,
-            accountType: 'Individual',
-          })
-          .subscribe({
-            next: (res: any) => {
-              //(res);
-              this.loading_ = false;
-              this.success = { message: res.message };
-              this.validateUser.emit({
-                user: this.phoneNumber,
-                type: 'otp',
-                ...res.data,
-              });
-            },
-            error: (err: any) => {
-              this.loading_ = false;
-              this.error = {
-                type: '',
-                message: 'Something went wrong, Please try again',
-              };
-            },
-          });
+        .verifyUser({
+          type: this.userType.toUpperCase(),
+          userIdentifier:
+            this.countryCode === '+234' && this.phoneNumber.length > 10
+              ? '+234' + this.phoneNumber.trim().slice(1)
+              : this.countryCode + this.phoneNumber.trim(),
+          sendOtp: true,
+          accountType: 'Individual',
+        })
+        .subscribe({
+          next: (res: any) => {
+            this.router.navigate(['/'])
+            //(res);
+            // setTimeout(() => {
+            //   this.router.navigate(['/two-factor-authentication']);
+            // }, 500);
+            this.loading_ = false;
+            this.success = { message: res.message };
+            this.validateUser.emit({
+              user: this.phoneNumber,
+              type: 'otp',
+              ...res.data,
+            });
+          },
+          error: (err: any) => {
+            this.loading_ = false;
+            this.error = {
+              type: '',
+              message: 'Something went wrong, Please try again',
+            };
+          },
+        });
   };
 
   navigate() {
@@ -329,41 +355,45 @@ export class IndividualLoginComponent {
         user: this.phoneNumber,
         type: 'Individual',
       },
-    });}
+    });
+  }
 
-    verifyEmail = async () => {
-      if (this.email === '') this.validators.email = 'Required*';
-      else {
-        this.loading = true;
-        this.error = { type: '', message: '' };
-        // this.showPassword = true
-        this.authService
-          .verifyUser({
-            type: 'EMAIL',
-            userIdentifier: this.email?.toLowerCase().trim(),
-            sendOtp: false,
-            accountType: 'Individual',
-          })
-          .subscribe({
-            next: (res: any) => {
-              this.loading = false;
-              if (res.message === 'User found') {
-                this.showPassword = true;
-              } else {
-                this.error = {
-                  type: 'create-account',
-                  message: 'User not found',
-                };
-              }
-            },
-            error: (err: any) => {
-              this.loading = false;
-              this.error = {
-                type: '',
-                message: 'Something went wrong, Please try again',
-              };
-            },
-          });
+  verifyEmail = async () => {
+    if (this.email === '') this.validators.email = 'Required*';
+    else {
+      this.loading = true;
+      this.error = { type: '', message: '' };
+      // this.showPassword = true
+      this.verifiedData = {
+        type: 'EMAIL',
+        userIdentifier: this.email?.toLowerCase().trim(),
+        sendOtp: false,
+        accountType: 'Individual',
       }
-    };
+      this.authService
+        .verifyUser(this.verifiedData)
+        .subscribe({
+          next: (res: any) => {
+            this.sharedDataService.setLoginData(this.verifiedData);
+
+            this.loading = false;
+            if (res.message === 'User found') {
+              this.showPassword = true;
+            } else {
+              this.error = {
+                type: 'create-account',
+                message: 'User not found',
+              };
+            }
+          },
+          error: (err: any) => {
+            this.loading = false;
+            this.error = {
+              type: '',
+              message: 'Something went wrong, Please try again',
+            };
+          },
+        });
+    }
+  };
 }

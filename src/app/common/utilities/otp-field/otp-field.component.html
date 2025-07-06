@@ -1,0 +1,13 @@
+<div class="flex items-center gap-[8px] justify-between w-full">
+  <input
+    *ngFor="let digit of otpArray; let i = index"
+    #otpInputs
+    type="password"
+    maxlength="1"
+    (input)="onInput($event, i)"
+    (keydown)="onKeyDown($event, i)"
+    (paste)="onPaste($event)"
+    class="w-[48px] h-[48px] text-center border border-[#00000034] rounded-[4px] text-[16px] font-[500] text-[#374151] focus:outline-none"
+    [(ngModel)]="otp[i]"
+  />
+</div>

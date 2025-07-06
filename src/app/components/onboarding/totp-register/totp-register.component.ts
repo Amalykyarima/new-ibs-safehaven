@@ -5,17 +5,39 @@ import { NgOtpInputModule } from 'ng-otp-input';
 import { AuthService } from '../../../resources/services/auth.service';
 import { Router } from '@angular/router';
 import { CountdownComponent } from '../../../common/utilities/countdown/countdown.component';
+import { SharedDataService } from '../../../resources/services/shared-data.service';
+import { MaskMiddlePipe } from '../../../resources/services/mask.pipe';
 
 
 @Component({
   selector: 'app-totp-register',
   standalone: true,
-  imports: [CommonModule, NgOtpInputModule, CountdownComponent],
+  imports: [CommonModule, NgOtpInputModule, CountdownComponent, MaskMiddlePipe],
   templateUrl: './totp-register.component.html',
   styleUrl: './totp-register.component.scss'
 })
 export class TotpRegisterComponent {
-  constructor(private authService: AuthService, private router: Router) {}
+  userType = 'phone';
+  error: any = { type: '', message: '' };
+  pin = '';
+  resendType = '';
+  errorMessage = '';
+  @Input() showTimer = false;
+
+  @Input() loginData: any = {};
+  @Input() hideBackBtn: boolean = false;
+  @Output() validate: EventEmitter<any> = new EventEmitter<any>();
+  @Output() close: EventEmitter<any> = new EventEmitter<any>();
+  @Output() resend: EventEmitter<any> = new EventEmitter<any>();
+  phoneNumber: any = '';
+
+  loading = false;
+  loading_ = false;
+  success: any = {};
+  constructor(private authService: AuthService,
+    private router: Router,
+    private sharedDataService: SharedDataService,
+    ) {}
 
   pinConfig = {
     length: 6,
@@ -46,18 +68,7 @@ export class TotpRegisterComponent {
     console.log(this.loginData);
   }
 
-  pin = '';
-  resendType = '';
-  errorMessage = '';
-  loading = false;
-  @Input() showTimer = false;
 
-  @Input() error = '';
-  @Input() loginData: any = {};
-  @Input() hideBackBtn: boolean = false;
-  @Output() validate: EventEmitter<any> = new EventEmitter<any>();
-  @Output() close: EventEmitter<any> = new EventEmitter<any>();
-  @Output() resend: EventEmitter<any> = new EventEmitter<any>();
 
   verifyOtp = () => {
     // this.error = 'Invalid otp';
@@ -75,7 +86,20 @@ export class TotpRegisterComponent {
             if (res.statusCode === 200) {
               const encoded = window.btoa(JSON.stringify(this.loginData));
               //(encoded);
-              this.router.navigate(['/onboarding/profile-setup/' + encoded]);
+              // this.router.navigate(['/onboarding/profile-setup/' + encoded]);
+
+            console.log('logindataaa', this.loginData)
+            this.sharedDataService.setLoginData(this.loginData);
+
+              if (this.loginData.accountType === 'Corporate'){
+                setTimeout(() => {
+                  this.router.navigate(['/setup-account-corporate']);
+                }, 500);
+              } else {
+                setTimeout(() => {
+                  this.router.navigate(['/setup-account-corporate']);
+                }, 500);
+              }
             } else if (
               res.statusCode === 400 &&
               res.message === 'Incorrect OTP.'
