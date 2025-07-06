@@ -1,0 +1,177 @@
+<div class="w-full px-[40px] h-full py-[30px] flex flex-col gap-[32px]">
+  <div class="w-full flex items-center justify-between">
+    <span class="text-[#1E293B] font-[700] text-[20px]">Utility Bills</span>
+    <span class="font-[600] text-[16px] text-[#034EA2]">Purchase History</span>
+  </div>
+  <div class="w-full max-w-[582px] flex flex-col">
+    <div
+      *ngIf="step == 1"
+      class="w-full flex flex-col px-[24px] py-[30px] bg-[#fff] rounded-[20px] gap-[18px]"
+    >
+      <div
+        *ngIf="!cableSelected"
+        class="w-full flex items-center justify-between"
+      >
+        <span class="font-[500] text-[16px] text-[#64748B]">Distribution Company</span>
+        <div
+          (click)="this.store.openModal('tv-providers')"
+          class="flex items-center cursor-pointer gap-[2px] bg-[#EBF5FF] rounded-[10px] px-[16px] py-[8px]"
+        >
+          <img src="../../../../assets/icons/add-blue.svg" alt="" />
+          <span class="font-[600] text-[14px] text-[#034EA2]"
+            >Select Provider</span
+          >
+        </div>
+      </div>
+      <div *ngIf="cableSelected" class="w-full flex flex-col gap-[22px]">
+        <div class="w-full flex items-center justify-between">
+          <span class="font-[500] text-[16px] text-[#64748B]">Cable TV</span>
+          <div class="flex h-full items-center gap-[4px]">
+            <img src="../../../../assets/images/aedc.svg" alt="" />
+            <span
+              class="whitespace-nowrap font-[600] text-[14px] text-[#1E293B]"
+              >DSTV Bill</span
+            >
+            <div class="w-full border-l border-[#F1F5F9] ps-[4px]">
+              <img src="../../../../assets/icons/edit-grey.svg" alt="" />
+            </div>
+          </div>
+        </div>
+        <app-input
+          (onChange)="collectInput($event)"
+          [placeholder]="'Provider Number'"
+        />
+      </div>
+    </div>
+    <div *ngIf="step == 2" class="w-full flex flex-col gap-[24px]">
+        <div
+          class="w-full bg-[#fff] flex flex-col gap-[20px] rounded-[20px]"
+        >
+          <div class="px-[24px] pt-[25px] flex items-center gap-[8px]">
+              <img src="../../../../assets/image/utility-image.svg" alt="">
+              <div class="w-full flex flex-col gap-[4px]">
+                  <span class="font-[600] text-[16px] text-[#1E293B]">Kedonojo Ameh</span>
+                  <span class="font-[500] text-[16px] text-[#64748B]">123412341234</span>
+              </div>
+          </div>
+          <div class="w-full border-[0.5px] border-[#F1F5F9]"></div>
+          <div class="w-full flex items-center gap-[8px] px-[24px] pb-[20px]">
+              <app-switch />
+            <span class="font-[500] text-[16px] text-[#64748B]">Save as beneficiary</span>
+          </div>
+        </div>
+        <div class="w-full flex items-center justify-between px-[24px] py-[20px] bg-[#fff] rounded-[20px]">
+            <div class="w-full px-[24px] flex justify-between items-center">
+                <span class="font-[500] text-[15px] text-[#64748B]">Amount</span>
+                <app-amount-input (valueChange)="amountValueChange($event)" />
+              </div>
+        </div>
+        <div class="w-full flex flex-col bg-[#fff] rounded-[20px]">
+          <div
+            class="w-full items-center justify-between px-[24px] pt-[24px] pb-[12px] flex"
+          >
+            <span class="font-[600] text-[14px] text-[#64748B]">SEND FROM</span>
+            <div class="flex items-center gap-[4px]">
+              <span class="font-[600] text-[14px] text-[#1E293B]"
+                >Bal: <span></span>******</span
+              ><img src="../../../../assets/icons/eye-balance.svg" alt="" />
+            </div>
+          </div>
+          <div
+            class="w-full items-center justify-between flex border-t border-[#F1F5F9] border-[0.5px] py-[20px] px-[24px] rounded-t-[20px]"
+          >
+            <div class="flex gap-[12px] items-center">
+              <img src="../../../../assets/images/name-bar.svg" alt="" />
+              <div class="flex flex-col gap-[8px]">
+                <span class="font-[600] text-[16px] text-[#1E293B]"
+                  >Kedonojo Ameh/Flexing</span
+                >
+                <div class="flex items-center gap-[8px]">
+                  <span class="font-[500] text-[16px] text-[#1E293B]"
+                    >1021678900</span
+                  ><span
+                    class="bg-[#EBF5FF] rounded-[4px] px-[6px] py-[3px] text-[14px] font-[500] text-[#034EA2]"
+                    >Savings</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              class="border border-[#CBD5E1] rounded-[10px] px-[16px] pt-[9.5px] pb-[10.5px]"
+            >
+              <span class="text-[14px] font-[600] text-[#334155]">Change</span>
+            </div>
+          </div>
+        </div>
+        <div
+        class="w-full flex flex-col bg-[#fff] rounded-[20px] gap-[20px] {{
+          isRecurring ? 'ps-[16px] pe-[32px]' : 'px-[16px]'
+        }} {{ isRecurring ? 'py-[24px]' : 'py-[18px]' }}"
+      >
+        <div class="w-full flex items-center justify-between">
+          <span class="font-[600] text-[16px] text-[#1E293B]"
+            >Set as a Recurring Transaction?</span
+          >
+          <app-switch
+            [checked]="isRecurring"
+            (checkedChange)="recurringToggle($event)"
+          />
+        </div>
+        <div
+          *ngIf="isRecurring"
+          class="w-full border-t border-[#F1F5F9] py-[24px]"
+        >
+          <div class="w-full flex flex-col gap-[24px]">
+            <app-select-tile
+              [items]="['Daily', 'Weekly', 'Monthly', 'Yearly']"
+              [value]="'Daily'"
+            />
+            <span class="font-[500] text-[14px] text-[#64748B]"
+              >This transaction will be repeated daily based on the settings
+              below.
+            </span>
+            <div class="w-full flex items-center justify-between">
+              <span class="font-[600] text-[14px] text-[#64748B]"
+                >SET PERIOD</span
+              >
+            </div>
+            <app-input [placeholder]="'Start Date'" />
+            <app-input [placeholder]="'End Date'" />
+            <div class="w-full flex items-center gap-[8px]">
+              <app-switch />
+              <div class="flex flex-col">
+                <span class="font-[600] text-[14px] text-[#64748B]"
+                  >Enable Auto Retry</span
+                >
+                <span class="text-[14px] font-[400] text-[#64748B]"
+                  >Retry the transaction if funds are insufficient.</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w-full flex justify-end pb-[50px]">
+          <div class="max-w-[184px] w-full">
+            <app-button-filled [text]="'Continue'" />
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<app-modal *ngIf="activeModal() as view">
+    <ng-container [ngSwitch]="view">
+      <app-confirm-transaction
+        [type]="'airtime'"
+        *ngSwitchCase="'confirm-transaction'"
+      />
+      <app-transaction-pin *ngSwitchCase="'transaction-pin'" />
+      <app-successful-transfer *ngSwitchCase="'successful-transfer'" />
+      <app-tv-providers (selectNetwork)="selectedProvider($event)"
+      *ngSwitchCase="'tv-providers'" />
+      <app-saved-contacts *ngSwitchCase="'saved-contacts'" />
+      <!-- Optional fallback -->
+      <div *ngSwitchDefault>Unknown modal type</div>
+    </ng-container>
+  </app-modal>

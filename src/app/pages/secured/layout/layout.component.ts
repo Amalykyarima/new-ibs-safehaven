@@ -8,14 +8,15 @@ import { TransferService } from '../../../resources/services/transfer.service';
 import { SettingsService } from '../../../resources/services/settings.service';
 import { ActivatedRoute, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "../../../components/dashboard/header/header.component";
-import { DropdownComponent } from "../../../common/utilities/dropdown/dropdown.component";
 import { Location } from '@angular/common';
+import { SidenavComponent } from '../../../components/dashboard/sidenav/sidenav.component';
+
 
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterOutlet, DropdownComponent, HeaderComponent],
+  imports: [CommonModule, RouterModule, RouterOutlet, HeaderComponent, SidenavComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss'
 })
@@ -24,7 +25,7 @@ export class LayoutComponent {
   activeDropdown: 'financial' | 'reward' | 'settings' | null = null;
   buttonPosition?: DOMRect;
 
-  activeItem: string = ''; // or set default like 'Home'
+  activeItem: string = '';
 
   topUpOptionsVisible = false;
   FinancialOptionsVisible = false;
@@ -114,12 +115,12 @@ export class LayoutComponent {
   ];
 
   ngOnInit(): void {
-    this.getUserData();
+    // this.getUserData();
     this.totalTransfersRequiringApproval = 0;
     // this.getTransfers();
     this.setTitle(this.location.path());
     this.location.onUrlChange((url) => {
-      this.refreshUserData();
+      // this.refreshUserData();
       // this.getTransfers();
       this.setTitle(url);
       if (window.innerWidth <= 768) {
@@ -259,20 +260,20 @@ export class LayoutComponent {
     );
   };
 
-  async getUserData() {
-    this.fetchingData = true;
-    this.currentUser = await this.generalService.refreshUserData();
-    console.log(this.currentUser, 'this.currentUser')
-    this.checkAccount();
+  // async getUserData() {
+  //   this.fetchingData = true;
+  //   this.currentUser = await this.generalService.refreshUserData();
+  //   console.log(this.currentUser, 'this.currentUser')
+  //   this.checkAccount();
 
-    this.clientData = { ...this.currentUser };
-    this.fetchingData = false;
-  }
+  //   this.clientData = { ...this.currentUser };
+  //   this.fetchingData = false;
+  // }
 
-  async refreshUserData() {
-    this.currentUser = await this.generalService.refreshUserData();
-    this.checkAccount();
-  }
+  // async refreshUserData() {
+  //   this.currentUser = await this.generalService.refreshUserData();
+  //   this.checkAccount();
+  // }
 
   checkAccount() {
     this.checkStatus = this.currentUser.client.status;

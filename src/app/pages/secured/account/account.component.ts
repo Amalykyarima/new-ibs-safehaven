@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { LayoutComponent } from '../layout/layout.component';
 
 @Component({
   selector: 'app-account',
@@ -10,5 +11,4 @@ import { RouterModule } from '@angular/router';
   styleUrl: './account.component.scss'
 })
 export class AccountComponent {
-
 }

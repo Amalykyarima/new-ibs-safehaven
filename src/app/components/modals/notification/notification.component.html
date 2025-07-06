@@ -1,0 +1,12 @@
+<div class="w-full px-[38px] py-[46px] items-center flex flex-col gap-[8px] bg-white">
+    <div class="w-full flex flex-col items-center">
+        <img class="w-[152px]" src="../../../../assets/images/notification-success.svg" alt="">
+        <span class="text-center font-[700] text-[24px] text-[#1E293B]">{{title}}</span>
+    </div>
+    <div class="w-full flex flex-col gap-[24px] items-center max-w-[364px]">
+        <span class="text-center font-[500] text-[18px] text-[#64748B]">{{message}}</span>
+           <div class="w-full">
+            <app-button-filled [bg]="'bg-[#EBF5FF]'" [textColor]="'text-[#034EA2]'" [text]="'Close'" />
+           </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+.bg-stroke {
+  background-image: url("/assets/images/modal-bg-stroke.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.blur-effect{
+    pointer-events: none;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 9999;
+    height: 62px;
+}

@@ -1,0 +1,11 @@
+<div class="wrapper">
+    <span class="currency-symbol">{{ currencySymbol }}</span>
+    <input
+      type="text"
+      class="dotted-underline-input"
+      [value]="formattedAmount"
+      (keypress)="onKeyPress($event)"
+      (keydown)="onKeyDown($event)"
+      readonly
+    />
+  </div>

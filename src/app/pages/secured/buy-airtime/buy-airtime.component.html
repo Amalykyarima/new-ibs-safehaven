@@ -1,0 +1,223 @@
+<div class="w-full px-[40px] h-full py-[30px] flex flex-col gap-[32px]">
+  <div class="w-full flex items-center justify-between">
+    <span class="text-[#1E293B] font-[700] text-[20px]">Buy Airtime</span>
+    <span class="font-[600] text-[16px] text-[#034EA2]">Purchase History</span>
+  </div>
+  <div class="w-full flex flex-col gap-[24px] max-w-[582px]">
+    <div
+      class="rounded-[20px] relative bg-[#fff] w-full flex flex-col gap-[20px] p-[24px]"
+    >
+      <div class="w-full flex flex-col gap-[20px]">
+        <div class="w-full grid grid-cols-[1fr_111px] items-center gap-[10px]">
+          <app-input [placeholder]="'Phone Number'" [type]="'number'" />
+          <div
+            (click)="this.store.openModal('networks')"
+            class="flex cursor-pointer max-w-[111px] items-center justify-between rounded-[10px] bg-[#F1F5F9] h-[60px] px-[16px] py-[21px]"
+          >
+            <div class="w-full flex gap-[4px]">
+              <img class="w-[15px]" src="{{ networkIcon }}" alt="" /><span
+                class="font-[500] text-[14px] text-[#64748B]"
+                >{{ network }}</span
+              >
+            </div>
+            <img src="../../../../assets/icons/chevron-down-grey.svg" alt="" />
+          </div>
+        </div>
+        <div class="w-full flex items-center gap-[8px]">
+          <app-switch />
+          <span class="font-[500] text-[16px] text-[#64748B]"
+            >Save this number</span
+          >
+        </div>
+        <div class="w-full flex flex-col gap-[20px]">
+          <div class="w-full border-[0.5px] border-[#F1F5F9]"></div>
+          <div
+            (click)="this.store.openModal('saved-contacts')"
+            class="w-full cursor-pointer flex items-center justify-between"
+          >
+            <span class="text-[16px] font-[600] text-[#034EA2]"
+              >Saved Numbers</span
+            >
+            <img src="../../../../assets/icons/chevron-right-blue.svg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="w-full flex flex-col gap-[20px] bg-[#fff] rounded-[20px] {{
+        amount > 0 ? 'pt-[22px]' : 'py-[22px]'
+      }}"
+    >
+      <div class="w-full px-[24px] flex justify-between items-center">
+        <span class="font-[500] text-[15px] text-[#64748B]">Amount</span>
+        <app-amount-input (valueChange)="amountValueChange($event)" />
+      </div>
+      <div
+        *ngIf="amount > 0"
+        [ngStyle]="
+          isRewardPoints
+            ? { backgroundImage: 'url(/assets/images/static-blue-bg.svg)' }
+            : { backgroundColor: '#94A3B8' }
+        "
+        class="{{
+          isRewardPoints ? 'bg-[#034EA2]' : 'bg-[#94A3B8]'
+        }} w-full rounded-[20px] pt-[14px]"
+      >
+        <div class="px-[24px] flex pb-[14px] items-center justify-between">
+          <div class="flex items-center gap-[4px]">
+            <img src="../../../../assets/icons/coins-gold.svg" alt="" /><span
+              class="text-[14px] font-[600] {{
+                isRewardPoints ? 'text-[#fff]' : 'text-[#1E293B]'
+              }}"
+              >Apply Reward Points</span
+            >
+          </div>
+          <app-switch
+            [checked]="isRewardPoints"
+            (checkedChange)="rewardPointsToggled($event)"
+          />
+        </div>
+        <div
+          class="w-full rounded-[20px] px-[24px] flex items-center justify-between {{
+            !isRewardPoints
+              ? 'bg-[#EBF5FF] py-[30.5px]'
+              : 'bg-[#E1EFFE] py-[13.5px]'
+          }}"
+        >
+          <span class="text-[14px] font-[600] text-[#64748B]"
+            >Bal Pts:
+            <span class="text-[14px] font-[600] text-[#1E293B]"
+              >1000pts</span
+            ></span
+          >
+          <div *ngIf="isRewardPoints" class="flex flex-col items-end gap-[8px]">
+            <span class="font-[600] text-[16px] text-[#034EA2]"
+              >You pay: ₦0.00</span
+            >
+            <div
+              class="w-full border-[0.5px] border-[#034EA2] border-dashed"
+            ></div>
+            <span class="font-[600] text-[14px] text-[#64748B]"
+              >Saved ₦1,000</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-full flex flex-col bg-[#fff] rounded-[20px]">
+      <div
+        class="w-full items-center justify-between px-[24px] pt-[24px] pb-[12px] flex"
+      >
+        <span class="font-[600] text-[14px] text-[#64748B]">SEND FROM</span>
+        <div class="flex items-center gap-[4px]">
+          <span class="font-[600] text-[14px] text-[#1E293B]"
+            >Bal: <span></span>******</span
+          ><img src="../../../../assets/icons/eye-balance.svg" alt="" />
+        </div>
+      </div>
+      <div
+        class="w-full items-center justify-between flex border-t border-[#F1F5F9] border-[0.5px] py-[20px] px-[24px] rounded-t-[20px]"
+      >
+        <div class="flex gap-[12px] items-center">
+          <img src="../../../../assets/images/name-bar.svg" alt="" />
+          <div class="flex flex-col gap-[8px]">
+            <span class="font-[600] text-[16px] text-[#1E293B]"
+              >Kedonojo Ameh/Flexing</span
+            >
+            <div class="flex items-center gap-[8px]">
+              <span class="font-[500] text-[16px] text-[#1E293B]"
+                >1021678900</span
+              ><span
+                class="bg-[#EBF5FF] rounded-[4px] px-[6px] py-[3px] text-[14px] font-[500] text-[#034EA2]"
+                >Savings</span
+              >
+            </div>
+          </div>
+        </div>
+        <div
+          class="border border-[#CBD5E1] rounded-[10px] px-[16px] pt-[9.5px] pb-[10.5px]"
+        >
+          <span class="text-[14px] font-[600] text-[#334155]">Change</span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="w-full flex flex-col bg-[#fff] rounded-[20px] gap-[20px] {{
+        isRecurring ? 'ps-[16px] pe-[32px]' : 'px-[16px]'
+      }} {{ isRecurring ? 'py-[24px]' : 'py-[18px]' }}"
+    >
+      <div class="w-full flex items-center justify-between">
+        <span class="font-[600] text-[16px] text-[#1E293B]"
+          >Set as a Recurring Transaction?</span
+        >
+        <app-switch
+          [checked]="isRecurring"
+          (checkedChange)="recurringToggle($event)"
+        />
+      </div>
+      <div
+        *ngIf="isRecurring"
+        class="w-full border-t border-[#F1F5F9] py-[24px]"
+      >
+        <div class="w-full flex flex-col gap-[24px]">
+          <app-select-tile
+            [items]="['Daily', 'Weekly', 'Monthly', 'Yearly']"
+            [value]="'Daily'"
+          />
+          <span class="font-[500] text-[14px] text-[#64748B]"
+            >This transaction will be repeated daily based on the settings
+            below.
+          </span>
+          <div class="w-full flex items-center justify-between">
+            <span class="font-[600] text-[14px] text-[#64748B]"
+              >SET PERIOD</span
+            >
+          </div>
+          <app-input [placeholder]="'Start Date'" />
+          <app-input [placeholder]="'End Date'" />
+          <div class="w-full flex items-center gap-[8px]">
+            <app-switch />
+            <div class="flex flex-col">
+              <span class="font-[600] text-[14px] text-[#64748B]"
+                >Enable Auto Retry</span
+              >
+              <span class="text-[14px] font-[400] text-[#64748B]"
+                >Retry the transaction if funds are insufficient.</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-full flex justify-end pb-[50px]">
+      <div class="max-w-[184px] w-full">
+        <app-button-filled [text]="'Continue'" />
+      </div>
+    </div>
+  </div>
+  <span (click)="this.store.openModal('confirm-transaction')"
+    >confirm-transaction</span
+  >
+  <span (click)="this.store.openModal('transaction-pin')">transaction-pin</span>
+  <span (click)="this.store.openModal('successful-transfer')"
+    >successful-transfer</span
+  >
+</div>
+
+<app-modal *ngIf="activeModal() as view">
+  <ng-container [ngSwitch]="view">
+    <app-confirm-transaction
+      [type]="'airtime'"
+      *ngSwitchCase="'confirm-transaction'"
+    />
+    <app-transaction-pin *ngSwitchCase="'transaction-pin'" />
+    <app-successful-transfer *ngSwitchCase="'successful-transfer'" />
+    <app-select-network
+      (selectNetwork)="selectedNetwork($event)"
+      *ngSwitchCase="'networks'"
+    />
+    <app-saved-contacts *ngSwitchCase="'saved-contacts'" />
+    <!-- Optional fallback -->
+    <div *ngSwitchDefault>Unknown modal type</div>
+  </ng-container>
+</app-modal>

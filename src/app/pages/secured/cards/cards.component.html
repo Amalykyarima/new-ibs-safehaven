@@ -1,0 +1,215 @@
+<div class="w-full py-[32px] px-[40px] h-full flex flex-col gap-[24px]">
+  <div class="w-full flex items-center justify-between">
+    <span class="font-[700] text-[20px] text-[#1E293B]">Cards</span>
+    <div class="flex items-center w-fit gap-[20px]">
+     <div class="relative">
+        <div (click)="openCardRequestDropdown()" class=" border cursor-pointer border-[#CBD5E1] gap-[2px] items-center bg-white rounded-[10px] h-[44px] justify-center w-[161px] flex">
+            <img src="../../../../assets/icons/card-request.svg" alt="" /><span
+              class="font-[600] whitespace-nowrap text-[16px] text-[#334155]"
+              >Card Request</span
+            >
+          </div>
+          <div *ngIf="cardRequestDropdown" class="absolute flex flex-col w-[405px] bg-white rounded-[10px] z-[999] top-[50px] right-0 shadow-md gap-[24px]">
+            <span class="mt-[24px] ms-[24px] font-[600] text-[16px] text-[#1E293B]">Card Requests</span>
+            <div class="w-full flex flex-col">
+                <div (click)="openCardRequestDropdown()" *ngFor="let card of cardRequests" class="px-[24px] hover:bg-slate-100 cursor-pointer flex py-[20px] flex-col">
+                    <span class="font-[500] text-[14px] text-[#64748B]">You Requested a {{card.scheme}} for:</span>
+                    <div class="w-full flex items-center justify-between">
+                        <div class="flex flex-col gap-[24px]">
+                            <div class="w-full flex items-center gap-[12px]">
+                                <img class="h-[48px]" src="../../../../assets/images/name-bar.svg" alt="">
+                                <div class="w-full flex flex-col gap-[8px]">
+                                    <span class="font-[600] text-[14px] text-[#1E293B]">{{card.name}}</span>
+                                    <div class="w-full flex items-center gap-[8px]">
+                                        <span class="font-[400] text-[14px] text-[#1E293B]">{{card.accountNumber}}</span>
+                                        <div class="px-[6px] pt-[1px] pb-[3px] rounded-[4px] bg-[#EBF5FF]"><span class="font-[500] text-[12px] text-[#034EA2]">{{card.type}}</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="font-[500] text-[14px] text-[#64748B]">Requested <span class="font-[600] text-[#1E293B]">{{card.duration}}days ago</span></div>
+                        </div>
+                        <img src="../../../../assets/images/card-request-master.svg" alt="">
+                    </div>
+                </div>
+            </div>
+          </div>
+     </div>
+      <div (click)="store.openModal('link-card')"
+        class="border cursor-pointer border-[#CBD5E1] w-[131px] flex items-center h-[44px] justify-center gap-[2px] bg-white rounded-[10px]"
+      >
+        <img src="../../../../assets/icons/link.svg" alt="" /><span
+          class="font-[600] text-[16px] whitespace-nowrap text-[#334155]"
+          >Link Card</span
+        >
+      </div>
+      <div class="relative">
+        <div (click)="openCreateCardDropdown()"
+        class="w-[150px] cursor-pointer rounded-[10px] h-[44px] bg-[#034EA2] flex items-center gap-[2px] justify-center"
+      >
+        <span class="font-[600] text-[16px] whitespace-nowrap text-white"
+          >Create Card</span
+        >
+        <img src="../../../../assets/icons/chevron-down-white.svg" alt="" />
+      </div>
+      <div *ngIf="createCardDropdown" class="w-[178px] bg-[#fff] rounded-[10px] flex flex-col right-0 top-[50px] shadow-md absolute">
+        <div (click)="selectCardType(card.name)" *ngFor="let card of cardTypes" class="w-full hover:bg-slate-100 px-[10px] py-[10px] cursor-pointer flex items-center">
+            <img [src]="card.icon" alt="">
+            <span class="font-[500] text-[14px] text-[#64748B]">{{card.name}}</span>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  <div class="w-full flex gap-[20px]">
+    <div
+      class="bg-white rounded-[20px] h-full w-full max-w-[340px] flex flex-col gap-[24px] py-[24px] px-[20px]"
+    >
+      <span class="font-[500] text-[14px] text-[#64748B]"
+        >{{ cards.length }} Cards</span
+      >
+      <div class="w-full flex flex-col gap-[18px]">
+        <div
+          *ngFor="let card of cards"
+          (click)="setActiveCard(card.pan)"
+          [ngClass]="{ 'bg-[#EBF5FF]': activeCard === card.pan }"
+          class="w-full p-[10px] cursor-pointer rounded-[8px] flex gap-[10px] items-start"
+        >
+          <img
+            class="w-[27px]"
+            src="../../../../assets/icons/safehaven-card-icon.svg"
+            alt=""
+          />
+          <div class="w-full flex flex-col gap-[8px]">
+            <span class="font-[600] text-[16px] text-[#1E293B]">{{
+              card.pan
+            }}</span>
+            <div class="flex items-center gap-[8px]">
+              <span class="font-[500] text-[14px] text-[#94A3B8]"
+                >Exp {{ card.expiry }}</span
+              >
+              <div class="border-[0.5px] border-[#E2E8F0] h-[18px]"></div>
+              <div
+                [ngClass]="{ 'bg-[#fff]': activeCard === card.pan }"
+                class="flex items-center gap-[6px] px-[6px] rounded-[4px]"
+              >
+                <div class="w-[6px] h-[6px] rounded-full bg-[#64748B]"></div>
+                <span class="font-[500] mb-[2px] text-[12px] text-[#64748B]">{{
+                  card.type
+                }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="bg-white rounded-[20px] flex flex-col w-full items-center gap-[28px] py-[79px]"
+    >
+      <div class="relative flex items-center justify-center">
+        <img
+          src="../../../../assets/images/sample-card-front.svg"
+          alt="Card Front"
+          class="w-full h-auto object-contain filter"
+          [ngClass]="{'filter blur-[1px] brightness-75 opacity-80' : cardFrozen}"
+        />
+        <img
+          *ngIf="cardFrozen"
+          src="../../../../assets/images/frozen-overlay.svg"
+          alt="Frozen Overlay"
+          class="absolute inset-0 w-full h-full z-[999] transform scale-[1.1] pointer-events-none fade-in "
+        />
+      </div>
+      <div
+        class="bg-[#F8FAFC] w-full max-w-[360px] rounded-[20px] py-[10px] px-[16px] flex flex-col gap-[14px]"
+      >
+        <span class="font-[600] text-[12px] text-[#64748B]">CARD ACCOUNT</span>
+        <div class="w-full flex items-center justify-between">
+          <div class="flex items-center gap-[8px]">
+            <img
+              class="h-[43px]"
+              src="../../../../assets/images/name-bar.svg"
+              alt=""
+            />
+            <div class="flex flex-col gap-[4px]">
+              <span class="font-[600] text-[14px] text-[#1E293B]"
+                >Abasifreke Emm.../Main</span
+              >
+              <div class="flex items-center gap-[8px]">
+                <span class="font-[500] text-[14px] text-[#64748B]"
+                  >1021678900</span
+                >
+                <div class="rounded-[4px] bg-[#EBF5FF] py-[1px] px-[6px]">
+                  <span class="font-[500] text-[12px] text-[#034EA2] mb-[1px]"
+                    >Savings</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-end font-[500] text-[14px] text-[#94A3B8]"
+              >Bal.</span
+            >
+            <span class="text-end font-[600] text-[14px] text-[#1E293B]"
+              >₦50,000.98</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="w-full max-w-[360px] flex items-center justify-between">
+       <div (click)="store.openModal('card-details')" class="flex flex-col justify-center gap-[4px] items-center max-w-[75px] w-full cursor-pointer">
+        <div
+        class="w-[60px] h-[60px] rounded-full bg-[#EBF5FF] flex justify-center items-center"
+      >
+        <img src="../../../../assets/icons/card-details.svg" alt="" />
+      </div>
+      <span class="font-[500] text-[12px] text-[#64748B]">Card Details</span>
+       </div>
+       <div class="flex flex-col justify-center gap-[4px] items-center max-w-[75px] w-full cursor-pointer">
+        <div
+        (click)="freezeCard()"
+        class="w-[60px] h-[60px] rounded-full bg-[#EBF5FF] flex justify-center items-center"
+      >
+        <img
+          [src]="
+            '../../../../assets/icons/' +
+            (cardFrozen ? 'unfreeze' : 'freeze') +
+            '.svg'
+          "
+          alt="{{ cardFrozen ? 'Unfreeze Card' : 'Freeze Card' }}"
+        />
+      </div>
+        <span class="font-[500] text-[12px] text-[#64748B]">{{
+          cardFrozen ? 'Unfreeze Card' : 'Freeze Card'
+        }}</span>
+       </div>
+        <div (click)="store.openModal('notification')" class="flex flex-col justify-center gap-[4px] items-center max-w-[75px] w-full cursor-pointer">
+          <div
+            class="w-[60px] h-[60px] rounded-full bg-[#EBF5FF] flex justify-center items-center"
+          >
+            <img src="../../../../assets/icons/pin.svg" alt="" />
+          </div>
+          <span class="font-[500] text-[12px] text-[#64748B]">Default PIN</span>
+        </div>
+        <div (click)="store.openModal('confirmation')" class="flex flex-col justify-center gap-[4px] items-center max-w-[75px] w-full cursor-pointer">
+          <div
+            class="w-[60px] h-[60px] rounded-full bg-[#EBF5FF] flex justify-center items-center"
+          >
+            <img src="../../../../assets/icons/cancel-card.svg" alt="" />
+          </div>
+          <span class="font-[500] text-[12px] text-[#64748B]">Cancel Card</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-modal *ngIf="activeModal() as view">
+    <ng-container [ngSwitch]="view">
+      <app-confirmation *ngSwitchCase="'confirmation'" [message]="'Are you sure you want to delete this card? Note, this action cannot be undone'" [title]="'Cancel Card?'" />
+      <app-card-details *ngSwitchCase="'card-details'" />
+      <app-notification *ngSwitchCase="'notification'" [message]="'Your default card PIN has been sent to your phone and email address'" [title]="'Default Card PIN Sent'" />
+      <app-link-card *ngSwitchCase="'link-card'" />
+      <!-- Optional fallback -->
+      <div *ngSwitchDefault>Unknown modal type</div>
+    </ng-container>
+  </app-modal>

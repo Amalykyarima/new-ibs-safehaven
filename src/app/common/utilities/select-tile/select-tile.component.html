@@ -1,0 +1,27 @@
+<!-- <div class="flex flex-col w-full gap-[6px]">
+    <span class="font-[500] text-[14px] text-[#6B7280]">{{ label }}</span>
+    <div class="w-full flex items-center gap-[10px]">
+        <div (click)="setItem(item)" *ngFor="let item of items" class=" px-[12px] pt-[3px] pb-[5px] cursor-pointer rounded-[4px] {{selectedItem === item ? 'bg-[#034EA2]' : 'bg-[#fff]'}}">{{item}}"<span class="text-[14px] font-[500] {{selectedItem === item ? 'text-[#fff]' : 'text-[#64748B]'}}">{{item}}</span></div>
+    </div>
+    <span class="text-[10px] text-[#FF0000] font-[400] h-[16px]">{{ error }}</span>
+</div> -->
+<div class="flex flex-col w-full gap-[16px]">
+    <span class="font-[500] text-[14px] text-[#6B7280]">{{ label }}</span>
+    <div class="w-full flex items-center gap-[10px]">
+      <div
+        *ngFor="let item of items"
+        (click)="setItem(item)"
+        class="px-[12px] pt-[3px] pb-[5px] cursor-pointer rounded-[4px]"
+        [ngClass]="selectedItem === item ? 'bg-[#034EA2]' : 'bg-[#fff]'"
+      >
+        <span
+          class="text-[14px] font-[500]"
+          [ngClass]="selectedItem === item ? 'text-[#fff]' : 'text-[#64748B]'"
+        >
+          {{ item }}
+        </span>
+      </div>
+    </div>
+    <span *ngIf="error" class="text-[10px] text-[#FF0000] font-[400] h-[16px]">{{ error }}</span>
+  </div>
+  

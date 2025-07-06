@@ -1,0 +1,30 @@
+.switch {
+    width: 44px;
+    height: 24px;
+    background-color: #F1F5F9;
+    border-radius: 9999px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    .ball {
+      width: 20px;
+      height: 20px;
+      background-color: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.3s ease;
+    }
+  
+    &.checked {
+      background-color: #EBF5FF;
+  
+      .ball {
+        transform: translateX(20px);
+        background-color: #034EA2;
+      }
+    }
+  }
+  

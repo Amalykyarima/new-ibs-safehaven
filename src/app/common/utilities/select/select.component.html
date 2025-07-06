@@ -3,13 +3,13 @@
     <span class="text-[#6B7280] text-[14px] font-[800]">{{ label }}</span>
     <div class="relative w-full min-h-[52px]">
       <div
-        class="flex flex-col bg-[#F4F5F7] min-h-[52px] px-[18px] rounded-[10px] gap-[4px] overflow-hidden"
+        class="flex flex-col bg-[#F1F5F9] min-h-[52px] px-[18px] rounded-[10px] gap-[4px] overflow-hidden"
       >
         <span
           (click)="toggleDropdown()"
           class="cursor-pointer text-[14px] {{
             !custom && !selectedOption ? 'text-[#9FA6B2]' : 'text-[#374151]'
-          }} font-[400] w-full h-full min-h-[52px] flex items-center justify-between"
+          }} font-[400] w-full h-full min-h-[60px] flex items-center justify-between"
         >
           {{ selectedOption ? selectedOption : customValue ? placeholderText : placeholder }}
           <img
@@ -24,9 +24,6 @@
           >{{ placeholderHelper }}</span
         >
       </div>
-      <span class="text-[12px] min-h-[14px] font-[400] text-red-500"
-        >{{ error }}
-      </span>
       <div
         *ngIf="showDropdown"
         class="absolute z-[999999] flex flex-col bg-[#fff] shadow-md w-full rounded-[10px] {{
@@ -50,3 +47,4 @@
     <!-- <span class="text-[12px] text-red-600 min-h-[14px]">{{ error }}</span> -->
   </div>
 </div>
+

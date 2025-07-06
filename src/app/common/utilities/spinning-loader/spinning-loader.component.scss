@@ -1,0 +1,38 @@
+.loader {
+    position: relative;
+    width: 65px;
+    height: 40px;
+  }
+  
+  .circle {
+    position: absolute;
+    top: 50%;
+    width: 23.3px;
+    height: 23.3px;
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .circle1 {
+    background-color: #034EA2;
+    animation: moveLeftRight 1.5s ease-in-out infinite;
+  }
+  
+  .circle2 {
+    background-color: #fff;
+    border: 2.9px solid #034EA2;
+    animation: moveRightLeft 1.5s ease-in-out infinite;
+  }
+  
+  @keyframes moveLeftRight {
+    0%   { left: 0; }
+    50%  { left: 20px; }
+    100% { left: 40px; }
+  }
+  
+  @keyframes moveRightLeft {
+    0%   { left: 40px; }
+    50%  { left: 20px; }
+    100% { left: 0; }
+  }
+  

@@ -28,13 +28,22 @@ export class SelectComponent {
   @Output() optionSelected = new EventEmitter<string>();
 
   @ContentChild(TemplateRef) customContent!: TemplateRef<any>;
-
+animate: boolean = false;
   showDropdown: boolean = false;
   // selectedOption: string = '';
 
   toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;
   }
+  getVissibility = () => {
+    if (this.selectedOption !== '') {
+      setTimeout(() => {
+        this.animate = true;
+      }, 100);
+    } else {
+      this.animate = false;
+    }
+  };
 
   selectOption(option: string): void {
     this.selectedOption = option;

@@ -1,0 +1,117 @@
+<div class="w-full flex flex-col gap-[24px]">
+  <div *ngIf="type === 'transfer'"
+    class="w-full flex flex-col gap-[18px] pb-[24px] bg-[#fff] rounded-[20px]"
+  >
+    <div class="w-full flex items-center gap-[18px] px-[24px] pt-[25px]">
+      <app-avatar-icon />
+      <div class="w-full flex flex-col gap-[2px]">
+        <span class="font-[600] text-[16px] text-[#1E293B]">Kedonojo Ameh</span>
+        <span class="font-[500] text-[16px] text-[#64748B]">109099879</span>
+        <span class="font-[500] text-[16px] text-[#64748B]"
+          >Access Bank of Nigeria PLC.</span
+        >
+      </div>
+    </div>
+    <div class="w-full border-[0.5px] border-[#F1F5F9]"></div>
+    <div class="flex items-center gap-[8px] px-[24px]">
+      <app-switch />
+      <span class="text-[#64748B] font-[500] text-[16px]"
+        >Save as beneficiary</span
+      >
+    </div>
+  </div>
+  <div *ngIf="type === 'transfer'"
+    class="bg-[#fff] rounded-[20px] py-[20px] px-[24px] flex flex-col gap-[4px]"
+  >
+    <span class="text-[16px] font-[500] text-[#64748B]">Narration</span>
+    <span class="text-[16px] font-[600] text-[#1E293B]"
+      >Spoil yourself on Valentines</span
+    >
+  </div>
+  <div *ngIf="type === 'airtime'" class="bg-[#fff] rounded-[20px] gap-[20px] flex flex-col">
+   <img class="mt-[24px] ms-[24px] w-[50px] h-[50px]" src="../../../../assets/images/airtel-mobile.svg" alt="">
+   <div class="w-full border-t border-[#F1F5F9] py-[20px] gap-[20px] flex flex-col px-[24px]">
+    <div class="flex items-center justify-between w-full">
+        <span class="text-[16px] font-[500] text-[#64748B]">Purchase</span>
+        <span class="text-[16px] text-[#1E293B] font-[600]">Airtime</span>
+      </div>
+      <div class="flex items-center justify-between w-full">
+        <span class="text-[16px] font-[500] text-[#64748B]">Amount</span>
+        <span class="text-[16px] text-[#1E293B] font-[600]">₦5,000</span>
+      </div>
+      <div class="flex items-center justify-between w-full">
+        <span class="text-[16px] font-[500] text-[#64748B]">Fees</span>
+        <span class="text-[16px] text-[#1E293B] font-[600]">No Fees</span>
+      </div>
+      <div class="flex items-center justify-between w-full">
+        <span class="text-[16px] font-[500] text-[#64748B]">Total Amount Due</span>
+        <span class="text-[16px] text-[#1E293B] font-[600]">₦3,500</span>
+      </div>
+   </div>
+  </div>
+  <div
+    class="bg-[#fff] rounded-[20px] px-[16px] py-[20px] flex flex-col gap-[20px]"
+  >
+    <span class="font-[600] text-[16px] text-[#1E293B]"
+      >Recurring Transaction</span
+    >
+    <div class="flex flex-col w-full gap-[20px]">
+      <div class="flex items-center justify-between w-full">
+        <span class="text-[16px] font-[500] text-[#64748B]">Frequency</span>
+        <span class="text-[16px] text-[#1E293B] font-[600]">Weekly</span>
+      </div>
+      <div class="flex items-center justify-between w-full">
+        <span class="text-[16px] font-[500] text-[#64748B]">Start Date</span>
+        <span class="text-[16px] text-[#1E293B] font-[600]"
+          >14th FEB, 2025</span
+        >
+      </div>
+      <div class="flex items-center justify-between w-full">
+        <span class="text-[16px] font-[500] text-[#64748B]">End Date</span>
+        <span class="text-[16px] text-[#1E293B] font-[600]"
+          >14th APR, 2025</span
+        >
+      </div>
+      <div class="flex items-center justify-between w-full">
+        <span class="text-[16px] font-[500] text-[#64748B]">Auto Retry</span>
+        <span class="text-[16px] text-[#1E293B] font-[600]">Enabled</span>
+      </div>
+    </div>
+  </div>
+  <div class="w-full flex flex-col bg-[#fff] rounded-[20px]">
+    <div
+      class="w-full items-center justify-between px-[24px] pt-[24px] pb-[12px] flex"
+    >
+      <span class="font-[600] text-[14px] text-[#64748B]">SEND FROM</span>
+      <div class="flex items-center gap-[4px]">
+        <span class="font-[600] text-[14px] text-[#1E293B]"
+          >Bal: <span></span>******</span
+        ><img src="../../../../assets/icons/eye-balance.svg" alt="" />
+      </div>
+    </div>
+    <div
+      class="w-full items-center justify-between flex border-t border-[#F1F5F9] border-[0.5px] py-[20px] px-[24px] rounded-t-[20px]"
+    >
+      <div class="flex gap-[12px] items-center">
+        <img src="../../../../assets/images/name-bar.svg" alt="" />
+        <div class="flex flex-col gap-[8px]">
+          <span class="font-[600] text-[16px] text-[#1E293B]"
+            >Kedonojo Ameh/Flexing</span
+          >
+          <div class="flex items-center gap-[8px]">
+            <span class="font-[500] text-[16px] text-[#1E293B]">1021678900</span
+            ><span
+              class="bg-[#EBF5FF] rounded-[4px] px-[6px] py-[3px] text-[14px] font-[500] text-[#034EA2]"
+              >Savings</span
+            >
+          </div>
+        </div>
+      </div>
+      <div
+        class="border border-[#CBD5E1] cursor-pointer rounded-[10px] px-[16px] pt-[9.5px] pb-[10.5px]"
+      >
+        <span class="text-[14px] font-[600] text-[#334155]">Change</span>
+      </div>
+    </div>
+  </div>
+</div>

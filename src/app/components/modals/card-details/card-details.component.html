@@ -1,0 +1,35 @@
+<div class="w-full p-[20px]">
+  <div
+    *ngIf="loading"
+    class="w-full h-full flex flex-col gap-[16px] px-[87px] my-[100px] justify-center items-center"
+  >
+    <app-spinning-loader /><span class="font-[700] text-[24px] text-[#1E293B]">Fetching Card Details</span>
+  </div>
+  <div
+    *ngIf="!loading"
+    class="rounded-[20px] bg-white p-[16px] flex flex-col gap-[32px]"
+  >
+    <div class="w-full flex flex-col gap-[4px]">
+      <span class="font-[500] text-[14px] text-[#64748B]">CARD PAN</span>
+      <span class="font-[600] text-[16px] text-[#1E293B]"
+        >5061 8983 8593 8888</span
+      >
+    </div>
+    <div class="w-full flex flex-col gap-[4px]">
+      <span class="font-[500] text-[14px] text-[#64748B]">CARD EXPIRY</span>
+      <span class="font-[600] text-[16px] text-[#1E293B]">10/27</span>
+    </div>
+    <div class="w-full flex flex-col gap-[4px]">
+      <span class="font-[500] text-[14px] text-[#64748B]">CVV2</span>
+      <span class="font-[600] text-[16px] text-[#1E293B]">419</span>
+    </div>
+    <div class="w-full flex flex-col gap-[4px]">
+      <span class="font-[500] text-[14px] text-[#64748B]">CARD BRAND </span>
+      <span class="font-[600] text-[16px] text-[#1E293B]">Verve</span>
+    </div>
+    <div class="w-full flex flex-col gap-[4px]">
+      <span class="font-[500] text-[14px] text-[#64748B]">NAME ON CARD</span>
+      <span class="font-[600] text-[16px] text-[#1E293B]">Kedonojo Ameh</span>
+    </div>
+  </div>
+</div>
