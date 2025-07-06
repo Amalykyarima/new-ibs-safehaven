@@ -18,7 +18,7 @@ import { OtpFieldComponent } from "../otp-field/otp-field.component";
 @Component({
   selector: 'app-otp-input',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgOtpInputModule, RouterModule, OtpFieldComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgOtpInputModule, RouterModule],
   templateUrl: './otp-input.component.html',
   styleUrl: './otp-input.component.scss'
 })
