@@ -1,1 +1,35 @@
-<p>statements works!</p>
+<div class="w-full h-full flex flex-col gap-[28px] px-[40px] py-[32px]">
+  <div class="w-full flex flex-col gap-[24px]">
+    <span class="font-[700] text-[20px] text-[#1E293B]">Statements</span>
+    <div class="w-full flex items-center justify-between rounded-[20px] bg-white px-[28px] pt-[16.5px] pb-[21.5px]">
+        <div class="flex items-center gap-[8px]">
+            <img src="../../../../assets/images/shapes-avatar-savings.svg" alt="">
+            <div class="flex flex-col gap-[8px]">
+                <span class="font-[600] text-[18px] text-[#1E293B]">Abasifreke Emmanuel / Daily Spending</span>
+                <div class="flex items-center gap-[8px]">
+                    <span class="font-[500] text-[16px] text-[#64748B]">1021678900</span>
+                    <div class="bg-[#EBF5FF] pt-[2px] px-[6px] pb-[4px] rounded-[4px]"><span class="font-[500] text-[14px] text-[#034EA2]">Savings</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col gap-[11px] items-end max-w-[287px]">
+           <span class="font-[500] text-[16px] text-[#94A3B8]">AVAILABLE BALANCE:  <span class="font-[700] text-[24px] text-[#1E293B]">₦500,120.24</span></span>
+            <div class="w-full border-dashed border-[#E2E8F0] border-[0.5px]"></div>
+            <span class="font-[500] text-[16px] text-[#64748B]">LEDGER BALANCE: <span class="font-[600] text-[18px] text-[#64748B]">₦50,000.98</span></span>
+        </div>
+    </div>
+  </div>
+  <div class="w-full bg-white rounded-[20px] flex flex-col gap-[28px] py-[24px] px-[28px]">
+    <div class="w-full flex items-center justify-between">
+        <span>Showing 25</span>
+        <div class="flex items-center w-full max-w-[331px] gap-[24px]">
+            <app-filter />
+            <div class="max-w-[190px] w-full"><app-button-filled [height]="'h-[44px]'" [text]="'Download Statement'" /></div>
+        </div>
+    </div>
+    <div *ngIf="activeFilters.length == 0" class="w-full pt-[16px] border-t border-[#F1F5F9] flex flex-col gap-[16px]">
+        <span class="font-[600] text-[14px] text-[#64748B]">ACTIVE FILTER</span>
+    </div>
+   <app-statement-table />
+  </div>
+</div>

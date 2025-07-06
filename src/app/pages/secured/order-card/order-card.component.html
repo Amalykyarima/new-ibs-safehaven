@@ -1,0 +1,96 @@
+<div class="w-full py-[32px] px-[40px] flex flex-col gap-[14px]">
+  <div (click)="backStep()" class="flex items-center cursor-pointer">
+    <img src="../../../../assets/icons/back-arrow.svg" alt="" /><span
+      class="font-[600] text-[14px] text-[#334155]"
+      >Back</span
+    >
+  </div>
+  <div class="w-full flex justify-between items-start">
+    <div *ngIf="step == 1" class="w-full flex flex-col gap-[24px] max-w-[584px]">
+      <span class="font-[700] text-[20px] text-[#1E293B]"
+        >Order {{ cardType }} Card</span
+      >
+      <div class="w-full flex flex-col gap-[24px]">
+        <app-input [placeholder]="'Enter Cardholder Name'" [label]="'Cardholder Name'" />
+        <div class="w-full flex flex-col gap-[14px]">
+            <span class="font-[600] text-[14px] text-[#64748B]">CARD SCHEME</span>
+            <div class="w-full flex items-center gap-[16px]">
+                <div (click)="setActiveScheme(scheme.name)" *ngFor="let scheme of cardScehemes" class="h-[112px] cursor-pointer max-w-[134px] w-full rounded-[20px] bg-white flex flex-col gap-[10px]">
+                   <div class="w-full flex items-start justify-between pt-[5px]">
+                    <div class="rounded-[18px] bg-[#F8FAFC] w-[72px] h-[58px] ms-[6px] flex justify-center items-center"><img [src]="scheme.imagePath" alt=""></div>
+                    <img *ngIf="activeScheme === scheme.name" class="me-[8px]" src="../../../../assets/icons/blue-check.svg" alt="">
+                   </div>
+                   <span [ngClass]="activeScheme === scheme.name ? 'text-[#1E293B]' : 'text-[#64748B]'" class="ms-[16px] font-[500] text-[16px]">{{scheme.name}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="w-full flex flex-col gap-[10px]">
+            <div class="w-full flex flex-col bg-[#fff] rounded-[20px]">
+                <div
+                  class="w-full items-center justify-between px-[24px] pt-[24px] pb-[12px] flex"
+                >
+                  <span class="font-[600] text-[14px] text-[#64748B]">SEND FROM</span>
+                  <div class="flex items-center gap-[4px]">
+                    <span class="font-[600] text-[14px] text-[#1E293B]"
+                      >Bal: <span></span>******</span
+                    ><img src="../../../../assets/icons/eye-balance.svg" alt="" />
+                  </div>
+                </div>
+                <div
+                  class="w-full items-center justify-between flex border-t border-[#F1F5F9] border-[0.5px] py-[20px] px-[24px] rounded-t-[20px]"
+                >
+                  <div class="flex gap-[12px] items-center">
+                    <img src="../../../../assets/images/name-bar.svg" alt="" />
+                    <div class="flex flex-col gap-[8px]">
+                      <span class="font-[600] text-[16px] text-[#1E293B]"
+                        >Kedonojo Ameh/Flexing</span
+                      >
+                      <div class="flex items-center gap-[8px]">
+                        <span class="font-[500] text-[16px] text-[#1E293B]"
+                          >1021678900</span
+                        ><span
+                          class="bg-[#EBF5FF] rounded-[4px] px-[6px] py-[3px] text-[14px] font-[500] text-[#034EA2]"
+                          >Savings</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="border border-[#CBD5E1] rounded-[10px] px-[16px] pt-[9.5px] pb-[10.5px]"
+                  >
+                    <span class="text-[14px] font-[600] text-[#334155]">Change</span>
+                  </div>
+                </div>
+              </div>
+            <span class="font-[500] text-[14px] text-[#64748B]">SafeHaven Card Fee: <span class="text-[#1E293B] font-[600]">₦1,000.00</span> (excl. VAT)</span>
+        </div>
+        <div class="w-full">
+            <app-button-filled [action]="nextStep" [text]="'Continue'" />
+        </div>
+      </div>
+    </div>
+    <div *ngIf="step ==2" class="w-full max-w-[584px] flex flex-col gap-[24px]">
+        <span class="font-[700] text-[20px] text-[#1E293B]"
+        >Delivery Details</span
+      >
+      <div class="w-full flex flex-col gap-[24px]">
+        <app-select [options]="['Nigeraia', 'United States', 'United Kingdom', 'Canada']" />
+        <app-select [options]="['Abia', 'FCT', 'Lagos', 'Kaduna']" />
+        <app-select [options]="[]" />
+        <app-input [placeholder]="'Address Line 1'" />
+        <app-input [placeholder]="'Phone Number'" />
+      </div>
+      <div><app-button-filled [action]="openModal" [text]="'Continue'" /></div>
+    </div>
+    <div class="w-full max-w-[339px] bg-white rounded-t-[20px] px-[54px] pt-[54px] flex items-end">
+        <img src="../../../../assets/images/order-card-image.svg" alt="">
+    </div>
+  </div>
+</div>
+<app-modal *ngIf="activeModal() as view">
+    <ng-container [ngSwitch]="view">
+      <app-card-order-confirmed *ngSwitchCase="'card-order-confirmed'" />
+      <!-- Optional fallback -->
+      <div *ngSwitchDefault>Unknown modal type</div>
+    </ng-container>
+  </app-modal>

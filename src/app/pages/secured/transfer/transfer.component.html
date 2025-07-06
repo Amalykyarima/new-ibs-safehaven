@@ -327,7 +327,7 @@
       </div>
     </div>
   </div>
-    <span (click)="this.store.openModal('confirm-transaction')">confirm-transaction</span>
+  <span (click)="this.store.openModal('confirm-transaction')">confirm-transaction</span>
   <span (click)="this.store.openModal('transaction-pin')">transaction-pin</span>
   <span (click)="this.store.openModal('bank-select')">bank-select</span>
   <span (click)="this.store.openModal('my-beneficiaries')">beneficiaries-list</span>
@@ -335,7 +335,7 @@
 </div>
 <app-modal *ngIf="activeModal() as view">
   <ng-container [ngSwitch]="view">
-    <app-confirm-transaction *ngSwitchCase="'confirm-transaction'" />
+    <app-confirm-transaction [type]="'transfer'" *ngSwitchCase="'confirm-transaction'" />
     <app-transaction-pin *ngSwitchCase="'transaction-pin'" />
     <app-bank-select *ngSwitchCase="'bank-select'" />
     <app-successful-transfer *ngSwitchCase="'successful-transfer'" />

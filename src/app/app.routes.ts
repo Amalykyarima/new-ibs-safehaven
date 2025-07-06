@@ -19,6 +19,9 @@ import { TransferHistoryComponent } from './pages/secured/transfer-history/trans
 import { VasHistoryComponent } from './pages/secured/vas-history/vas-history.component';
 import { StatementsComponent } from './pages/secured/statements/statements.component';
 import { RecurringTransactionComponent } from './pages/secured/recurring-transaction/recurring-transaction.component';
+import { PromoHubComponent } from './pages/secured/promo-hub/promo-hub.component';
+import { RecurringTransactionDetailsComponent } from './pages/secured/recurring-transaction-details/recurring-transaction-details.component';
+import { OrderCardComponent } from './pages/secured/order-card/order-card.component';
 
 export const routes: Routes = [
   {
@@ -120,8 +123,18 @@ export const routes: Routes = [
       },
       {
         path: 'cards',
-        component: CardsComponent,
-        title: 'Cards',
+        children: [
+          {
+            path: '',
+            component: CardsComponent,
+            title: 'Cards',
+          },
+          {
+            path: 'order-card/:type',
+            component: OrderCardComponent,
+            title: 'Order Card'
+          }
+        ]
       },
       {
         path: 'loan',
@@ -144,9 +157,25 @@ export const routes: Routes = [
         title: 'Statements',
       },
       {
-        path: 'recurring-transaction',
-        component: RecurringTransactionComponent,
+        path: 'recurring-transactions',
         title: 'Recurring Transaction',
+        children: [
+          {
+            path: '',
+            component: RecurringTransactionComponent,
+            title: 'Recurring Transaction'
+          },
+          {
+            path: 'details',
+            component: RecurringTransactionDetailsComponent,
+            title: 'Recurring Transaction Details'
+          }
+        ]
+      },
+      {
+        path: 'promo-hub',
+        component: PromoHubComponent,
+        title: 'Promo Hub',
       },
     ],
   },

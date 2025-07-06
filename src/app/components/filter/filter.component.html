@@ -1,0 +1,52 @@
+<div class="w-full relative">
+  <div
+    (click)="openFilter()"
+    class="flex cursor-pointer items-center gap-[2px] py-[10px] w-[117px] h-[44px] justify-center border-[#CBD5E1] border rounded-[10px] bg-white"
+  >
+    <img src="../../../assets/icons/filter.svg" alt="" /><span
+      class="font-[600] text-[16px] text-[#334155] pb-[3.5px]"
+      >Filter</span
+    >
+    <div class="pt-[3px] pb-[5px] px-[8px] bg-[#F1F5F9] rounded-[4px]">
+      <span class="font-[500] text-[14px] text-[#64748B]">2</span>
+    </div>
+  </div>
+  <div
+    *ngIf="filterDropdown"
+    class="absolute top-[50px] right-0 bg-white z-[9999] py-[10px] px-[14px] w-[281px] rounded-[10px] shadow-md"
+  >
+    <div
+      *ngFor="let item of filterItems; let i = index"
+      class="flex flex-col gap-[8px] p-[10px] cursor-pointer w-full"
+    >
+      <div
+        class="w-full flex items-center justify-between"
+        (click)="toggle(i)"
+      >
+        <span class="font-[500] text-[14px] text-[#64748B]">{{ item.title }}</span>
+        <img src="../../../assets/icons/dropdown.svg" alt="" />
+      </div>
+      <div
+        *ngIf="activeIndex === i" [ngClass]="item.title=== 'By Accounts' ? 'rounded-[8px] bg-[#F8FAFC] py-[12px] px-[10px]' : ''"
+        class="w-full flex"
+      >
+        <div
+          *ngIf="item.type === 'checkbox'"
+          class="w-full flex flex-col gap-[14px]"
+        >
+          <app-checkbox-group [items]="getCheckboxValues(item.title)" />
+        </div>
+        <div *ngIf="item.type === 'date-range'">
+          <div>
+            <!-- <input type="date" class="border px-2 py-1 rounded w-full" /> -->
+             <app-datepicker />
+          </div>
+        </div>
+        <div *ngIf="item.type === 'date'">
+          <!-- <input type="date" class="border px-2 py-1 rounded w-full" /> -->
+          <app-datepicker />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

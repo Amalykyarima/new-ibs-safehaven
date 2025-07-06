@@ -1,0 +1,13 @@
+<div (click)="checkItem()" class="flex items-center gap-[8px]">
+    <div
+      class="w-[16px] h-[16px] rounded-[4px] flex items-center justify-center"
+      [ngClass]="!isChecked ? 'border border-[#CBD5E1]' : ''"
+    >
+      <img
+        *ngIf="isChecked"
+        src="../../../../assets/images/check-box.svg"
+        alt="checked"
+      />
+    </div>
+    <span class="font-[500] text-[14px] text-[#1E293B]">{{ label }}</span>
+  </div>

@@ -1,17 +1,35 @@
-<div class="modal-overlay" (click)="handleClose()">
-  <div class="modal-container" (click)="$event.stopPropagation()">
+<!-- <div class="modal-overlay" (click)="handleClose()">
+  <div class="modal-container {{store.modalName() === 'Successful Transfer' ? 'p-[0px]' :'p-[20px]'}}" (click)="$event.stopPropagation()">
     <div class="modal-header">
-      <div class="font-[700] text-[20px] text-[#1E293B] whitespace-nowrap">
+      <div *ngIf="store.modalName() !== 'Successful Transfer'" class="font-[700] text-[20px] text-[#1E293B] whitespace-nowrap">
         {{ store.modalName() }}
       </div>
-      <span class="modal-close w-full justify-end flex"
+      <span class="modal-close w-full justify-end flex {{store.modalName() === 'Successful Transfer' ? 'pe-[20px] pt-[20px]' :'p-[0px]'}}"
         ><img
           (click)="handleClose()"
           src="../../../../assets/icons/close.svg"
           alt=""
       /></span>
     </div>
-    <div class="modal-body mt-[25px] max-h-[70vh] overflow-y-auto scrollbar-hidden">
+    <div class="modal-body {{store.modalName() === 'Successful Transfer' ? 'mt-[0px]' :'mt-[25px]'}} max-h-[80vh] overflow-y-auto scrollbar-hidden">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div> -->
+<div class="modal-overlay" (click)="handleClose()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div *ngIf="!['Confirmation'].includes(store.modalName())"  class="modal-header pt-[25px] px-[20px]">
+      <div *ngIf="!['Successful Transfer'].includes(store.modalName())" class="font-[700] text-[20px] text-[#1E293B] whitespace-nowrap">
+        {{ store.modalName() }}
+      </div>
+      <span class="modal-close w-full justify-end flex"
+        ><img class="cursor-pointer"
+          (click)="handleClose()"
+          src="../../../../assets/icons/close.svg"
+          alt=""
+      /></span>
+    </div>
+    <div class="modal-body max-h-[80vh] w-full overflow-y-auto scrollbar-hidden">
       <ng-content></ng-content>
     </div>
   </div>

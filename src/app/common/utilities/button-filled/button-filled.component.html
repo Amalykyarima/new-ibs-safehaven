@@ -1,6 +1,10 @@
 <div
-  (click)="action()"
-  class="w-full bg-[#034EA2] cursor-pointer text-[#fff] h-[52px] flex justify-center items-center rounded-[10px]"
+  (click)="action()" [ngClass]="[
+  bg ? bg : 'bg-[#034EA2]', 
+  height ? height : 'h-[52px]',
+  textColor ? textColor : 'text-[#fff]'
+]"
+  class="w-full cursor-pointer flex justify-center items-center rounded-[10px]"
 >
-  {{ text }}
+ <span class="text-[16px] pb-[1px] font-[600]">{{ text }}</span>
 </div>

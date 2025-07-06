@@ -1,0 +1,77 @@
+<div class="w-full flex flex-col gap-[24px] mt-[25px] px-[20px]">
+  <app-input [placeholder]="'Card PAN'" />
+  <div class="w-full flex flex-col gap-[14px]">
+    <span class="font-[600] text-[14px] text-[#64748B]"
+      >SELECT ACCOUNT TO LINK CARD</span
+    >
+    <div class="rounded-[20px] bg-white overflow-y-auto">
+      <div *ngIf="accounts.length > 2" class="w-full p-[16px]">
+        <app-search [height]="'40px'" />
+      </div>
+      <div
+        (click)="selectAccount(account.name)"
+        *ngFor="let account of accounts"
+        class="px-[16px] hover:bg-slate-50 py-[16px] gap-[14px] cursor-pointer w-full flex items-center"
+      >
+        <div
+          class="w-[20px] h-[20px] rounded-full"
+          [ngClass]="
+            activeAccount === account.name
+              ? 'border-[6px] border-[#034EA2]'
+              : 'border border-[#CBD5E1]'
+          "
+        ></div>
+        <div class="w-full flex items-center justify-between">
+          <div class="flex items-center gap-[8px]">
+            <img
+              [src]="
+                '../../../../assets/images/shapes-avatar-' +
+                (account.type === 'Savings' ? 'savings' : 'current') +
+                '.svg'
+              "
+              alt=""
+            />
+            <div class="flex flex-col gap-[4px]">
+              <span class="font-[600] text-[16px] text-[#1E293B]">
+                {{ account.name }}
+              </span>
+              <div class="flex items-center gap-[8px]">
+                <span class="font-[400] text-[16px] text-[#64748B]">
+                  {{ account.accountNumber }}
+                </span>
+                <div
+                  class="px-[6px] pt-[1px] pb-[3px] rounded-[4px]"
+                  [ngClass]="{
+                    'bg-[#EBF5FF]': account.type === 'Savings',
+                    'bg-[#F9F5FF]': account.type !== 'Savings'
+                  }"
+                >
+                  <span
+                    class="font-[500] text-[12px]"
+                    [ngClass]="{
+                      'text-[#034EA2]': account.type === 'Savings',
+                      'text-[#6941C6]': account.type !== 'Savings'
+                    }"
+                  >
+                    {{ account.type }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <span class="font-[600] text-[12px] text-[#94A3B8]">BAL</span>
+            <span class="font-[600] text-[14px] text-[#1E293B]">
+              {{ account.balance }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-full flex justify-end my-[14px]">
+      <div class="w-full max-w-[183px]">
+        <app-button-filled [text]="'Link Card'" />
+      </div>
+    </div>
+  </div>
+</div>

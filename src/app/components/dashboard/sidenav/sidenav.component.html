@@ -1,5 +1,5 @@
 <div
-  class="w-full px-[24px] py-[32px] h-[100vh] min-w-[262px] flex flex-col gap-[64px]"
+  class="w-full px-[24px] py-[32px] h-[100vh] min-w-[262px] md:flex flex-col gap-[64px] hidden"
 >
   <img
     class="max-w-[121px] w-full"
@@ -110,6 +110,162 @@
         <div class="w-full flex gap-[5.5px] justify-center mb-[8px]">
           <img src="../../../../assets/images/google-play.svg" alt="" />
           <img src="../../../../assets/images/apple-store.svg" alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="w-full max-w-[80%] py-[28px] px-[14px] relative md:hidden flex flex-col"
+>
+  <div (click)="openSideModal()" class="w-[25px] cursor-pointer h-[25px]">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4 6h16M4 12h16M4 18h16"
+      />
+    </svg>
+  </div>
+  <div
+    *ngIf="sideModalOpen"
+    [ngClass]="{
+      'slide-in': sideModalOpen,
+      'slide-out': !sideModalOpen
+    }"
+    (animationend)="onAnimationEnd()"
+    class="absolute side-modal top-0 left-0 z-50 w-full h-full bg-white rounded-l-[20px]"
+  >
+    <div
+      class="w-full px-[24px] py-[32px] bg-white h-[100vh] min-w-[262px] flex flex-col gap-[64px]"
+    >
+      <div class="w-full flex items-center justify-between">
+        <img
+          class="max-w-[121px] w-full"
+          src="../../../../assets/images/logo1.svg"
+          alt="Logo"
+        />
+        <img
+          class="cursor-pointer"
+          (click)="closeSideModal()"
+          src="../../../../assets/icons/close.svg"
+          alt=""
+        />
+      </div>
+      <div
+        class="w-full flex flex-col gap-[144px] overflow-y-auto scrollbar-hidden"
+      >
+        <div class="w-full flex flex-col gap-[8px]">
+          <div *ngFor="let item of navItems">
+            <div
+              (click)="item.children ? setParent(item.label) : toggle(item)"
+              [ngClass]="
+                getActivePath(item.label) ||
+                activeParent.toLowerCase() === item.label.toLowerCase()
+                  ? 'bg-[#EBF5FF] hover:bg-none'
+                  : 'hover:bg-slate-100'
+              "
+              class="px-[10px] py-[4px] rounded-[8px] cursor-pointer flex gap-[8px] items-center {{
+                isOpen(item) ? 'justify-between' : null
+              }}"
+            >
+              <img
+                class="w-[24px] h-[24px]"
+                src="../../../../assets/icons/{{
+                  activeItem === item.label ? item.iconActive : item.icon
+                }}"
+                alt=""
+              />
+              <div class="w-full flex justify-between items-center">
+                <span
+                  [ngClass]="
+                    activeItem === item.label || activeParent === item.label
+                      ? 'font-[600] text-[#034EA2]'
+                      : 'text-[#64748B] font-[500]'
+                  "
+                  class="text-[14px]"
+                >
+                  {{ item.label }} </span
+                ><img
+                  [src]="
+                    item.children
+                      ? isOpen(item)
+                        ? '../../../../assets/icons/active-arrow-up.svg'
+                        : '../../../../assets/icons/newdropdown.svg'
+                      : null
+                  "
+                  alt=""
+                  *ngIf="item.children"
+                />
+              </div>
+            </div>
+            <div
+              *ngIf="item.children && isOpen(item)"
+              class="w-full flex gap-[14px] mb-[20px] mt-[14px]"
+            >
+              <div class="w-[0.5px] border-[#E2E8F0] border ms-[10px]"></div>
+              <div class="w-full flex flex-col gap-[4px]">
+                <div
+                  *ngFor="let child of item.children"
+                  [routerLink]="child.route"
+                  (click)="toggle(child)"
+                  routerLinkActive=""
+                  [ngClass]="{
+                    'bg-[#EBF5FF] hover:bg-none': activeItem === child.label,
+                    'hover:bg-slate-100': activeItem !== child.label
+                  }"
+                  class="px-[10px] py-[4px] rounded-[8px] w-full cursor-pointer flex gap-[8px] items-center"
+                >
+                  <img
+                    src="../../../../assets/icons/{{
+                      activeItem === child.label ? child.iconActive : child.icon
+                    }}"
+                    alt=""
+                  />
+                  <span
+                    [ngClass]="
+                      activeItem === child.label
+                        ? 'font-[600] text-[#034EA2]'
+                        : 'text-[#64748B] font-[500]'
+                    "
+                    class="text-[14px]"
+                  >
+                    {{ child.label }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="w-full max-w-[212px] rounded-[20px] bg-[#F8FAFC] flex flex-col gap-[14px] p-[5px]"
+        >
+          <div
+            class="bg-[#fff] rounded-[20px] w-full flex justify-center items-center py-[11.5px]"
+          >
+            <img
+              class="w-full max-w-[96px]"
+              src="../../../../assets/images/sample-qr.svg"
+              alt=""
+            />
+          </div>
+          <div
+            class="w-full flex flex-col gap-[4px] justify-center items-center"
+          >
+            <span class="text-[12px] font-[500] text-[#64748B]"
+              >Scan to Download Mobile App</span
+            >
+            <div class="w-full flex gap-[5.5px] justify-center mb-[8px]">
+              <img src="../../../../assets/images/google-play.svg" alt="" />
+              <img src="../../../../assets/images/apple-store.svg" alt="" />
+            </div>
+          </div>
         </div>
       </div>
     </div>

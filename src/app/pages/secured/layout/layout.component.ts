@@ -8,17 +8,15 @@ import { TransferService } from '../../../resources/services/transfer.service';
 import { SettingsService } from '../../../resources/services/settings.service';
 import { ActivatedRoute, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "../../../components/dashboard/header/header.component";
-import { DropdownComponent } from "../../../common/utilities/dropdown/dropdown.component";
 import { Location } from '@angular/common';
 import { SidenavComponent } from '../../../components/dashboard/sidenav/sidenav.component';
-import { ContentLayoutComponent } from '../../../components/dashboard/content-layout/content-layout.component';
 
 
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterOutlet, DropdownComponent, HeaderComponent, SidenavComponent, ContentLayoutComponent],
+  imports: [CommonModule, RouterModule, RouterOutlet, HeaderComponent, SidenavComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss'
 })
@@ -27,7 +25,7 @@ export class LayoutComponent {
   activeDropdown: 'financial' | 'reward' | 'settings' | null = null;
   buttonPosition?: DOMRect;
 
-  activeItem: string = ''; // or set default like 'Home'
+  activeItem: string = '';
 
   topUpOptionsVisible = false;
   FinancialOptionsVisible = false;

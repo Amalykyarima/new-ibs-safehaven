@@ -107,7 +107,14 @@ export class SidenavComponent {
       label: 'Reward Center',
       icon: 'party-confetti.svg',
       iconActive: 'party-confetti-blue.svg',
-      children: [],
+      children: [
+        {
+          label: 'Promo Hub',
+          icon: 'promo-hub.svg',
+          iconActive: 'promo-hub-active.svg',
+          link: 'promo-hub',
+        },
+      ],
     },
     {
       label: 'Settings',
@@ -119,21 +126,37 @@ export class SidenavComponent {
   activeItem: any = null;
   activeParent: string = '';
   openMap = new Map<any, boolean>();
+  sideModalOpen: boolean = false;
+  showModal = false;
 
   constructor(public router: Router, private route: ActivatedRoute) {}
   ngOnInit() {
     this.findUrl();
   }
+  onAnimationEnd() {
+    // When slide-out finishes, remove from DOM
+    if (!this.sideModalOpen) {
+      this.showModal = false;
+    }
+  }
   toggle(item: any) {
     this.activeItem = item.label;
-  
+
     if (!item.children && item.link !== undefined) {
-      const target = item.link === '' ? '/dashboard' : `/dashboard/${item.link}`;
+      const target =
+        item.link === '' ? '/dashboard' : `/dashboard/${item.link}`;
       this.router.navigate([target]).then(() => {
         this.findUrl();
       });
     }
-    
+  }
+  openSideModal() {
+    this.showModal = true;
+    this.sideModalOpen = true;
+  }
+  
+  closeSideModal() {
+    this.sideModalOpen = false;
   }
   setParent(label: string) {
     this.activeParent = label;
@@ -142,9 +165,9 @@ export class SidenavComponent {
     if (!input) return '';
     return input
       .split('-')
-      .map((word, index) => index === 0 
-        ? word.charAt(0).toUpperCase() + word.slice(1) 
-        : word)
+      .map((word, index) =>
+        index === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word
+      )
       .join(' ');
   }
 
@@ -156,19 +179,24 @@ export class SidenavComponent {
   };
   findUrl() {
     const pathSegments = location.pathname.split('/').filter(Boolean);
-    const lastSegment = pathSegments[pathSegments.length - 1];
+
+    const cleanedPath = pathSegments
+      .filter((segment) => segment !== 'dashboard' && isNaN(Number(segment)));
   
     let matchedChildLabel: string | null = null;
     let matchedParentLabel: string | null = null;
   
     for (const item of this.navItems) {
-      if (item.link === lastSegment) {
+      if (item.link === cleanedPath[0]) {
         matchedChildLabel = item.label;
         break;
       }
   
       if (item.children?.length) {
-        const childMatch = item.children.find((child: any) => child.link === lastSegment);
+        const childMatch = item.children.find((child: any) => {
+          return cleanedPath.includes(child.link);
+        });
+  
         if (childMatch) {
           matchedChildLabel = childMatch.label;
           matchedParentLabel = item.label;
@@ -179,24 +207,8 @@ export class SidenavComponent {
   
     this.activeItem = matchedChildLabel || 'Home';
     this.activeParent = matchedParentLabel || '';
-  
-    console.log('Active Item:', this.activeItem);
-    console.log('Active Parent:', this.activeParent);
   }
   
-  // findUrl() {
-  //   const urlItem = this.route.snapshot.url.map(segment => segment.path).join('/');
-  //   const pathSegments = location.pathname.split('/').filter(Boolean); // removes empty strings from split
   
-  //   let rawSegment = pathSegments.length <= 2 ? pathSegments[1] : pathSegments[2];
-  
-  //   // Fallback to 'Home' if empty or undefined
-  //   if (!rawSegment) {
-  //     this.activeItem = 'Home';
-  //   } else {
-  //     this.activeItem = this.reverseFormatString(rawSegment);
-  //   }
-  
-  //   console.log('Active:', this.activeItem, 'Raw URL Segment:', rawSegment);
-  // }
+
 }
