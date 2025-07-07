@@ -26,7 +26,7 @@ export const DisplayStore = signalStore(
   withState(initialState),
   withComputed((store) => ({
     modalName: computed(() => {
-      const modals = store.modals(); // this is a Signal<ModalState>
+      const modals = store.modals();
       const openModalKey = Object.keys(modals).find((key) => modals[key]);
 
       if (!openModalKey) return '';

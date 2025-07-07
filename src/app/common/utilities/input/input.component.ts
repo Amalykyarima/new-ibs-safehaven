@@ -33,6 +33,7 @@ export class InputComponent implements OnChanges, AfterViewInit {
   @Input() maxLength: number | null = null;
   @Input() type: string = 'text';
   @Input() label: string = '';
+  @Input() height: string = '';
   @Input() placeholder: string = '';
   @Input() value: string = '';
   @Input() error: string = '';
