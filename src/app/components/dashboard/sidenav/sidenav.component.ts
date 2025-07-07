@@ -134,7 +134,6 @@ export class SidenavComponent {
     this.findUrl();
   }
   onAnimationEnd() {
-    // When slide-out finishes, remove from DOM
     if (!this.sideModalOpen) {
       this.showModal = false;
     }
@@ -179,28 +178,31 @@ export class SidenavComponent {
   };
   findUrl() {
     const pathSegments = location.pathname.split('/').filter(Boolean);
-
+  
     const cleanedPath = pathSegments
       .filter((segment) => segment !== 'dashboard' && isNaN(Number(segment)));
   
     let matchedChildLabel: string | null = null;
     let matchedParentLabel: string | null = null;
   
-    for (const item of this.navItems) {
-      if (item.link === cleanedPath[0]) {
-        matchedChildLabel = item.label;
-        break;
-      }
-  
-      if (item.children?.length) {
-        const childMatch = item.children.find((child: any) => {
-          return cleanedPath.includes(child.link);
-        });
-  
-        if (childMatch) {
-          matchedChildLabel = childMatch.label;
-          matchedParentLabel = item.label;
+    if (cleanedPath.length === 0) {
+      matchedChildLabel = 'Home';
+    } else {
+      for (const item of this.navItems) {
+        if (item.link === cleanedPath[0]) {
+          matchedChildLabel = item.label;
           break;
+        }
+  
+        if (item.children?.length) {
+          const childMatch = item.children.find((child: any) =>
+            cleanedPath.includes(child.link)
+          );
+          if (childMatch) {
+            matchedChildLabel = childMatch.label;
+            matchedParentLabel = item.label;
+            break;
+          }
         }
       }
     }
@@ -209,6 +211,35 @@ export class SidenavComponent {
     this.activeParent = matchedParentLabel || '';
   }
   
-  
+  // findUrl() {
+  //   const pathSegments = location.pathname.split('/').filter(Boolean);
 
+  //   const cleanedPath = pathSegments
+  //     .filter((segment) => segment !== 'dashboard' && isNaN(Number(segment)));
+  
+  //   let matchedChildLabel: string | null = null;
+  //   let matchedParentLabel: string | null = null;
+  
+  //   for (const item of this.navItems) {
+  //     if (item.link === cleanedPath[0]) {
+  //       matchedChildLabel = item.label;
+  //       break;
+  //     }
+  
+  //     if (item.children?.length) {
+  //       const childMatch = item.children.find((child: any) => {
+  //         return cleanedPath.includes(child.link);
+  //       });
+  
+  //       if (childMatch) {
+  //         matchedChildLabel = childMatch.label;
+  //         matchedParentLabel = item.label;
+  //         break;
+  //       }
+  //     }
+  //   }
+  
+  //   this.activeItem = matchedChildLabel || 'Home';
+  //   this.activeParent = matchedParentLabel || '';
+  // }
 }

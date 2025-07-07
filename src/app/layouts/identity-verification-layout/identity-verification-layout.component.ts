@@ -18,7 +18,6 @@ import { FaceVerificationComponent } from "../../components/modals/face-verifica
     BvnVerificationComponent,
     NinVerificationComponent,
     ModalComponent,
-    ButtonFilledComponent,
     OtpComponent,
     FaceVerificationComponent
 ],
@@ -31,23 +30,15 @@ export class IdentityVerificationLayoutComponent {
   animate: boolean = false;
   readonly store = inject(DisplayStore);
 ShowOtpForBvn: boolean = false;
-  // openModal() {
-  //   console.log('OpenFaceModal')
-  //   this.store.updateModalView('user-info', 'modal');
-  // }
+  openModal() {
+    console.log('OpenFaceModal')
+   this.store.openModal('face-verification')
+  }
   switchTab = (value: string) => {
     this.activeType = value;
   };
-
-
-
-  openModal() {
-    this.store.openModal('face-verification');
-  }
-
-  activeModal = computed(() => {
-    const modals = this.store.modals(); // Get all modal states
-    return Object.keys(modals).find((key) => modals[key]); // Return first active modal
-  });
-
+    activeModal = computed(() => {
+      const modals = this.store.modals();
+      return Object.keys(modals).find((key) => modals[key]);
+    });
 }

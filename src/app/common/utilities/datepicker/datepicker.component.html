@@ -2,12 +2,10 @@
      <div class="h-[60px] w-full rounded-[10px] bg-[#F1F5F9] py-[19px] px-[16px]">{{label}}</div>
     <span class="text-[10px] text-[#FF0000] font-[400] h-[16px]">{{ error }}</span>
 </div> -->
-<div class="w-full flex flex-col">
-  <!-- <span class="font-[800] text-[14px] text-[#6B7280]">{{ label }}</span> -->
-  <!-- <nz-date-picker class="w-full bg-[#fff]" [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-date-picker> -->
-  <!-- <p-calendar [(ngModel)]="date" /> -->
-   <div class="h-[60px] w-full rounded-[10px] bg-[#F1F5F9] py-[19px] px-[16px]">{{label}}</div>
-  <span class="text-[10px] text-[#FF0000] font-[400] h-[16px]">{{ error }}</span>
+<div class="w-full flex flex-col gap-[6px]">
+    <span class="font-[800] text-[14px] text-[#6B7280]">{{ label }}</span>
+    <nz-date-picker class="w-full bg-[#fff]" [(ngModel)]="date" (ngModelChange)="handleChange($event)"></nz-date-picker>
+    <span class="text-[10px] text-[#FF0000] font-[400] h-[16px]">{{ error }}</span>
 </div>
 
 
