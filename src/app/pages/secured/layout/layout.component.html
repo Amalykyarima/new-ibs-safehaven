@@ -1,10 +1,11 @@
 <div class="w-full h-[100vh] flex">
   <app-sidenav />
   <div class="w-full flex-1 flex flex-col">
-    <app-header />
-    <div
-      class="w-full h-[calc(100vh-80px)] overflow-y-auto bg-[#F8FAFC] rounded-tl-[20px] rounded-bl-[20px]"
-    >
+    <!-- <app-header /> -->
+    <app-header [title]="this.headerTitle" [(openSideBar)]="this.openSideBar" [fetchingData]="this.fetchingData"
+      [currentUser]="this.currentUser" [showBackButton]="this.showHeaderBackButton" [backUrl]="this.backUrl"
+      [urlQuery]="this.urlQuery"></app-header>
+    <div class="w-full h-[calc(100vh-80px)] overflow-y-auto bg-[#F8FAFC] rounded-tl-[20px] rounded-bl-[20px]">
       <!-- <div class="h-[1000px] border border-red-600 w-full"></div> -->
       <router-outlet></router-outlet>
     </div>
@@ -168,7 +169,7 @@
               </button>
 
 
-              
+
 
             </div>
           </div>

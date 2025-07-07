@@ -115,12 +115,12 @@ export class LayoutComponent {
   ];
 
   ngOnInit(): void {
-    // this.getUserData();
+    this.getUserData();
     this.totalTransfersRequiringApproval = 0;
     // this.getTransfers();
     this.setTitle(this.location.path());
     this.location.onUrlChange((url) => {
-      // this.refreshUserData();
+      this.refreshUserData();
       // this.getTransfers();
       this.setTitle(url);
       if (window.innerWidth <= 768) {
@@ -260,20 +260,20 @@ export class LayoutComponent {
     );
   };
 
-  // async getUserData() {
-  //   this.fetchingData = true;
-  //   this.currentUser = await this.generalService.refreshUserData();
-  //   console.log(this.currentUser, 'this.currentUser')
-  //   this.checkAccount();
+  async getUserData() {
+    this.fetchingData = true;
+    this.currentUser = await this.generalService.refreshUserData();
+    console.log(this.currentUser, 'this.currentUser')
+    this.checkAccount();
 
-  //   this.clientData = { ...this.currentUser };
-  //   this.fetchingData = false;
-  // }
+    this.clientData = { ...this.currentUser };
+    this.fetchingData = false;
+  }
 
-  // async refreshUserData() {
-  //   this.currentUser = await this.generalService.refreshUserData();
-  //   this.checkAccount();
-  // }
+  async refreshUserData() {
+    this.currentUser = await this.generalService.refreshUserData();
+    this.checkAccount();
+  }
 
   checkAccount() {
     this.checkStatus = this.currentUser.client.status;
