@@ -9,7 +9,7 @@
   >
     <div class="w-full flex flex-col gap-[20px]">
       <div class="w-full grid grid-cols-[1fr_111px] items-center gap-[10px]">
-        <app-input [placeholder]="'Phone Number'" [type]="'number'" />
+        <app-input [placeholder]="'Phone Number'" [type]="'number'" [spinner]="inputSpinner"/>
         <div
           (click)="this.store.openModal('networks')"
           class="flex cursor-pointer max-w-[111px] items-center justify-between rounded-[10px] bg-[#F1F5F9] h-[60px] px-[16px] py-[21px]"
@@ -96,7 +96,7 @@
       </div>
     </div>
   </div>
-  <div 
+  <div
   class="w-full flex flex-col bg-[#fff] rounded-[20px] gap-[20px] {{
     isRecurring ? 'ps-[16px] pe-[32px]' : 'px-[16px]'
   }} {{ isRecurring ? 'py-[24px]' : 'py-[18px]' }}"
@@ -128,8 +128,8 @@
           >SET PERIOD</span
         >
       </div>
-      <app-input [placeholder]="'Start Date'" />
-      <app-input [placeholder]="'End Date'" />
+      <app-input [placeholder]="'Start Date'" [spinner]="inputSpinner" />
+      <app-input [placeholder]="'End Date'" [spinner]="inputSpinner"/>
       <div class="w-full flex items-center gap-[8px]">
         <app-switch />
         <div class="flex flex-col">

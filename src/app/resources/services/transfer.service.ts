@@ -13,6 +13,7 @@ export class TransferService {
     }
 
     bankList() {
+      console.log('geting banklist')
         return this.apiService.get(`transfers/banks`);
     }
 

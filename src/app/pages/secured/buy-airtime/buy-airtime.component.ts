@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, Input, computed, inject } from '@angular/core';
 import { DropdownComponent } from '../../../common/utilities/dropdown/dropdown.component';
 import { SwitchComponent } from '../../../common/utilities/switch/switch.component';
 import { AmountInputComponent } from '../../../common/utilities/amount-input/amount-input.component';
@@ -45,6 +45,7 @@ export class BuyAirtimeComponent {
   amount: number = 0;
   network: string = 'Airtel';
   networkIcon: string = '../../../../assets/images/airtel.svg';
+  @Input() inputSpinner: boolean = false;
 
   rewardPointsToggled(newValue: boolean) {
     this.isRewardPoints = newValue;

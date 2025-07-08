@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, Input, computed, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InputComponent } from '../../../common/utilities/input/input.component';
 import { CommonModule } from '@angular/common';
@@ -23,6 +23,8 @@ import { CardOrderConfirmedComponent } from '../../../components/modals/card-ord
   styleUrl: './order-card.component.scss',
 })
 export class OrderCardComponent {
+  @Input() inputSpinner: boolean = false;
+
   readonly store = inject(DisplayStore);
   cardType: any = '';
   cardScehemes: any[] = [

@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, Input, computed, inject } from '@angular/core';
 import { InputComponent } from "../../../common/utilities/input/input.component";
 import { CommonModule } from '@angular/common';
 import { SwitchComponent } from "../../../common/utilities/switch/switch.component";
@@ -30,6 +30,8 @@ provider: string = '';
 providerIcon: string = '';
 packageSelected: boolean = false;
 isRecurring: boolean = false;
+@Input() inputSpinner: boolean = false;
+
 
 collectInput(input: string){
   this.inputNumber = input;

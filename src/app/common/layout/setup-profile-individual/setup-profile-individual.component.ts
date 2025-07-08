@@ -54,6 +54,8 @@ export class SetupProfileIndividualComponent {
 
   @Output() validateUser: EventEmitter<any> = new EventEmitter<any>();
   @Output() getUser: EventEmitter<any> = new EventEmitter<any>();
+  @Input() inputSpinner: boolean = false;
+
 
   // user: Signin;
   // userType = 'phone';

@@ -6,14 +6,14 @@
         [activeTab]="verificationMethods[0].name" />
     </div>
     <div *ngIf="activeMethod !== ''" class="w-full flex flex-col gap-[24px]">
-      <app-input [type]="'number'" [label]="'BVN'" [value]="bvn" [placeholder]="'Enter your BVN'"
+      <app-input [type]="'number'" [label]="'BVN'" [value]="bvn" [placeholder]="'Enter your BVN'" [spinner]="inputSpinner"
         [error]="validators.bvn" (onChange)="handleChange('bvn', $event)" (submit)="handleSubmitStep2()" />
 
       <!-- <app-input [placeholder]="'Address Line 1'" [label]="'Address'" [value]="address" [error]="validators.address"
         (onChange)="handleChangeStep3('address', $event)" [placeholder]="'Address Line 1'"
         (submit)="handleSubmitStep2()" /> -->
 
-      <app-input [type]="'date'" [placeholder]="'Date of Birth'" [label]="'Date of Birth'" [value]="this.dateOfBirth" />
+      <app-input [type]="'date'" [placeholder]="'Date of Birth'" [label]="'Date of Birth'" [value]="this.dateOfBirth" [spinner]="inputSpinner" />
 
       <!-- <app-calendar [max]="today" [label]="'Date of birth'" [date]="date"
       (selectDate)="onDateChange($event)"

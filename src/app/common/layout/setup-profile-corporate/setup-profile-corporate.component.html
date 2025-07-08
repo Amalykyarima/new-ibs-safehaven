@@ -20,15 +20,15 @@
         </div>
         <div class="flex flex-col gap-[8px]">
           <app-input [label]="'Company Name'"  [placeholder]="'Company Name'" [value]="companyName" [error]="validators.companyName"
-            (onChange)="handleChangeStep1('companyName', $event)" (submit)="handleSubmitStep1()" />
+            (onChange)="handleChangeStep1('companyName', $event)" (submit)="handleSubmitStep1()" [spinner]="inputSpinner" />
 
           <div class="w-full items-center grid grid-cols-2 gap-[10px]">
-            <app-input [placeholder]="'RC Number'" [value]="registrationNumber" [error]="validators.registrationNumber"
+            <app-input [placeholder]="'RC Number'" [value]="registrationNumber" [error]="validators.registrationNumber" [spinner]="inputSpinner"
               (onChange)="handleChangeStep1('registrationNumber', $event)" [placeholder]="'RC Number'"
               (submit)="handleSubmitStep1()" />
           </div>
 
-          <app-input [placeholder]="'Company Email Address'" [label]="'Email'" [value]="emailAddress"
+          <app-input [placeholder]="'Company Email Address'" [label]="'Email'" [value]="emailAddress" [spinner]="inputSpinner"
             [error]="validators.emailAddress" (onChange)="handleChangeStep1('emailAddress', $event)"
             [placeholder]="'Enter your email address'" (submit)="handleSubmitStep1()" />
 
@@ -43,7 +43,7 @@
             [placeholder]="'Nature of Business'" [option]="natureOfBusiness"
             [error]="validators.natureOfBusiness" (optionSelected)="handleChangeStep1('natureOfBusiness', $event)" />
 
-          <app-input  [placeholder]="'TIN'" [label]="'TIN (Optional)'" [value]="tin"
+          <app-input  [placeholder]="'TIN'" [label]="'TIN (Optional)'" [value]="tin" [spinner]="inputSpinner"
             [error]="validators.tin" (onChange)="handleChangeStep1('tin', $event)" (submit)="handleSubmitStep1()" />
 
         </div>
@@ -57,7 +57,7 @@
       </div>
       <div class="flex flex-col gap-[8px] mt-[28px]">
         <app-input [placeholder]="'Address Line 1'" [label]="'Address'" [value]="address" [error]="validators.address"
-          (onChange)="handleChangeStep2('company_address', $event)"
+          (onChange)="handleChangeStep2('company_address', $event)" [spinner]="inputSpinner"
           (submit)="handleSubmitStep2()" />
 
         <app-select [placeholder]="'State'" [label]="'State'" [options]="states" [placeholder]="'State'"
@@ -75,7 +75,7 @@
       </div>
       <div class="flex flex-col gap-[8px] mt-[28px]">
         <app-input [placeholder]="'Address Line 1'" [label]="'Address'" [value]="address" [error]="validators.address"
-          (onChange)="handleChangeStep3('address', $event)" [placeholder]="'Address Line 1'"
+          (onChange)="handleChangeStep3('address', $event)" [placeholder]="'Address Line 1'" [spinner]="inputSpinner"
           (submit)="handleSubmitStep2()" />
 
         <app-select [placeholder]="'State'" [label]="'State'" [options]="states"
@@ -94,7 +94,7 @@
       </div>
       <div class="flex flex-col gap-[8px] mt-[28px]">
         <app-input [placeholder]="'Password'" [type]="passwordType1" [label]="'Password'"
-           [value]="password" [error]="validators.password"
+           [value]="password" [error]="validators.password" [spinner]="inputSpinner"
           (onChange)="handleChangeStep4('password', $event)" (submit)="handleSubmitStep3()" />
         <app-input [placeholder]="'Confirm Password'" [type]="'password'" [label]="'Confirm Password'"
            [value]="confirmPassword" [error]="validators.confirmPassword"

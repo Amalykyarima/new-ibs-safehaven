@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { InputComponent } from '../../../common/utilities/input/input.component';
 import { CommonModule } from '@angular/common';
 import { ButtonFilledComponent } from "../../../common/utilities/button-filled/button-filled.component";
@@ -12,6 +12,8 @@ import { SearchComponent } from "../../../common/utilities/search/search.compone
   styleUrl: './link-card.component.scss',
 })
 export class LinkCardComponent {
+  @Input() inputSpinner: boolean = false;
+
   accounts: any[] = [
     {
       name: 'Abasifreke Emm.../Main',

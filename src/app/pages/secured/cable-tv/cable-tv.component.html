@@ -29,7 +29,7 @@
             </div>
           </div>
         </div>
-        <app-input (onChange)="collectInput($event)" [placeholder]="'Provider Number'" />
+        <app-input (onChange)="collectInput($event)" [placeholder]="'Provider Number'" [spinner]="inputSpinner"/>
       </div>
       <div
         class="w-full border-t pt-[20px] border-[#F1F5F9] flex items-center justify-between"
@@ -140,8 +140,8 @@
               >SET PERIOD</span
             >
           </div>
-          <app-input [placeholder]="'Start Date'" />
-          <app-input [placeholder]="'End Date'" />
+          <app-input [placeholder]="'Start Date'" [spinner]="inputSpinner"/>
+          <app-input [placeholder]="'End Date'" [spinner]="inputSpinner"/>
           <div class="w-full flex items-center gap-[8px]">
             <app-switch />
             <div class="flex flex-col">

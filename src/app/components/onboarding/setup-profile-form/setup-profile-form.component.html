@@ -11,7 +11,7 @@
 
     <form class="flex flex-col gap-6">
       <div class="flex flex-col gap-0.5">
-        <app-input [value]="email" [placeholder]="'Enter your email address'" [error]="validators.email"
+        <app-input [value]="email" [placeholder]="'Enter your email address'" [error]="validators.email" [spinner]="inputSpinner"
           (onChange)="handleChange('email', $event)"></app-input>
       </div>
 
@@ -96,7 +96,7 @@
 
     <form class="flex flex-col gap-6">
       <div class="flex flex-col gap-0.5">
-        <app-input [value]="address" [placeholder]="'Address Line 1'" [error]="validators.email"
+        <app-input [value]="address" [placeholder]="'Address Line 1'" [error]="validators.email" [spinner]="inputSpinner"
           (onChange)="handleChange('address', $event)"></app-input>
       </div>
 
@@ -138,13 +138,13 @@
 
     <form class="flex flex-col gap-6">
       <div class="flex flex-col gap-0.5">
-        <app-input [value]="address" [placeholder]="'Password'" [error]="validators.email"
+        <app-input [value]="address" [placeholder]="'Password'" [error]="validators.email" [spinner]="inputSpinner"
           (onChange)="handleChange('address', $event)"></app-input>
       </div>
 
 
       <div class="flex flex-col gap-0.5">
-        <app-input [value]="address" [placeholder]="'Confirm Password'" [error]="validators.email"
+        <app-input [value]="address" [placeholder]="'Confirm Password'" [error]="validators.email" [spinner]="inputSpinner"
           (onChange)="handleChange('address', $event)"></app-input>
       </div>
 

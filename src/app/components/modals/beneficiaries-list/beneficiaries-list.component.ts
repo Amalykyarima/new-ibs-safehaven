@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AvatarIconComponent } from "../../../common/utilities/avatar-icon/avatar-icon.component";
+import { TransferService } from '../../../resources/services/transfer.service';
+
 
 @Component({
   selector: 'app-beneficiaries-list',
@@ -8,6 +10,93 @@ import { AvatarIconComponent } from "../../../common/utilities/avatar-icon/avata
   templateUrl: './beneficiaries-list.component.html',
   styleUrl: './beneficiaries-list.component.scss'
 })
-export class BeneficiariesListComponent {
+export class BeneficiariesListComponent implements OnInit {
 
+
+  filteredList: Array<any> = [];
+  deletingBen: any = '';
+  @Input() beneficiaries: Array<any> = [];
+  @Input() toggleModal: boolean = false;
+  @Output() toggleModalChange: EventEmitter<boolean> = new EventEmitter();
+  @Input() selectedBeneficiary: any = null;
+  @Output() selectedBeneficiaryChange: EventEmitter<any> = new EventEmitter();
+  @Output() beneficiaryDeleted: EventEmitter<any> = new EventEmitter();
+
+  constructor(private transferService: TransferService) {
+    this.filteredList = this.beneficiaries.filter((item: any) => {
+      return item._id != this.selectedBeneficiary?._id;
+    });
+  }
+
+
+  ngOnInit(): void {
+    console.log(' ngOnInit beneficiaries', this.beneficiaries)
+
+  }
+
+  ngOnChanges():void {
+    this.filteredList = this.beneficiaries.filter((item: any) => {
+      return item._id != this.selectedBeneficiary?._id;
+    });
+    console.log('filteredList', this.filteredList)
+  }
+
+  selectItem(item: any): void {
+    this.selectedBeneficiary = item;
+    this.selectedBeneficiaryChange.emit(this.selectedBeneficiary);
+    setTimeout(() => {
+      this.toggleModal = false;
+      this.toggleModalChange.emit(this.toggleModal);
+    }, 200);
+  }
+
+  unselectItem() {
+    this.selectedBeneficiary = {};
+    this.selectedBeneficiaryChange.emit(this.selectedBeneficiary);
+    setTimeout(() => {
+      this.toggleModal = false;
+      this.toggleModalChange.emit(this.toggleModal);
+    }, 200);
+  }
+
+  handleCancel(): void {
+    this.toggleModal = false;
+    this.toggleModalChange.emit(this.toggleModal);
+  }
+
+  filterList(event: any): void {
+    let query = ((event.target as HTMLInputElement).value).toLowerCase();
+    if (query == '') {
+      this.filteredList = this.beneficiaries.filter((item: any) => {
+        return item._id != this.selectedBeneficiary?._id;
+      });
+    }
+    else {
+      this.filteredList = this.beneficiaries.filter((item: any) => {
+        let name = item.accountName.toLowerCase();
+        let accNo = item.accountNumber.toLowerCase();
+        let bank = item.bank.toLowerCase();
+        return name.includes(query) || accNo.includes(query) || bank.includes(query);
+      })
+    }
+  }
+
+  deleteBeneficiary(event:any) {
+    this.deletingBen = event._id;
+    this.transferService.removeBeneficiaries(event._id).subscribe(
+      (res:any) => {
+        if(res.statusCode === 200) {
+          this.deletingBen = '';
+          this.beneficiaryDeleted.emit(res);
+          setTimeout(() => {
+            this.toggleModal = false;
+            this.toggleModalChange.emit(this.toggleModal);
+          }, 200);
+        }
+        else {
+          this.deletingBen = '';
+        }
+      }
+    )
+  }
 }

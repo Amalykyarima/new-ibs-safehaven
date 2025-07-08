@@ -41,6 +41,7 @@
     "chart.js": "^3.2.0",
     "encrypt-storage": "^2.14.6",
     "express": "^4.18.2",
+    "gsap": "^3.13.0",
     "ladda": "^2.0.1",
     "moment": "^2.30.1",
     "ng-otp-input": "^2.0.7",

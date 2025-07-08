@@ -39,6 +39,8 @@ export class CorporateLoginComponent {
     this.user = new Signin();
   }
   @Input() verifiedData: any = {};
+  @Input() inputSpinner: boolean = false;
+
 
   userType = 'phone';
   error: any = { type: '', message: '' };

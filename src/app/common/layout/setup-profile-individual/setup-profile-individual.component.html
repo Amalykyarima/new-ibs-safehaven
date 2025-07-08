@@ -19,7 +19,7 @@
               [error]="validators.emailAddress" (onChange)="handleChangeStep1('emailAddress', $event)"
               [placeholder]="'Enter your email address'" (submit)="handleSubmitStep1()" /> -->
 
-            <app-input [placeholder]="'Email Address'" [label]="'Email'" [value]="emailAddress"
+            <app-input [placeholder]="'Email Address'" [label]="'Email'" [value]="emailAddress" [spinner]="inputSpinner"
               [error]="validators.emailAddress" (onChange)="handleChangeStep1('emailAddress', $event)"
               (submit)="handleSubmitStep1()" />
           </div>
@@ -88,7 +88,7 @@
 
         <div class="flex flex-col gap-6 mt-[28px]">
           <div class="flex flex-col gap-0.5">
-            <app-input [placeholder]="'Address Line 1'" [label]="'Address'" [value]="address"
+            <app-input [placeholder]="'Address Line 1'" [label]="'Address'" [value]="address" [spinner]="inputSpinner"
               [error]="validators.address" (onChange)="handleChangeStep2('address', $event)"
               [placeholder]="'Enter your address'" (submit)="handleSubmitStep2()" />
           </div>
@@ -117,10 +117,10 @@
         </div>
 
         <div class="flex flex-col gap-[8px] mt-[28px]">
-          <app-input [placeholder]="'Password'" [type]="passwordType1" [label]="'Password'"
+          <app-input [placeholder]="'Password'" [type]="passwordType1" [label]="'Password'" [spinner]="inputSpinner"
             [placeholder]="'Enter your password'" [value]="password" [error]="validators.password"
             (onChange)="handleChangeStep4('password', $event)" (submit)="handleSubmitStep3()" />
-          <app-input [placeholder]="'Confirm Password'" [type]="'password'" [label]="'Confirm Password'"
+          <app-input [placeholder]="'Confirm Password'" [type]="'password'" [label]="'Confirm Password'" [spinner]="inputSpinner"
             [placeholder]="'Confirm your password'" [value]="confirmPassword" [error]="validators.confirmPassword"
             (onChange)="handleChangeStep4('confirmPassword', $event)" (submit)="handleSubmitStep3()" />
         </div>

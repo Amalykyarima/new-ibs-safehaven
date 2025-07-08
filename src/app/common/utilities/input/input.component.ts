@@ -41,6 +41,8 @@ export class InputComponent implements OnChanges, AfterViewInit {
   @Input() phone: boolean = false;
   @Input() countryCode: string = '234';
   @Input() flag: string = '🇳🇬';
+  @Input() spinner: boolean = true;
+
   // @Input() countries: any[] = [
   //   { name: 'Nigeria', callingCodes: ['234'], flag: '🇳🇬' },
   //   { name: 'Ghana', callingCodes: ['233'], flag: '🇬🇭' },
@@ -191,5 +193,14 @@ export class InputComponent implements OnChanges, AfterViewInit {
   checkValue(event: any) {
     // console.log('event', event.target.value);
     this.handleChange(event ? event?.target?.value : this.value);
+  }
+
+  startSpinner() {
+    this.spinner = true;
+  }
+
+  // Example: Method to hide spinner (call this when the action finishes)
+  stopSpinner() {
+    this.spinner = false;
   }
 }

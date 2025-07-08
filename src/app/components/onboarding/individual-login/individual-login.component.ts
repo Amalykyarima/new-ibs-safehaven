@@ -41,6 +41,8 @@ export class IndividualLoginComponent {
   @Output() validateUser: EventEmitter<any> = new EventEmitter<any>();
   @Output() getUser: EventEmitter<any> = new EventEmitter<any>();
   @Input() verifiedData: any = {};
+  @Input() inputSpinner: boolean = false;
+
 
 
   user: Signin;

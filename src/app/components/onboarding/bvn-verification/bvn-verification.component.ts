@@ -45,6 +45,7 @@ export class BvnVerificationComponent {
   @Input() value: string = '';
   @Output() onChange = new EventEmitter<string>();
   @Output() openFaceModal: EventEmitter<any> = new EventEmitter<any>();
+  @Input() inputSpinner: boolean = false;
 
 
 

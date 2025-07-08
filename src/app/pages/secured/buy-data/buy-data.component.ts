@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, Input, computed, inject } from '@angular/core';
 import { SwitchComponent } from "../../../common/utilities/switch/switch.component";
 import { DisplayStore } from '../../../stores/display.store';
 import { CommonModule } from '@angular/common';
@@ -25,6 +25,8 @@ export class BuyDataComponent {
  networkIcon: string = '../../../../assets/images/airtel.svg';
  packageSelected: boolean = false;
  isRecurring: boolean = false;
+ @Input() inputSpinner: boolean = false;
+
 
  selectedNetwork(event: { name: string; icon: string }) {
   this.network = event.name;

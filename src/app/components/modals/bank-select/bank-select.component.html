@@ -1,46 +1,35 @@
-<div class="w-full flex flex-col gap-[24px]">
-    <app-search />
-    <div class="w-full flex flex-col gap-[20px]">
-        <span class="font-[600] text-[14px] text-[#64748B]">MY BANK</span>
-        <div class="w-full flex justify-between items-center rounded-[20px] bg-[#fff] p-[20px]">
-            <div class="flex gap-[8px] items-center">
-                <img src="../../../../assets/images/safehaven-bank-list.svg" alt="">
-                <span class="font-[600] text-[#1E293B] text-[14px]">Safe Haven MFB</span>
-            </div> 
-            <img src="../../../../assets/icons/chevron-right.svg" alt="">
-        </div>
+<div class="w-full flex flex-col gap-[24px] py-[25px] px-[20px]">
+  <app-search />
+  <div class="w-full flex flex-col gap-[20px]">
+    <span class="font-[600] text-[14px] text-[#64748B]">MY BANK</span>
+    <div class="w-full flex justify-between items-center rounded-[20px] bg-[#fff] p-[20px]">
+      <div class="flex gap-[8px] items-center" (click)="selectBank(bank)">
+        <img src="../../../../assets/images/safehaven-bank-list.svg" alt="">
+        <span class="font-[600] text-[#1E293B] text-[14px]">Safe Haven MFB</span>
+      </div>
+      <img src="../../../../assets/icons/chevron-right.svg" alt="">
     </div>
-    <div class="w-full flex flex-col gap-[20px]">
-        <span class="font-[600] text-[14px] text-[#64748B]">FREQUENT SELECTIONS</span>
-       <div class="w-full bg-[#fff] rounded-[20px] p-[20px] flex flex-col gap-[32px]">
-        <div class="w-full flex justify-between items-center">
-            <div class="flex gap-[8px] items-center">
-                <img src="../../../../assets/images/access-bank-list.svg" alt="">
-                <span class="font-[600] text-[#1E293B] text-[14px]">Access Bank</span>
-            </div> 
-            <img src="../../../../assets/icons/chevron-right.svg" alt="">
+  </div>
+  <div class="w-full flex flex-col gap-[20px]">
+    <span class="font-[600] text-[14px] text-[#64748B]">FREQUENT SELECTIONS</span>
+    <div class="w-full bg-[#fff] rounded-[20px] p-[20px] flex flex-col gap-[32px]">
+      <div class="w-full flex justify-between items-center" *ngFor="let bank of filteredBanks"
+        (click)="selectBank(bank)">
+        <div class="flex gap-[8px] items-center">
+          <ng-container *ngIf="!this.bank.logoImage">
+            <div class="defaultBank">
+              <img src="../../../../assets/images/bank-list-icon.svg" />
+            </div>
+          </ng-container>
+          <ng-container *ngIf="this.bank.logoImage">
+            <div class="logoImage">
+              <img [src]="this.bank.logoImage" />
+            </div>
+          </ng-container>
+          <span class="font-[600] text-[#1E293B] text-[14px]">{{bank.name}}</span>
         </div>
-        <div class="w-full flex justify-between items-center">
-            <div class="flex gap-[8px] items-center">
-                <img src="../../../../assets/images/gt-bank-list.svg" alt="">
-                <span class="font-[600] text-[#1E293B] text-[14px]">Guaranty Trust Bank</span>
-            </div> 
-            <img src="../../../../assets/icons/chevron-right.svg" alt="">
-        </div>
-        <div class="w-full flex justify-between items-center">
-            <div class="flex gap-[8px] items-center">
-                <img src="../../../../assets/images/gt-bank-list.svg" alt="">
-                <span class="font-[600] text-[#1E293B] text-[14px]">Guaranty Trust Bank</span>
-            </div> 
-            <img src="../../../../assets/icons/chevron-right.svg" alt="">
-        </div>
-        <div class="w-full flex justify-between items-center">
-            <div class="flex gap-[8px] items-center">
-                <img src="../../../../assets/images/default-bank-list.svg" alt="">
-                <span class="font-[600] text-[#1E293B] text-[14px]">Wema Bank</span>
-            </div> 
-            <img src="../../../../assets/icons/chevron-right.svg" alt="">
-        </div>
-       </div>
+        <img src="../../../../assets/icons/chevron-right.svg" alt="">
+      </div>
     </div>
+  </div>
 </div>

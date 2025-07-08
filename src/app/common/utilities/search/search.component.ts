@@ -10,4 +10,6 @@ import { InputComponent } from "../input/input.component";
 })
 export class SearchComponent {
 @Input() height: string = '60px';
+@Input() inputSpinner: boolean = false;
+
 }

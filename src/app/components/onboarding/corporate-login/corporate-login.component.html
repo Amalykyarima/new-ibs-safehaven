@@ -38,11 +38,11 @@
   </div>
 
   <app-input [type]="'text'" [label]="'Email Address'" [value]="email" [placeholder]="'Enter your email address'"
-    [error]="validators.email" (onChange)="handleChange('email', $event)"
+    [error]="validators.email" (onChange)="handleChange('email', $event)" [spinner]="inputSpinner"
     (submit)="!showPassword ? verifyEmail() : login()"></app-input>
 
   <div *ngIf="showPassword && path === 'login'" class="flex flex-col w-full">
-    <app-input [type]="passwordType" [placeholder]="'Enter your password'" [value]="password"
+    <app-input [type]="passwordType" [placeholder]="'Enter your password'" [value]="password" [spinner]="inputSpinner"
       [error]="validators.password" (onChange)="handleChange('password', $event)" (submit)="login()">
       <img *ngIf="passwordType === 'password'" (click)="passwordType = 'text'" class="w-[14px] cursor-pointer"
         src="../../../../assets/icons/eye.svg" alt="" />

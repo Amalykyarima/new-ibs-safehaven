@@ -11,7 +11,7 @@
         >Order {{ cardType }} Card</span
       >
       <div class="w-full flex flex-col gap-[24px]">
-        <app-input [placeholder]="'Enter Cardholder Name'" [label]="'Cardholder Name'" />
+        <app-input [placeholder]="'Enter Cardholder Name'" [label]="'Cardholder Name'" [spinner]="inputSpinner"/>
         <div class="w-full flex flex-col gap-[14px]">
             <span class="font-[600] text-[14px] text-[#64748B]">CARD SCHEME</span>
             <div class="w-full flex items-center gap-[16px]">
@@ -77,8 +77,8 @@
         <app-select [options]="['Nigeraia', 'United States', 'United Kingdom', 'Canada']" />
         <app-select [options]="['Abia', 'FCT', 'Lagos', 'Kaduna']" />
         <app-select [options]="[]" />
-        <app-input [placeholder]="'Address Line 1'" />
-        <app-input [placeholder]="'Phone Number'" />
+        <app-input [placeholder]="'Address Line 1'" [spinner]="inputSpinner"/>
+        <app-input [placeholder]="'Phone Number'" [spinner]="inputSpinner"/>
       </div>
       <div><app-button-filled [action]="openModal" [text]="'Continue'" /></div>
     </div>

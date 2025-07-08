@@ -80,6 +80,8 @@ export class ForgotPasswordComponent implements OnInit {
   };
 
   @Input() accountType: 'Individual' | 'Corporate' = 'Individual';
+  @Input() inputSpinner: boolean = false;
+
 
   ngOnInit(): void {
     this.loginData = this.sharedDataService.getLoginData();

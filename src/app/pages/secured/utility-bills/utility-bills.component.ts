@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, Input, computed, inject } from '@angular/core';
 import { InputComponent } from "../../../common/utilities/input/input.component";
 import { CommonModule } from '@angular/common';
 import { DisplayStore } from '../../../stores/display.store';
@@ -21,6 +21,8 @@ import { AmountInputComponent } from "../../../common/utilities/amount-input/amo
   styleUrl: './utility-bills.component.scss'
 })
 export class UtilityBillsComponent {
+  @Input() inputSpinner: boolean = false;
+
  readonly store = inject(DisplayStore);
 provider: string = '';
 providerIcon: string = '';

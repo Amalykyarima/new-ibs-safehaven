@@ -38,6 +38,8 @@ export class SetupProfileCorporateComponent {
   @Output() spinnerChange = new EventEmitter<boolean>();
   @Output() accountOpenedChange = new EventEmitter<boolean>();
   @Output() accountFormStatusChange = new EventEmitter<boolean>();
+  @Input() inputSpinner: boolean = false;
+
 
   newUser: CompanySignup;
   date: any = new Date();

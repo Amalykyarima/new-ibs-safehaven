@@ -21,6 +21,8 @@ export class SetupProfileFormComponent {
 @Input() additional: boolean = false;
 @Input() home: boolean = true;
 @Input() passwordSetup: boolean = false;
+@Input() inputSpinner: boolean = false;
+
 
 spinner: boolean = false;
 
