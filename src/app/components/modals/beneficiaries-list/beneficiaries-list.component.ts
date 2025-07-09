@@ -1,18 +1,19 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AvatarIconComponent } from "../../../common/utilities/avatar-icon/avatar-icon.component";
 import { TransferService } from '../../../resources/services/transfer.service';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-beneficiaries-list',
   standalone: true,
-  imports: [AvatarIconComponent],
+  imports: [CommonModule, AvatarIconComponent],
   templateUrl: './beneficiaries-list.component.html',
   styleUrl: './beneficiaries-list.component.scss'
 })
 export class BeneficiariesListComponent implements OnInit {
 
-
+  filteredBeneficiaries: Array<any> = [];
   filteredList: Array<any> = [];
   deletingBen: any = '';
   @Input() beneficiaries: Array<any> = [];
@@ -30,15 +31,23 @@ export class BeneficiariesListComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log(' ngOnInit beneficiaries', this.beneficiaries)
+    console.log(' ngOnInit beneficiaries', this.filteredList)
 
   }
+
 
   ngOnChanges():void {
     this.filteredList = this.beneficiaries.filter((item: any) => {
       return item._id != this.selectedBeneficiary?._id;
     });
-    console.log('filteredList', this.filteredList)
+  }
+
+  // ngOnChanges() {
+  //   this.filterBeneficiaries();
+  // }
+
+  filterBeneficiaries() {
+    this.filteredBeneficiaries = this.beneficiaries;
   }
 
   selectItem(item: any): void {
@@ -81,11 +90,11 @@ export class BeneficiariesListComponent implements OnInit {
     }
   }
 
-  deleteBeneficiary(event:any) {
+  deleteBeneficiary(event: any) {
     this.deletingBen = event._id;
     this.transferService.removeBeneficiaries(event._id).subscribe(
-      (res:any) => {
-        if(res.statusCode === 200) {
+      (res: any) => {
+        if (res.statusCode === 200) {
           this.deletingBen = '';
           this.beneficiaryDeleted.emit(res);
           setTimeout(() => {

@@ -181,9 +181,9 @@ export class TransferComponent implements OnInit {
           element.bank = sameBank[0].name;
         }
       });
-      // this.fetchingData = false;
+      this.fetchingData = false;
+      console.log('beneficiaries', this.beneficiaries, this.sameBankBeneficiaries)
     });
-    console.log('beneficiaries', this.beneficiaries, this.sameBankBeneficiaries)
   }
 
 

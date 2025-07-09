@@ -1,15 +1,38 @@
-<div class="w-full rounded-[20px] bg-[#fff] flex flex-col gap-[32px] p-[20px]">
-  <div class="w-full flex justify-between items-center">
-    <div class="w-full flex items-center gap-[18px]">
-      <app-avatar-icon />
-      <div class="w-full flex flex-col gap-[2px]">
-        <span class="font-[600] text-[16px] text-[#1E293B]">Kedonojo Ameh</span>
-        <span class="font-[500] text-[16px] text-[#64748B]">109099879</span>
-        <span class="font-[500] text-[16px] text-[#64748B]"
-          >Access Bank of Nigeria PLC.</span
-        >
+<div style="padding: 20px;">
+
+  <div class="w-full rounded-[20px] bg-[#fff] flex flex-col gap-[32px] p-[20px]">
+    <!-- <div class="w-full flex justify-between items-center">
+      <div class="w-full flex items-center gap-[18px]">
+        <app-avatar-icon />
+        <div class="w-full flex flex-col gap-[2px]">
+          <span class="font-[600] text-[16px] text-[#1E293B]">Kedonojo Ameh</span>
+          <span class="font-[500] text-[16px] text-[#64748B]">109099879</span>
+          <span class="font-[500] text-[16px] text-[#64748B]"
+            >Access Bank of Nigeria PLC.</span
+          >
+        </div>
       </div>
+      <img src="../../../../assets/icons/trash.svg" alt="" />
+    </div> -->
+    <div *ngFor="let item of filteredList" class="w-full flex justify-between items-center">
+      <div class="w-full flex items-center gap-[18px]" (click)="this.selectItem(item)">
+        <app-avatar-icon />
+        <div class="w-full flex flex-col gap-[2px]">
+          <span class="font-[600] text-[16px] text-[#1E293B]">
+            {{ item.accountName }}
+          </span>
+          <span class="font-[500] text-[16px] text-[#64748B]">
+            {{ item.accountNumber }}
+          </span>
+          <span class="font-[500] text-[16px] text-[#64748B]">
+            {{item.bank}}
+          </span>
+        </div>
+      </div>
+      <span (click)="this.deleteBeneficiary(item)">
+        <img src="../../../../assets/icons/trash.svg" alt="" />
+      </span>
     </div>
-    <img src="../../../../assets/icons/trash.svg" alt="" />
+
   </div>
 </div>

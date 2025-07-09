@@ -211,7 +211,7 @@
     <app-bank-select (toggleModalChange)="this.closeBankModal()" [(selectedBank)]="selectedBank" [banks]="banks"
       (selectedBankChange)="bankChanged()" *ngSwitchCase="'bank-select'" />
     <app-successful-transfer *ngSwitchCase="'successful-transfer'" />
-    <app-beneficiaries-list [beneficiaries]="this.sameBankBeneficiaries"
+    <app-beneficiaries-list [beneficiaries]="this.beneficiaries"
     [(selectedBeneficiary)]="this.selectedBeneficiary" (selectedBeneficiaryChange)="this.changeBeneficiary($event)"
     (beneficiaryDeleted)="this.deletedBeneficiary($event)"
      *ngSwitchCase="'my-beneficiaries'" />
