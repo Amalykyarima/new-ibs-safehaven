@@ -10,15 +10,17 @@ import { CommonModule } from '@angular/common';
   styleUrl: './avatar-icon.component.scss'
 })
 export class AvatarIconComponent {
- @Input() height: string = '74';
+  @Input() badgeSrc: string = '../../../../assets/images/bank-list-icon.svg';
+  @Input() name: string = '';
+  @Input() height: string = '74';
   @Input() width: string = '74';
   getHalfAsString(value: string | number): string {
     const numericValue = typeof value === 'string' ? Number(value) : value;
-  
+
     if (isNaN(numericValue)) {
       throw new Error('Invalid input: must be a number or numeric string');
     }
-  
+
     const half = numericValue / 2;
     return half.toString();
   }

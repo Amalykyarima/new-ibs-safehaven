@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-avatar',
@@ -8,7 +8,8 @@ import { Component, Input } from '@angular/core';
   templateUrl: './avatar.component.html',
   styleUrl: './avatar.component.scss',
 })
-export class AvatarComponent {
+export class AvatarComponent implements OnInit {
+
   @Input() name = '';
   @Input() textStyle = '';
   @Input() ciruclar: boolean = false;
@@ -16,13 +17,16 @@ export class AvatarComponent {
   @Input() width: string = '';
   colors = ['#F1F1E6', '#EDEEFF', '#F4F5F7', '#F9FAFB', '#E5EDFF'];
 
+  ngOnInit(): void {
+console.log('name', this.name)  }
+
   getAcronym = (name: string) => {
     let arr = name.split(' ');
     let val = '';
     arr.forEach((a) => {
       val = val + a[0];
     });
-    return val.slice(0, 3);
+    return val.slice(0, 2);
   };
 
   getColor = () => {

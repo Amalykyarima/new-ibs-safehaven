@@ -71,7 +71,8 @@ export class TotpRegisterComponent {
 
 
   verifyOtp = () => {
-    // this.error = 'Invalid otp';
+    // this.error = '';
+    this.error.message = 'Invalid otp';
     //('click', this.loginData);
     if (this.pin.length !== 6) this.error = 'Required*';
     else {
@@ -102,7 +103,7 @@ export class TotpRegisterComponent {
               }
             } else if (
               res.statusCode === 400 &&
-              res.message === 'Incorrect OTP.'
+              res.message === 'Incorrect PIN.'
             ) {
               this.errorMessage = res.message;
               this.error = res.message;

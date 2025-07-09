@@ -2,12 +2,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AvatarIconComponent } from "../../../common/utilities/avatar-icon/avatar-icon.component";
 import { TransferService } from '../../../resources/services/transfer.service';
 import { CommonModule } from '@angular/common';
+import { SearchComponent } from "../../../common/utilities/search/search.component";
 
 
 @Component({
   selector: 'app-beneficiaries-list',
   standalone: true,
-  imports: [CommonModule, AvatarIconComponent],
+  imports: [CommonModule, AvatarIconComponent, SearchComponent],
   templateUrl: './beneficiaries-list.component.html',
   styleUrl: './beneficiaries-list.component.scss'
 })
@@ -51,6 +52,7 @@ export class BeneficiariesListComponent implements OnInit {
   }
 
   selectItem(item: any): void {
+    console.log('selectItem Beneficiary')
     this.selectedBeneficiary = item;
     this.selectedBeneficiaryChange.emit(this.selectedBeneficiary);
     setTimeout(() => {
@@ -74,6 +76,7 @@ export class BeneficiariesListComponent implements OnInit {
   }
 
   filterList(event: any): void {
+    console.log('filterList')
     let query = ((event.target as HTMLInputElement).value).toLowerCase();
     if (query == '') {
       this.filteredList = this.beneficiaries.filter((item: any) => {
@@ -91,6 +94,7 @@ export class BeneficiariesListComponent implements OnInit {
   }
 
   deleteBeneficiary(event: any) {
+    console.log('deleteBeneficiary')
     this.deletingBen = event._id;
     this.transferService.removeBeneficiaries(event._id).subscribe(
       (res: any) => {
