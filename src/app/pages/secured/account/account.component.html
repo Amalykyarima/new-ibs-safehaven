@@ -1,0 +1,75 @@
+<div class="w-full flex flex-col gap-[24px] px-[40px] py-[32px]">
+<div class="w-full flex items-center justify-between">
+    <span class="font-[700] text-[20px] text-[#1E293B]">Accounts</span>
+    <div class="w-full max-w-[133px]">
+        <app-button-filled [text]="'Add Account'" [action]="openAddModal" />
+    </div>
+</div>
+<div class="w-full flex flex-col bg-white rounded-[20px] px-[24px] py-[35.5px]">
+    <span class="font-[500] text-[14px] text-[#64748B]">ALL ACCOUNT BALANCE</span>
+    <span class="font-[600] text-[40px] text-[#1E293B]">₦1,450,000<span class="font-[500] text-[28px]">.98</span></span>
+</div>
+<div class="flex items-center gap-[4px]">
+    <span class="font-[600] text-[16px] text-[#64748B]">ALL ACCOUNTS</span><div class="pt-[2px] rounded-[4px] bg-[#F1F5F9] pb-[4px] px-[7px]"><span class="font-[500] text-[14px] text-[#64748B]">4</span></div>
+</div>
+<div class="rounded-[20px] bg-white w-full">
+    <div (click)="toDetails()"
+      *ngFor="let account of accounts"
+      class="px-[16px] py-[16px] gap-[14px] cursor-pointer w-full flex items-center justify-between"
+    >
+        <div class="flex items-center gap-[8px]">
+          <img class="w-[60px]"
+            [src]="
+              '../../../../assets/images/shapes-avatar-' +
+              (account.type === 'Savings' ? 'savings' : 'current') +
+              '.svg'
+            "
+            alt=""
+          />
+          <div class="flex flex-col gap-[4px]">
+            <span class="font-[600] text-[18px] text-[#1E293B]">
+              {{ account.name }}
+            </span>
+            <div class="flex items-center gap-[8px]">
+              <span class="font-[500] text-[16px] text-[#64748B]">
+                {{ account.accountNumber }}
+              </span>
+              <div
+                class="px-[6px] pt-[1px] pb-[3px] rounded-[4px]"
+                [ngClass]="{
+                  'bg-[#EBF5FF]': account.type === 'Savings',
+                  'bg-[#F9F5FF]': account.type !== 'Savings'
+                }"
+              >
+                <span
+                  class="font-[500] text-[14px]"
+                  [ngClass]="{
+                    'text-[#034EA2]': account.type === 'Savings',
+                    'text-[#6941C6]': account.type !== 'Savings'
+                  }"
+                >
+                  {{ account.type }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-[14px]">
+            <div class="flex flex-col">
+                <span class="font-[500] text-[16px] text-[#94A3B8]">Balance</span>
+                <span class="font-[600] text-[20px] text-[#1E293B]">
+                  {{ account.balance }}
+                </span>
+              </div>
+              <img src="../../../../assets/icons/chevron-right.svg" alt="">
+        </div>
+      </div>
+    </div>
+</div>
+<app-modal *ngIf="activeModal() as view">
+    <ng-container [ngSwitch]="view">
+     <app-add-account *ngSwitchCase="'add-account'" />
+      <!-- Optional fallback -->
+      <div *ngSwitchDefault>Unknown modal type</div>
+    </ng-container>
+  </app-modal>

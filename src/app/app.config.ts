@@ -12,7 +12,6 @@ import { provideState, provideStore } from '@ngrx/store';
 import { OnboardingReducer } from './resources/store/onboarding/onboarding.reducer';
 import { GeneralReducer } from './resources/store/general/general.reducer';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 
 
@@ -23,7 +22,6 @@ registerLocaleData(zh);
 export const appConfig: ApplicationConfig = {
 
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
-    provideAnimationsAsync(),
     provideAnimations(),
      provideRouter(routes),
       provideClientHydration(),
@@ -31,8 +29,8 @@ export const appConfig: ApplicationConfig = {
        { provide: NZ_I18N, useValue: en_US },
         provideStore(),
         provideState({name: 'onboarding', reducer: OnboardingReducer }),
-        provideState({name: 'general', reducer: GeneralReducer })
-
+        provideState({name: 'general', reducer: GeneralReducer }),
+        provideClientHydration()
 
       ]
 };

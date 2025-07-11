@@ -8,7 +8,9 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
 // for Core import:
 import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { register } from 'swiper/element/bundle';
 
+register();
 @Component({
   selector: 'app-root',
   standalone: true,

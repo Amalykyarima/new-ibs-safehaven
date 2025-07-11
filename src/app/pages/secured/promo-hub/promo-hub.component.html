@@ -1,1 +1,46 @@
-<p>promo-hub works!</p>
+<div class="w-full flex flex-col py-[32px] px-[40px] gap-[24px]">
+  <span class="text-[20px] font-[700] text-[#1E293B]">Promo Hub</span>
+  <div class="w-full flex items-center gap-[4px]">
+    <div (click)="setPromoType(promo)" *ngFor="let promo of promoTypes" [ngClass]="activePromoType === promo ? 'bg-[#EBF5FF]' : ''" class="px-[12px] py-[8px] cursor-pointer rounded-[6px]">
+      <span [ngClass]="activePromoType === promo ? 'text-[#034EA2]' : 'text-[#64748B]'" class="font-[600] text-[16px]">{{ promo }}</span>
+    </div>
+  </div>
+  <div *ngIf="activePromoType === 'Active Promos'" class="w-full grid grid-cols-[1fr_1fr] gap-[24px]">
+    <div *ngFor="let promo of activePromos" (click)="navigateToDetails(promo.id)" class="w-full cursor-pointer py-[24px] gap-[22px] bg-[#fff] px-[20px] flex flex-col relative rounded-[20px] bg-[url('../../../../assets/images/reward-bg.svg')] bg-no-repeat bg-cover">
+        <div class="w-full flex items-center justify-between">
+            <img src="../../../../assets/images/gift.svg" alt="">
+            <div class="flex items-center gap-[4px] bg-white rounded-[4px] p-[6px]">
+                <img src="../../../../assets/icons/clock_2.svg" alt="">
+                <span class="font-[500] text-[14px] text-[#64748B]">Valid till {{promo?.expiry}}</span>
+            </div>
+        </div>
+        <div class="w-full flex flex-col gap-[5px] flex-1">
+            <span class="font-[700] text-[20px] text-[#1E293B]">{{promo?.name}}</span>
+            <span class="font-[500] text-[18px] text-[#64748B]">{{promo?.description}}</span>
+        </div>
+        <div class="flex items-center gap-[4px]">
+            <img src="../../../../assets/images/points-earned.svg" alt="">
+            <span class="text-[18px] font-[600] text-[#034EA2]">{{promo?.points}} <span class="text-[#94A3B8] font-[500]">earned</span></span>
+        </div>
+    </div>
+  </div>
+  <div *ngIf="activePromoType === 'Expired Promos'" class="w-full grid grid-cols-[1fr_1fr] gap-[24px]">
+    <div *ngFor="let promo of activePromos" class="w-full py-[24px] gap-[22px] bg-[#fff] px-[20px] flex flex-col relative rounded-[20px] bg-[url('../../../../assets/images/reward-bg.svg')] bg-no-repeat bg-cover">
+        <div class="w-full flex items-center justify-between">
+            <img src="../../../../assets/images/gift.svg" alt="">
+            <div class="flex items-center gap-[4px] bg-[#FEF2F2] rounded-[4px] p-[6px]">
+                <img src="../../../../assets/icons/clock-red.svg" alt="">
+                <span class="font-[500] text-[14px] text-[#EF4444]">Valid till {{promo?.expiry}}</span>
+            </div>
+        </div>
+        <div class="w-full flex flex-col gap-[5px] flex-1">
+            <span class="font-[700] text-[20px] text-[#1E293B]">{{promo?.name}}</span>
+            <span class="font-[500] text-[18px] text-[#64748B]">{{promo?.description}}</span>
+        </div>
+        <div class="flex items-center gap-[4px]">
+            <img src="../../../../assets/images/points-earned.svg" alt="">
+            <span class="text-[18px] font-[600] text-[#034EA2]">{{promo?.points}} <span class="text-[#94A3B8] font-[500]">earned</span></span>
+        </div>
+    </div>
+  </div>
+</div>

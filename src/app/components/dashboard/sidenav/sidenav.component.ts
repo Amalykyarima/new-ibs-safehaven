@@ -99,7 +99,7 @@ export class SidenavComponent {
           label: 'Recurring Transactions',
           icon: 'recurring.svg',
           iconActive: 'recurring-active.svg',
-          link: 'recurring-transactions',
+          link: 'recurring-transaction',
         },
       ],
     },

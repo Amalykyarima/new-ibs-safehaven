@@ -4,7 +4,7 @@
         <div class="w-full rounded-[20px] bg-white flex flex-col gap-[32px] p-[20px]">
             <div class="w-full flex items-center justify-between">
                 <div class="gap-[8px] flex items-center">
-                    <img src="../../../../assets/icons/failed-transaction.svg" alt="">
+                    <img class="w-[50px]" src="../../../../assets/icons/failed-transaction.svg" alt="">
                     <div class="gap-[4px] flex flex-col">
                         <span class="font-[500] text-[18px] text-[#1E293B]">Airtel - Data|Ab|010323445...</span>
                         <div class="gap-[8px] flex items-center">
@@ -17,7 +17,7 @@
             </div>
             <div class="w-full flex items-center justify-between">
                 <div class="gap-[8px] flex items-center">
-                    <img src="../../../../assets/icons/failed-transaction.svg" alt="">
+                    <img class="w-[50px]" src="../../../../assets/icons/failed-transaction.svg" alt="">
                     <div class="gap-[4px] flex flex-col">
                         <span class="font-[500] text-[18px] text-[#1E293B]">Airtel - Data|Ab|010323445...</span>
                         <div class="gap-[8px] flex items-center">
@@ -35,7 +35,7 @@
         <div class="w-full rounded-[20px] bg-white flex flex-col gap-[32px] p-[20px]">
             <div class="w-full flex items-center justify-between">
                 <div class="gap-[8px] flex items-center">
-                    <img src="../../../../assets/icons/failed-transaction.svg" alt="">
+                    <img class="w-[50px]" src="../../../../assets/icons/failed-transaction.svg" alt="">
                     <div class="gap-[4px] flex flex-col">
                         <span class="font-[500] text-[18px] text-[#1E293B]">Airtel - Data|Ab|010323445...</span>
                         <div class="gap-[8px] flex items-center">
@@ -53,7 +53,7 @@
         <div class="w-full rounded-[20px] bg-white flex flex-col gap-[32px] p-[20px]">
             <div class="w-full flex items-center justify-between">
                 <div class="gap-[8px] flex items-center">
-                    <img src="../../../../assets/icons/failed-transaction.svg" alt="">
+                    <img class="w-[50px]" src="../../../../assets/icons/failed-transaction.svg" alt="">
                     <div class="gap-[4px] flex flex-col">
                         <span class="font-[500] text-[18px] text-[#1E293B]">Airtel - Data|Ab|010323445...</span>
                         <div class="gap-[8px] flex items-center">
@@ -67,3 +67,11 @@
         </div>
     </div>
 </div>
+<!-- <div *ngFor="let group of groupedTransactions" class="mb-6">
+    <h3 class="font-bold text-lg text-[#1E293B] mb-2">{{ group.date }}</h3>
+    <div *ngFor="let tx of group.transactions" class="p-3 bg-[#F1F5F9] rounded mb-2">
+      <p>ID: {{ tx.id }}</p>
+      <p>Amount: ₦{{ tx.amount }}</p>
+      <p>Time: {{ tx.date | date: 'shortTime' }}</p>
+    </div>
+  </div> -->

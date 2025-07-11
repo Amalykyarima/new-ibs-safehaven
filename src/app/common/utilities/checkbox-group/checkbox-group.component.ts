@@ -1,21 +1,32 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CheckboxComponent } from '../checkbox/checkbox.component';
 
 @Component({
   selector: 'app-checkbox-group',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CheckboxComponent],
   templateUrl: './checkbox-group.component.html',
-  styleUrl: './checkbox-group.component.scss'
+  styleUrl: './checkbox-group.component.scss',
 })
 export class CheckboxGroupComponent {
-  @Output() selectedValue = new EventEmitter<string>();
+  @Input() items: string[] = [];
+  @Output() selectedChange = new EventEmitter<string>();
+  selectedItem: string = '';
 
-@Input() items = ['Option 1', 'Option 2', 'Option 3'];
-  selected: string | null = null;
+  // select = (item: string) => {
+  //   console.log('item:', item, 'selectedItem:', this.selectedItem);
+  //   this.selectedItem = item;
+  //   console.log('item:', item, 'selectedItem:', this.selectedItem);
+  //   console.log('check', item === this.selectedItem);
 
-  selectItem(item: string) {
-    this.selected = item;
-    this.selectedValue.emit(this.selected);
+  //   this.selectedChange.emit(this.selectedItem);
+  // };
+  setChange(value: any){
+    this.selectedItem = value;
+    this.selectedChange.emit(this.selectedItem);
+  }
+  isItemChecked(item: string): boolean {
+    return this.selectedItem === item;
   }
 }

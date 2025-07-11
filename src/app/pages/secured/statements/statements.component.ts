@@ -12,5 +12,38 @@ import { StatementTableComponent } from "../../../components/tables/statement-ta
   styleUrl: './statements.component.scss'
 })
 export class StatementsComponent {
-activeFilters: any[] = [];
+  activeFilters: any[] = [];
+  filterItems: any[] = [
+    {
+      title: 'By Accounts',
+      type: 'checkbox',
+      values: [
+        'Abasifreke Emm.../Main',
+        'Abasifreke Emm.../Sub',
+        'Abasifreke Emm.../Flex',
+        'Abasifreke Emm.../Gift',
+      ],
+    },
+    { title: 'By Date', type: 'date' },
+    { title: 'By Date Range', type: 'date-range' },
+    {
+      title: 'By Type',
+      type: 'checkbox',
+      values: ['Airtime', 'Cable TV', 'Data', 'Utility Bills'],
+    },
+  ];
+  filteredItems: any[] = [];
+  handleFilter(updatedFilters: any[]) {
+    this.filterItems = this.filterItems.map(item => {
+      const updatedItem = updatedFilters.find(f => f.title === item.title);
+  
+      if (updatedItem) {
+        return { ...item, selected: updatedItem.selected };
+      }
+  
+      return { ...item, selected: undefined };
+    });
+  
+    // console.log('Filtered (parent can only remove):', this.filterItems);
+  }
 }

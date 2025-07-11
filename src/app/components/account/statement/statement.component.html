@@ -1,0 +1,23 @@
+<div
+  class="w-full flex flex-col bg-white rounded-[20px] py-[24px] px-[28px] gap-[28px]"
+>
+  <div class="w-full flex justify-between items-center">
+    <span class="font-[500] text-[16px] text-[#64748B]">Showing 1</span>
+    <div class="flex items-center gap-[24px]">
+      <app-filter />
+      <div
+        class="w-[190px] rounded-[10px] bg-[#034EA2] pt-[12.5px] pb-[13.5px] flex justify-center"
+      >
+        <span class="font-[600] text-[16px] text-white"
+          >Download Statement</span
+        >
+      </div>
+    </div>
+  </div>
+  <app-statement-table />
+  <app-pagination
+    [currentPage]="page"
+    [totalPages]="10"
+    (pageChange)="onPageChange($event)"
+  />
+</div>

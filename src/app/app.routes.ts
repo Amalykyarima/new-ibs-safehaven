@@ -22,6 +22,8 @@ import { LoanComponent } from './pages/secured/loan/loan.component';
 import { PromoHubComponent } from './pages/secured/promo-hub/promo-hub.component';
 import { RecurringTransactionDetailsComponent } from './pages/secured/recurring-transaction-details/recurring-transaction-details.component';
 import { RecurringTransactionComponent } from './pages/secured/recurring-transaction/recurring-transaction.component';
+import { PromoDetailsComponent } from './pages/secured/promo-details/promo-details.component';
+import { AccountDetailsComponent } from './pages/secured/account-details/account-details.component';
 
 export const routes: Routes = [
   {
@@ -90,8 +92,19 @@ export const routes: Routes = [
       },
       {
         path: 'accounts',
-        component: AccountComponent,
         title: 'Account',
+        children:[
+          {
+            path: '',
+            component: AccountComponent,
+            title: 'Account',
+          },
+          {
+            path: 'details',
+            component: AccountDetailsComponent,
+            title: 'Account Details',
+          },
+        ]
       },
       {
         path: 'transfers',
@@ -125,7 +138,6 @@ export const routes: Routes = [
       },
       {
         path: 'cards',
-        component: CardsComponent,
         title: 'Cards',
         children: [
           {
@@ -162,7 +174,6 @@ export const routes: Routes = [
       },
       {
         path: 'recurring-transaction',
-        component: RecurringTransactionComponent,
         title: 'Recurring Transaction',
         children: [
           {
@@ -179,8 +190,19 @@ export const routes: Routes = [
       },
       {
         path: 'promo-hub',
-        component: PromoHubComponent,
         title: 'Promo Hub',
+        children: [
+          {
+            path: '',
+            component: PromoHubComponent,
+            title: 'Promo Hub',
+          },
+          {
+            path: 'details',
+            component: PromoDetailsComponent,
+            title: 'Promo Hub Details',
+          },
+        ]
       },
     ],
   },

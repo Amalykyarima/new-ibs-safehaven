@@ -19,27 +19,44 @@
       *ngFor="let item of filterItems; let i = index"
       class="flex flex-col gap-[8px] p-[10px] cursor-pointer w-full"
     >
-      <div
-        class="w-full flex items-center justify-between"
-        (click)="toggle(i)"
-      >
-        <span class="font-[500] text-[14px] text-[#64748B]">{{ item.title }}</span>
+      <div class="w-full flex items-center justify-between" (click)="toggle(i)">
+        <span class="font-[500] text-[14px] text-[#64748B]">{{
+          item.title
+        }}</span>
         <img src="../../../assets/icons/dropdown.svg" alt="" />
       </div>
       <div
-        *ngIf="activeIndex === i" [ngClass]="item.title=== 'By Accounts' ? 'rounded-[8px] bg-[#F8FAFC] py-[12px] px-[10px]' : ''"
+        *ngIf="activeIndex === i"
+        [ngClass]="
+          item.title === 'By Accounts'
+            ? 'rounded-[8px] bg-[#F8FAFC] py-[12px] px-[10px]'
+            : ''
+        "
         class="w-full flex"
       >
+      <div *ngIf="item.type === 'checkbox'" class="w-full flex flex-col gap-[14px]">
         <div
-          *ngIf="item.type === 'checkbox'"
-          class="w-full flex flex-col gap-[14px]"
+          *ngFor="let checkbox of item.values"
+          (click)="selectCheckbox(checkbox); updateItem(i, checkbox)"
+          class="flex items-center gap-[8px] cursor-pointer"
         >
-          <app-checkbox-group [items]="getCheckboxValues(item.title)" />
+          <div
+            class="w-[16px] h-[16px] rounded-[4px] flex items-center justify-center"
+            [ngClass]="selectedCheckbox !== checkbox ? 'border border-[#CBD5E1]' : ''"
+          >
+            <img
+              *ngIf="selectedCheckbox === checkbox"
+              src="../../../../assets/images/check-box.svg"
+              alt="checked"
+            />
+          </div>
+          <span class="font-[500] text-[14px] text-[#1E293B]">{{ checkbox }}</span>
         </div>
+      </div>
         <div *ngIf="item.type === 'date-range'">
           <div>
             <!-- <input type="date" class="border px-2 py-1 rounded w-full" /> -->
-             <app-datepicker />
+            <app-datepicker />
           </div>
         </div>
         <div *ngIf="item.type === 'date'">

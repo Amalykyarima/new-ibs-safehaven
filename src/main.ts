@@ -11,11 +11,12 @@ import { OnboardingReducer } from './app/resources/store/onboarding/onboarding.r
 import { authInterceptor } from './app/resources/interceptors/auth.interceptor';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { provideNzI18n } from 'ng-zorro-antd/i18n';
+import { register as registerSwiperElements } from 'swiper/element/bundle';
 
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
-
+  registerSwiperElements()
   bootstrapApplication(AppComponent, {
     providers: [
       provideNzI18n(en_US),

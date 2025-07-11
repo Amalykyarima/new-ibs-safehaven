@@ -1,0 +1,57 @@
+<div class="w-full flex items-center justify-between py-[16px]">
+  <div class="flex items-center gap-[10px]">
+    <span class="font-[500] text-[16px] text-[#64748B]">Items per Page</span>
+    <div class="relative">
+        <div (click)="openDropdown()"
+      class="flex w-fit items-center gap-[4px] cursor-pointer py-[4px] px-[6px] border border-[#CBD5E1] rounded-[4px]"
+    >
+      <span class="font-[500] text-[14px] text-[#64748B]">25</span
+      ><img class="w-[16px]" src="../../../assets/icons/chevron.svg" alt="" />
+    </div>
+    <div *ngIf="dropdownOpen" class="absolute z-[9999] top-[35px] w-[50px] items-center flex flex-col left-0 right-0 bg-white rounded-[10px] shadow-sm">
+     <div class="hover:bg-slate-100 w-full flex justify-center py-[5px]"><span class="font-[500] text-[14px] text-[#334155]">25</span></div>
+     <div class="hover:bg-slate-100 w-full flex justify-center py-[5px]"><span class="font-[500] text-[14px] text-[#334155]">50</span></div>
+     <div class="hover:bg-slate-100 w-full flex justify-center py-[5px]"><span class="font-[500] text-[14px] text-[#334155]">75</span></div>
+     <div class="hover:bg-slate-100 w-full flex justify-center py-[5px]"><span class="font-[500] text-[14px] text-[#334155]">100</span></div>
+    </div>
+    </div>
+  </div>
+  <div class="flex items-center gap-[12px]">
+    <div
+      (click)="currentPage === 1 ? null : changePage(currentPage - 1)"
+      class="flex cursor-pointer items-center"
+    >
+      <img src="../../../assets/icons/caret-left.svg" alt="" /><span
+        class="font-[600] text-[14px] text-[#334155]"
+        >Previous</span
+      >
+    </div>
+
+    <div class="flex items-center gap-[2px]">
+      <div *ngFor="let page of pages">
+        <button
+          *ngIf="page !== '...'; else dots"
+          (click)="changePage(page)"
+          [ngClass]="{
+            'bg-[#F1F5F9]': currentPage === page,
+            '': currentPage !== page
+          }"
+          class="w-[32px] h-[32px] font-[600] text-[14px] justify-center items-center flex rounded-[8px] text-[#64748B]"
+        >
+          {{ page }}
+        </button>
+        <ng-template #dots>
+          <span class="px-2">...</span>
+        </ng-template>
+      </div>
+    </div>
+
+    <div
+      (click)="currentPage === totalPages ? null : changePage(currentPage + 1)"
+      class="flex cursor-pointer items-center"
+    >
+      <span class="font-[600] text-[14px] text-[#334155]">Next</span
+      ><img src="../../../assets/icons/caret-right.svg" alt="" />
+    </div>
+  </div>
+</div>

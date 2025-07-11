@@ -1,1 +1,179 @@
-
+<div class="w-full flex flex-col gap-[24px] px-[40px] py-[32px]">
+  <span class="font-[700] text-[20px] text-[#1E293B]">Home</span>
+  <div class="w-full flex flex-col gap-[20px]">
+    <div class="w-full flex gap-[20px]">
+      <div [ngClass]="frequentTransfers.length > 0 ? 'gap-[65px]' : 'gap-[24px]'"
+        class="w-full max-w-[503px] rounded-[20px] home-card flex flex-col p-[20px]"
+      >
+        <div class="w-full flex justify-between items-start">
+          <div class="flex flex-col gap-[8px]">
+            <span class="font-[600] text-[18px] text-[#EBF5FF]"
+              >Kedonojo Ameh</span
+            >
+            <div class="w-full flex flex-col gap-[4px]">
+              <div class="flex items-center gap-[4px]">
+                <span class="font-[500] text-[16px] text-[#EBF5FF]"
+                  >1012259803</span
+                ><img src="../../../../assets/icons/copy-light.svg" alt="" />
+              </div>
+              <div
+                class="bg-[#EBF5FF] w-fit pt-[3px] px-[6px] pb-[5px] rounded-[4px]"
+              >
+                <span class="font-[500] text-[14px] text-[#034EA2]"
+                  >Savings</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-[8px]">
+            <div
+              class="w-[37px] h-[37px] rounded-full bg-[#94A3B81A] backdrop-blur-sm"
+            ></div>
+            <div
+              class="w-[37px] h-[37px] rounded-full bg-[#94A3B81A] backdrop-blur-sm"
+            ></div>
+          </div>
+        </div>
+        <div class="flex flex-col w-full flex-1">
+          <span class="font-[500] text-[14px] text-[#C3DDFD]"
+            >ACCOUNT BALANCE</span
+          >
+          <div class="flex items-start">
+            <span class="text-[#EBF5FF] text-[24px] font-[500] mt-[8px]">₦</span
+            ><span class="text-[40px] text-[#EBF5FF]"
+              >11,200,000,000<span class="text-[28px]">.98</span></span
+            >
+          </div>
+        </div>
+        <div class="w-full grid grid-cols-4 gap-[42px]">
+          <div class="flex flex-col gap-[4px] items-center">
+            <div
+              class="h-[84px] w-[84px] bg-[#EBF5FF1A] rounded-full flex items-center justify-center"
+            >
+              <img
+                src="../../../../assets/icons/light-double-arrow.svg"
+                alt=""
+              />
+            </div>
+            <span class="font-[500] text-[16px] text-[#C3DDFD]">Transfer</span>
+          </div>
+          <div class="flex flex-col gap-[4px] items-center">
+            <div
+              class="h-[84px] w-[84px] bg-[#EBF5FF1A] rounded-full flex items-center justify-center"
+            >
+              <img src="../../../../assets/icons/pay-bills.svg" alt="" />
+            </div>
+            <span class="font-[500] text-[16px] text-[#C3DDFD]">Pay Bills</span>
+          </div>
+          <div class="flex flex-col gap-[4px] items-center">
+            <div
+              class="h-[84px] w-[84px] bg-[#EBF5FF1A] rounded-full flex items-center justify-center"
+            >
+              <img src="../../../../assets/icons/airtime-light.svg" alt="" />
+            </div>
+            <span class="font-[500] text-[16px] text-[#C3DDFD]"
+              >Buy Airtime</span
+            >
+          </div>
+          <div class="flex flex-col gap-[4px] items-center">
+            <div
+              class="h-[84px] w-[84px] bg-[#EBF5FF1A] rounded-full flex items-center justify-center"
+            >
+              <img src="../../../../assets/icons/wifi-light.svg" alt="" />
+            </div>
+            <span class="font-[500] text-[16px] text-[#C3DDFD]">Buy Data</span>
+          </div>
+        </div>
+      </div>
+      <div class="w-full flex flex-col gap-[28px]">
+        <div class="w-full grid grid-cols-2 gap-[20px]">
+          <div
+            class="w-full bg-white py-[8px] ps-[20px] pe-[8px] flex flex-col gap-[46px] justify-between rounded-[20px]"
+          >
+            <div class="w-full items-center flex justify-between">
+              <span class="font-[600] text-[14px] text-[#64748B]">ACCOUNTS</span>
+              <div class="p-[13px] rounded-[18px] bg-[#F8FAFC]"><img src="../../../../assets/icons/coins-grey.svg" alt=""></div>
+            </div>
+            <div class="w-full items-center flex justify-between pe-[3px]">
+              <span class="font-[700] text-[32px] text-[#1E293B]">2</span>
+              <img src="../../../../assets/icons/diagonal-arrow-grey.svg" alt="">
+            </div>
+          </div>
+          <div
+          class="w-full bg-white py-[8px] ps-[20px] pe-[8px] gap-[12px] flex flex-col justify-between rounded-[20px]"
+        >
+          <div class="w-full items-center flex justify-between">
+            <span class="font-[600] text-[14px] text-[#64748B]">CARDS</span>
+            <div class="p-[13px] rounded-[18px] bg-[#F8FAFC]"><img src="../../../../assets/icons/cards-grey.svg" alt=""></div>
+          </div>
+          <div *ngIf="cards.length > 0" class="w-full items-center flex justify-between pe-[3px]">
+            <span class="font-[700] text-[32px] text-[#1E293B]">2</span>
+            <img src="../../../../assets/icons/diagonal-arrow-grey.svg" alt="">
+          </div>
+          <div *ngIf="cards.length == 0" class="w-full flex flex-col items-center pe-[12px] gap-[12px]">
+            <span class="font-[500] text-[14px] text-[#94A3B8]">No cards yet</span>
+            <div class="w-full pt-[9.5px] pb-[10.5px] flex justify-center bg-[#EBF5FF] rounded-[10px]">
+                <span class="font-[600] text-[14px] text-[#034EA2]">Create Card</span>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div *ngIf="frequentTransfers.length > 0" class="w-full flex flex-col bg-white gap-[10px] rounded-[20px] p-[20px]">
+            <span class="font-[600] text-[14px] text-[#64748B]">FREQUENT TRANSFERS</span>
+            <div class="w-full flex gap-[29px] items-center">
+                <div class="flex w-fit flex-col gap-[2px]">
+                    <img class="w-[57px]" src="../../../../assets/images/access-avatar.svg" alt="">
+                    <span class="border-b border-dashed font-[500] text-[14px] text-[#64748B]">Fred, Iyke.</span>
+                </div>
+                <div class="flex w-fit flex-col gap-[2px]">
+                    <img class="w-[57px]" src="../../../../assets/images/access-avatar.svg" alt="">
+                    <span class="border-b border-dashed font-[500] text-[14px] text-[#64748B]">Inemesit. R</span>
+                </div>
+                <div class="flex w-fit flex-col gap-[2px]">
+                    <img class="w-[57px]" src="../../../../assets/images/access-avatar.svg" alt="">
+                    <span class="border-b border-dashed font-[500] text-[14px] text-[#64748B]">Kerimola</span>
+                </div>
+                <div class="flex w-fit flex-col gap-[2px]">
+                    <img class="w-[57px]" src="../../../../assets/images/access-avatar.svg" alt="">
+                    <span class="border-b border-dashed font-[500] text-[14px] text-[#64748B]">Daniel.R</span>
+                </div>
+            </div>
+        </div>
+        <div class="w-full flex-1 pt-[8px] ps-[8px] pb-[10px] rounded-[20px] bg-white">
+            <swiper-container class="grid grid-cols-1 w-full">
+                <swiper-slide class="w-full max-w-[550px] py-[25px] ps-[20px] me-[16px] flex items-center justify-between bg-[#E1EFFE] rounded-[20px]">                
+                        <div class="flex flex-col gap-[8px]">
+                           <div class="flex flex-col gap-[4px]">
+                            <span class="font-[600] text-[18px] text-[#1E293B]">Save and Earn Points  </span>
+                            <span class="font-[500] text-[14px] text-[#64748B]">Earn up to 500m when you invite your friends to Safehaven </span>
+                           </div>
+                            <div class="flex items-center">
+                                <span class="font-[600] text-[14px] text-[#034EA2]">Get Started</span>
+                                <img src="../../../../assets/icons/chevron-4.svg" alt="">
+                            </div>
+                        </div>
+                        <img src="../../../../assets/images/gold-half-frame.svg" alt="">
+                </swiper-slide>
+                <swiper-slide class="w-full max-w-[550px] py-[25px] ps-[20px] me-[16px] flex items-center justify-between bg-[#FAF5FF] rounded-[20px]">
+                    <div class="flex flex-col gap-[8px]">
+                        <div class="flex flex-col gap-[4px]">
+                         <span class="font-[600] text-[18px] text-[#1E293B]">Save and Earn Points  </span>
+                         <span class="font-[500] text-[14px] text-[#64748B]">Earn up to 500m when you invite your friends to Safehaven </span>
+                        </div>
+                         <div class="flex items-center">
+                             <span class="font-[600] text-[14px] text-[#034EA2]">Get Started</span>
+                             <img src="../../../../assets/icons/chevron-4.svg" alt="">
+                         </div>
+                     </div>
+                     <img src="../../../../assets/images/gold-half-frame.svg" alt="">
+                </swiper-slide>
+              </swiper-container>
+        </div>
+      </div>
+    </div>
+    <div class="w-full flex flex-col gap-[24px] px-[20px] py-[30px] bg-white rounded-[20px]">
+       <div class="flex items-center"><span>Recent Transactions</span><img src="../../../../assets/icons/chevron-right.svg" alt=""></div>
+       <app-home-table />
+    </div>
+  </div>
+</div>
