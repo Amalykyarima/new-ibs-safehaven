@@ -23,12 +23,39 @@
           (onChange)="searchAccountNumber($event)" [spinner]="inputSpinner"
           [placeholder]="'Enter Account Number'" [label]="'Account Number'" />
         </div>
+        <div *ngIf="suggestedBeneficiary">
+          <div class="w-full flex justify-between items-center py-[21px]">
+            <div class="w-full flex items-center gap-[18px]">
+              <app-avatar-icon [name]="'Abdul Malik'" />
+              <div class="w-full flex flex-col gap-[2px]">
+                <span class="font-[600] text-[16px] text-[#1E293B]">Abdul Malik</span>
+                <span class="font-[500] text-[16px] text-[#64748B]">Access Bank </span>
+                <span class="font-[500] text-[16px] text-[#64748B]">109099879</span>
+              </div>
+            </div>
+            <img src="../../../../assets/icons/chevron-right.svg" alt="" />
+          </div>
+        </div>
         <div class="w-full flex flex-col gap-[20px]">
           <div (click)="this.store.openModal('bank-select')" class="w-full flex items-center gap-[4px] cursor-pointer">
             <div class="w-[42px] h-[42px] rounded-full bg-[#EBF5FF] flex justify-center items-center">
               <img src="../../../../assets/icons/bank-add.svg" alt="" />
             </div>
             <span class="text-[16px] font-[600] text-[#034EA2]">Select Recipient’s Bank</span>
+          </div>
+          <div *ngIf="suggestedBanks">
+            <div class="font-[600] text-[14px] text-[#64748B] pt-[21px] pb-[20px]">SUGGESTED BANKS</div>
+            <section class="rounded-[20px] bg-[#F8FAFC]">
+              <div *ngFor="let bank of featuredBanks" class="w-full flex justify-between items-center rounded-[20px] bg-[#F8FAFC] p-[20px]">
+                <div class="flex gap-[8px] items-center">
+                  <img [src]="bank.logoImage" alt="">
+                  <span class="font-[600] text-[#1E293B] text-[14px]">{{bank.name}}</span>
+                </div>
+                <img src="../../../../assets/icons/chevron-right.svg" alt="">
+                <!-- <img [src]="bank.logoImage" /> -->
+              </div>
+            </section>
+
           </div>
           <div class="w-full h-[0.5px] bg-[#F1F5F9]"></div>
           <div (click)="this.store.openModal('my-beneficiaries')"
@@ -55,11 +82,11 @@
     <div *ngIf="transferSteps == 2" class="w-full flex flex-col gap-[24px]">
       <div class="w-full flex flex-col gap-[18px] pb-[24px] bg-[#fff] rounded-[20px]">
         <div class="w-full flex items-center gap-[18px] px-[24px] pt-[25px]">
-          <app-avatar-icon />
+          <app-avatar-icon [name]="this.beneficiaryAccountName" />
           <div class="w-full flex flex-col gap-[2px]">
-            <span class="font-[600] text-[16px] text-[#1E293B]">Kedonojo Ameh</span>
-            <span class="font-[500] text-[16px] text-[#64748B]">109099879</span>
-            <span class="font-[500] text-[16px] text-[#64748B]">Access Bank of Nigeria PLC.</span>
+            <span class="font-[600] text-[16px] text-[#1E293B]">{{this.beneficiaryAccountName}}</span>
+            <span class="font-[500] text-[16px] text-[#64748B]">{{this.newTransfer.beneficiaryAccountNumber}}</span>
+            <span class="font-[500] text-[16px] text-[#64748B]">{{this.beneficiaryBank}}</span>
           </div>
         </div>
         <div class="w-full border border-[#F1F5F9]"></div>
@@ -211,7 +238,7 @@
     <app-bank-select (toggleModalChange)="this.closeBankModal()" [(selectedBank)]="selectedBank" [banks]="banks"
       (selectedBankChange)="bankChanged()" *ngSwitchCase="'bank-select'" />
     <app-successful-transfer *ngSwitchCase="'successful-transfer'" />
-    <app-beneficiaries-list [beneficiaries]="this.beneficiaries"
+    <app-beneficiaries-list (toggleModalChange)="this.closeBeneficiaryModal()" [beneficiaries]="this.beneficiaries"
     [(selectedBeneficiary)]="this.selectedBeneficiary" (selectedBeneficiaryChange)="this.changeBeneficiary($event)"
     (beneficiaryDeleted)="this.deletedBeneficiary($event)"
      *ngSwitchCase="'my-beneficiaries'" />

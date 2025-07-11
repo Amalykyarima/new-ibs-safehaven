@@ -15,7 +15,7 @@ export class AvatarComponent implements OnInit {
   @Input() ciruclar: boolean = false;
   @Input() height: string = '';
   @Input() width: string = '';
-  colors = ['#F1F1E6', '#EDEEFF', '#F4F5F7', '#F9FAFB', '#E5EDFF'];
+  colors = ['#EBF5FF', '#EBF5FF', '#EBF5FF', '#EBF5FF', '#EBF5FF'];
 
   ngOnInit(): void {
 console.log('name', this.name)  }

@@ -88,10 +88,55 @@ export class TransferComponent implements OnInit {
   beneficiaryBankLogoUrl: string = '';
   showBankModal: boolean = false;
 
-  // Bankcodes
   bankCode: string = this.env.bankCode;
+  suggestedBeneficiary: boolean = false;
+  suggestedBanks: boolean = false;
 
   @Input() inputSpinner: boolean = false;
+
+  featuredBanks = [
+    {
+      name: 'OPAY',
+      alias: ['OPAY'],
+      routingKey: '000018',
+      logoImage:'../../../../assets/images/bank-list-icon.svg',
+
+      bankCode: '000018',
+      categoryId: '2',
+      nubanCode: null
+    },
+    {
+      name: 'GTBANK',
+      alias: ['GTBANK'],
+      routingKey: '000017',
+      logoImage:'../../../../assets/images/banks/gtbank.svg',
+      bankCode: '000017',
+      categoryId: '2',
+      nubanCode: null
+    },
+    {
+      name: 'ACCESS BANK',
+      alias: ['ACCESS BANK'],
+      routingKey: '000014',
+      logoImage: '../../../../assets/images/banks/access.svg',
+      bankCode: '000014',
+      categoryId: '2',
+      nubanCode: null
+    },
+    {
+      name: 'UBA',
+      alias: ['UBA'],
+      routingKey: '000016',
+      logoImage: '../../../../assets/images/banks/uba.svg',
+      bankCode: '000016',
+      categoryId: '2',
+      nubanCode: null
+    },
+
+
+  ];
+  beneficiaryAccountName: string ="";
+  beneficiaryBank:  string ="";
 
   constructor(
     // private router: Router,
@@ -198,9 +243,17 @@ export class TransferComponent implements OnInit {
   }
 
   async changeBeneficiary(event: any) {
+    console.log('changeBeneficiary', event)
+    this.closeBeneficiaryModal;
+    this.forward()
     if (event._id != null) {
+      console.log('if (event._id != null)')
       this.beneficiarySelected = true;
+      // this.beneficiaries = event
       this.newTransfer.beneficiaryAccountNumber = event.accountNumber;
+      this.beneficiaryAccountName = event.accountName;
+      this.beneficiaryBank = event.bank;
+
       this.newTransfer.beneficiaryBankCode = event.bankCode;
       await this.searchAccountNumber();
     } else {
@@ -210,34 +263,27 @@ export class TransferComponent implements OnInit {
     }
   }
 
-  checkFormat(event: any) {
-    this.newTransfer.beneficiaryAccountNumber =
-      this.newTransfer.beneficiaryAccountNumber.replace(/\D/g, '');
-    this.newTransfer.beneficiaryAccountNumber =
-      this.newTransfer.beneficiaryAccountNumber.replace(/ /g, '');
-    this.newTransfer.beneficiaryAccountNumber =
-      this.newTransfer.beneficiaryAccountNumber.trim();
-
-    return /^\d+$/.test(event.key);
-  }
-
   searchAccountNumber(event?: any) {
     console.log('searchAccountNumber', event)
-    this.newTransfer.beneficiaryAccountNumber = event;
-    this.newTransfer.beneficiaryAccountNumber = this.newTransfer.beneficiaryAccountNumber.trim();
-    this.newTransfer.beneficiaryAccountNumber = this.newTransfer.beneficiaryAccountNumber + '';
-    this.nameEnquiry = {};
-    this.nameEnquiry.accountName = '';
     this.selectedBank = this.banks.find(
       (item: any) => item.bankCode == this.newTransfer.beneficiaryBankCode
     );
-    console.log('searchAccountNumber', this.newTransfer.beneficiaryAccountNumber.length)
+    console.log('selectedBank', this.selectedBank)
 
+    this.newTransfer.beneficiaryAccountNumber =
+      this.newTransfer.beneficiaryAccountNumber.trim();
+    console.log('this.newTransfer.beneficiaryAccountNumber', this.newTransfer.beneficiaryAccountNumber)
+
+    this.newTransfer.beneficiaryAccountNumber =
+      this.newTransfer.beneficiaryAccountNumber + '';
+    console.log('this.newTransfer.beneficiaryAccountNumber', this.newTransfer.beneficiaryAccountNumber)
+
+    this.nameEnquiry = {};
+    this.nameEnquiry.accountName = '';
     if (
       this.newTransfer.beneficiaryAccountNumber.length === 10 &&
       this.newTransfer.beneficiaryBankCode !== ''
     ) {
-      this.inputSpinner = true;
       if (this.selectedOption === 1) {
         this.searchAccount(
           this.newTransfer.beneficiaryBankCode,
@@ -258,6 +304,68 @@ export class TransferComponent implements OnInit {
       this.beneficiarySelected = false;
       this.selectedBeneficiary = {};
     }
+  }
+
+  checkFormat(event: any) {
+    this.newTransfer.beneficiaryAccountNumber =
+      this.newTransfer.beneficiaryAccountNumber.replace(/\D/g, '');
+    this.newTransfer.beneficiaryAccountNumber =
+      this.newTransfer.beneficiaryAccountNumber.replace(/ /g, '');
+    this.newTransfer.beneficiaryAccountNumber =
+      this.newTransfer.beneficiaryAccountNumber.trim();
+
+    return /^\d+$/.test(event.key);
+  }
+
+  // searchAccountNumber(event?: any) {
+  //   console.log('searchAccountNumber', event)
+  //   this.newTransfer.beneficiaryAccountNumber = event;
+  //   this.newTransfer.beneficiaryAccountNumber = this.newTransfer.beneficiaryAccountNumber.trim();
+  //   this.newTransfer.beneficiaryAccountNumber = this.newTransfer.beneficiaryAccountNumber + '';
+  //   this.nameEnquiry = {};
+  //   this.nameEnquiry.accountName = '';
+  //   this.selectedBank = this.banks.find(
+  //     (item: any) => item.bankCode == this.newTransfer.beneficiaryBankCode
+  //   );
+  //   console.log('searchAccountNumber', this.newTransfer.beneficiaryAccountNumber.length)
+  //   if (this.newTransfer.beneficiaryAccountNumber.length === 10){
+  //     this.inputSpinner = true;
+  //     this.suggestBanksAndBeneficiaries();
+  //     console.log('inputSpinner', this.newTransfer.beneficiaryAccountNumber)
+  //   }
+
+  //   if (
+  //     this.newTransfer.beneficiaryAccountNumber.length === 10 &&
+  //     this.newTransfer.beneficiaryBankCode !== ''
+  //   ) {
+  //     this.inputSpinner = true;
+  //     if (this.selectedOption === 1) {
+  //       this.searchAccount(
+  //         this.newTransfer.beneficiaryBankCode,
+  //         this.newTransfer.beneficiaryAccountNumber
+  //       );
+  //     } else if (this.selectedOption === 2) {
+  //       this.searchAccount(
+  //         this.newTransfer.beneficiaryBankCode,
+  //         this.newTransfer.beneficiaryAccountNumber
+  //       );
+  //     } else if (this.selectedOption === 3) {
+  //       this.searchAccount(
+  //         this.newTransfer.beneficiaryBankCode,
+  //         this.newTransfer.beneficiaryAccountNumber
+  //       );
+  //     }
+  //   } else {
+  //     this.beneficiarySelected = false;
+  //     this.selectedBeneficiary = {};
+  //   }
+  // }
+
+  suggestBanksAndBeneficiaries(){
+    this.suggestedBeneficiary = true,
+    this.suggestedBanks = true;
+    this.inputSpinner = false;
+
   }
 
   async searchAccount(bankCode: string, number: string) {
@@ -310,15 +418,22 @@ export class TransferComponent implements OnInit {
     this.activePage = page;
   }
   forward = () => {
+    console.log('forward')
     this.transferSteps++;
   };
   backward = () => {
+    console.log('backward')
+
     this.transferSteps--;
   };
   confirmTransaction = () => {
+    console.log('confirmTransaction')
+
     this.store.openModal('confirm-transaction')
   }
   jumpToStep(step: number) {
+    console.log('jumpToStep')
+
     this.transferSteps = step;
   }
   toggleSending = () => {
@@ -334,6 +449,10 @@ export class TransferComponent implements OnInit {
   closeBankModal() {
     console.log('closeBank Modal')
     this.store.closeModal('bank-select')
+  }
+  closeBeneficiaryModal() {
+    console.log('closeBeneficiaryModa Modal')
+    this.store.closeModal('my-beneficiaries')
   }
 
 }
